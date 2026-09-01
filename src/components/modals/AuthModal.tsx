@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
-  Layers, 
   ArrowRight, 
   CheckCircle2, 
   GraduationCap, 
@@ -11,6 +10,8 @@ import {
   Building2 
 } from 'lucide-react';
 import { UserRole } from '../AuthAppView';
+import { ProjectVerseLogo } from '../Navbar';
+import { AccountIcon } from '../icons/AccountIcon';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -62,51 +63,55 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-[#040714]/85 backdrop-blur-xl"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm"
         />
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 15 }}
+          initial={{ opacity: 0, scale: 0.97, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 15 }}
+          exit={{ opacity: 0, scale: 0.97, y: 12 }}
           transition={{ duration: 0.25 }}
-          className="relative z-10 w-full max-w-md liquid-glass-elevated rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl bg-[#080d1e]/95 text-slate-100"
+          className="relative z-10 w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 border border-black/10 shadow-2xl text-[#111111]"
         >
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-all cursor-pointer"
+            className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#F5F5F3] hover:bg-[#ECECE9] border border-black/8 flex items-center justify-center text-[#4A4A4A] hover:text-[#111111] transition-all cursor-pointer"
+            aria-label="Close"
           >
             <X className="w-4 h-4" />
           </button>
 
           {!isAuthenticating ? (
             <div>
-              {/* Header */}
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-inner">
-                  <Layers className="w-3.5 h-3.5" />
-                </div>
-                <span className="font-semibold text-white tracking-wider text-sm font-body">
-                  PROJECT<span className="text-indigo-400">VERSE</span>
+              {/* Brand Header */}
+              <div className="flex items-center gap-2 mb-3">
+                <ProjectVerseLogo className="w-5 h-5 text-[#111111]" />
+                <span className="font-display text-[18px] text-[#111111] tracking-tight">
+                  PROJECT<span className="inline-block w-[0.24em]" aria-hidden="true" />VERSE
                 </span>
               </div>
 
-              <h2 className="font-display text-2xl sm:text-3xl text-white font-normal mb-1">
-                {mode === 'login' ? 'Academic Login' : 'Join ProjectVerse'}
-              </h2>
-              <p className="text-xs text-slate-400 font-body mb-5">
+              <div className="flex items-center gap-2 mb-1">
+                <AccountIcon size={22} className="text-[#111111]" />
+                <h2 className="font-display text-2xl sm:text-3xl text-[#111111] font-normal">
+                  {mode === 'login' ? 'Academic Login' : 'Join ProjectVerse'}
+                </h2>
+              </div>
+              <p className="text-xs text-[#4A4A4A] font-body mb-5">
                 {mode === 'login'
                   ? 'Access your verified project workspace and academic credentials.'
                   : 'Connect your verified research and collaborate across institutions.'}
               </p>
 
               {/* Mode toggle */}
-              <div className="grid grid-cols-2 gap-1 p-1 rounded-xl bg-black/40 border border-white/10 mb-4 text-xs font-mono-code">
+              <div className="grid grid-cols-2 gap-1 p-1 rounded-xl bg-[#F5F5F3] border border-black/8 mb-4 text-xs font-mono-code">
                 <button
                   type="button"
                   onClick={() => setMode('login')}
-                  className={`py-1.5 rounded-lg transition-all cursor-pointer ${
-                    mode === 'login' ? 'bg-indigo-600 text-white font-bold' : 'text-slate-400 hover:text-white'
+                  className={`py-2 rounded-lg transition-all cursor-pointer text-center font-medium ${
+                    mode === 'login' 
+                      ? 'bg-[#111111] text-white shadow-sm font-semibold' 
+                      : 'text-[#4A4A4A] hover:text-[#111111]'
                   }`}
                 >
                   Sign In
@@ -114,8 +119,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setMode('register')}
-                  className={`py-1.5 rounded-lg transition-all cursor-pointer ${
-                    mode === 'register' ? 'bg-indigo-600 text-white font-bold' : 'text-slate-400 hover:text-white'
+                  className={`py-2 rounded-lg transition-all cursor-pointer text-center font-medium ${
+                    mode === 'register' 
+                      ? 'bg-[#111111] text-white shadow-sm font-semibold' 
+                      : 'text-[#4A4A4A] hover:text-[#111111]'
                   }`}
                 >
                   Register
@@ -124,7 +131,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
               {/* Role Selection (STUDENT, FACULTY, HOD, ADMIN) */}
               <div className="mb-4">
-                <label className="block text-[11px] font-mono-code text-slate-400 uppercase mb-1.5">
+                <label className="block text-[11px] font-mono-code text-[#737373] uppercase mb-1.5 font-medium">
                   Select Workspace Role
                 </label>
                 <div className="grid grid-cols-2 gap-2 text-xs">
@@ -138,12 +145,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         onClick={() => setSelectedRole(item.role)}
                         className={`p-2.5 rounded-xl border text-left flex items-center gap-2 transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-indigo-500/20 border-indigo-400 text-white font-semibold'
-                            : 'bg-black/30 border-white/10 text-slate-400 hover:text-slate-200'
+                            ? 'bg-[#111111] border-[#111111] text-white font-medium shadow-xs'
+                            : 'bg-[#F7F7F5] border-black/8 text-[#4A4A4A] hover:bg-[#F3F3F1] hover:text-[#111111]'
                         }`}
                       >
-                        <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-indigo-400' : 'text-slate-500'}`} />
-                        <span className="text-[11px]">{item.label}</span>
+                        <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-[#737373]'}`} />
+                        <span className="text-[11px] font-mono-code">{item.label}</span>
                       </button>
                     );
                   })}
@@ -155,7 +162,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 {mode === 'register' && (
                   <>
                     <div>
-                      <label className="block text-xs font-mono-code text-slate-300 mb-1">
+                      <label className="block text-xs font-mono-code text-[#4A4A4A] mb-1 font-medium">
                         Full Name
                       </label>
                       <input
@@ -164,12 +171,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         placeholder="e.g. Devansh Kulkarni"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400 text-xs"
+                        className="w-full px-3 py-2 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] placeholder-[#737373] focus:outline-none focus:border-[#111111] focus:bg-white text-xs transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono-code text-slate-300 mb-1">
+                      <label className="block text-xs font-mono-code text-[#4A4A4A] mb-1 font-medium">
                         Institution / University
                       </label>
                       <input
@@ -178,14 +185,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         placeholder="e.g. IIT Bombay / MIT"
                         value={institution}
                         onChange={(e) => setInstitution(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400 text-xs"
+                        className="w-full px-3 py-2 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] placeholder-[#737373] focus:outline-none focus:border-[#111111] focus:bg-white text-xs transition-colors"
                       />
                     </div>
                   </>
                 )}
 
                 <div>
-                  <label className="block text-xs font-mono-code text-slate-300 mb-1">
+                  <label className="block text-xs font-mono-code text-[#4A4A4A] mb-1 font-medium">
                     Institutional / Academic Email
                   </label>
                   <input
@@ -194,12 +201,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     placeholder="name@university.edu"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400 text-xs"
+                    className="w-full px-3 py-2 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] placeholder-[#737373] focus:outline-none focus:border-[#111111] focus:bg-white text-xs transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono-code text-slate-300 mb-1">
+                  <label className="block text-xs font-mono-code text-[#4A4A4A] mb-1 font-medium">
                     Password
                   </label>
                   <input
@@ -208,32 +215,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400 text-xs"
+                    className="w-full px-3 py-2 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] placeholder-[#737373] focus:outline-none focus:border-[#111111] focus:bg-white text-xs transition-colors"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-2.5 px-4 rounded-xl bg-white text-slate-950 hover:bg-slate-100 font-semibold text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="btn-primary-black w-full py-3 px-4 rounded-xl text-xs font-medium flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
                   >
                     <span>{mode === 'login' ? `Sign In as ${selectedRole}` : `Create ${selectedRole} Profile`}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 text-white" />
                   </button>
                 </div>
               </form>
 
-              <div className="mt-4 pt-3 border-t border-white/10 text-center text-[11px] text-slate-500 font-mono-code">
+              <div className="mt-4 pt-3 border-t border-black/8 text-center text-[11px] text-[#737373] font-mono-code">
                 Institutional OAuth SSO • eduGAIN & SAML Compatible
               </div>
             </div>
           ) : (
             <div className="py-8 text-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 mx-auto animate-pulse">
-                <CheckCircle2 className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-full bg-[#F5F5F3] border border-black/10 flex items-center justify-center text-[#111111] mx-auto animate-pulse">
+                <CheckCircle2 className="w-6 h-6 text-[#111111]" />
               </div>
-              <h3 className="font-display text-2xl text-white">Opening {selectedRole} Workspace...</h3>
-              <p className="text-xs text-slate-300">
+              <h3 className="font-display text-2xl text-[#111111]">Opening {selectedRole} Workspace...</h3>
+              <p className="text-xs text-[#4A4A4A]">
                 Synchronizing credentials with ProjectVerse Ledger.
               </p>
             </div>
