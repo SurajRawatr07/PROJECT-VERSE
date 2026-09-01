@@ -161,11 +161,7 @@ function MainAppContent() {
       )}
 
       {/* Footer */}
-      <Footer
-        onSelectPage={handleSelectPage}
-        onOpenLogin={handleOpenLogin}
-        onOpenRegister={handleOpenRegister}
-      />
+      <Footer onSelectPage={handleSelectPage} />
 
       {/* Global Interactive Modals */}
       <AuthModal

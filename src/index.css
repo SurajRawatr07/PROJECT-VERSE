@@ -138,6 +138,11 @@
   color: #334155 !important;
 }
 
+:root.light .text-indigo-400,
+:root.light .text-indigo-300 {
+  color: #4f46e5 !important;
+}
+
 :root.light .text-slate-400 {
   color: #475569 !important;
 }
@@ -147,18 +152,36 @@
 }
 
 :root.light .border-white\/5,
+:root.light .border-white\/8,
 :root.light .border-white\/10,
+:root.light .border-white\/12,
 :root.light .border-white\/15,
 :root.light .border-white\/20 {
   border-color: rgba(10, 15, 20, 0.08) !important;
 }
 
-:root.light .bg-white\/5 {
-  background-color: rgba(10, 15, 20, 0.04) !important;
+:root.light .bg-white\/5,
+:root.light .bg-white\/8,
+:root.light .bg-white\/10,
+:root.light .bg-white\/12 {
+  background-color: rgba(10, 15, 20, 0.06) !important;
 }
 
-:root.light .bg-white\/10 {
-  background-color: rgba(10, 15, 20, 0.07) !important;
+:root.light .bg-white\/\[0\.03\] {
+  background-color: rgba(10, 15, 20, 0.03) !important;
+}
+
+:root.light #nav-login-btn {
+  color: #334155 !important;
+}
+
+:root.light #nav-login-btn:hover {
+  color: #0A0F14 !important;
+}
+
+:root.light #site-footer {
+  background-color: rgba(250, 249, 246, 0.92) !important;
+  border-top-color: rgba(10, 15, 20, 0.08) !important;
 }
 
 :root.light .bg-black\/40,
