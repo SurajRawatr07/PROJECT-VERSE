@@ -52,17 +52,17 @@ export const AboutView: React.FC<AboutViewProps> = ({
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#0A0F14] text-slate-100 pt-32 pb-24 px-4 sm:px-6 transition-colors duration-300">
+    <div className="w-full min-h-screen bg-[#FFFFFF] text-[#111111] pt-32 pb-24 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
-          <span className="text-xs font-mono-code uppercase tracking-widest text-indigo-400 dark:text-indigo-300">
+          <span className="text-xs font-mono-code uppercase tracking-widest text-[#737373] font-semibold">
             About ProjectVerse
           </span>
-          <h1 className="font-display text-4xl sm:text-6xl text-white font-normal mt-3 leading-tight">
+          <h1 className="font-display text-4xl sm:text-6xl text-[#111111] font-normal mt-3 leading-tight">
             Engineering a Future Where Academic Work Never Dies.
           </h1>
-          <p className="mt-4 font-body text-sm sm:text-base text-slate-300/90 leading-relaxed">
+          <p className="mt-4 font-body text-sm sm:text-base text-[#4A4A4A] leading-relaxed">
             ProjectVerse is the universal academic continuity ecosystem connecting students, faculty, and institutions worldwide.
           </p>
         </div>
@@ -74,21 +74,21 @@ export const AboutView: React.FC<AboutViewProps> = ({
             return (
               <motion.div
                 key={sec.id}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="liquid-glass rounded-2xl p-6 sm:p-8 border border-white/10 hover:border-indigo-400/30 transition-all"
+                transition={{ duration: 0.4, delay: idx * 0.06 }}
+                className="card-white p-6 sm:p-8"
               >
                 <div className="flex items-start gap-4 sm:gap-5">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-indigo-400 dark:text-indigo-300 shrink-0 mt-0.5">
+                  <div className="w-10 h-10 rounded-xl bg-[#F5F5F3] border border-black/6 flex items-center justify-center text-[#111111] shrink-0 mt-0.5">
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-body text-lg sm:text-xl font-semibold text-white mb-2">
+                    <h3 className="font-body text-lg sm:text-xl font-semibold text-[#111111] mb-2">
                       {sec.title}
                     </h3>
-                    <p className="font-body text-sm text-slate-300/90 leading-relaxed">
+                    <p className="font-body text-sm text-[#4A4A4A] leading-relaxed">
                       {sec.desc}
                     </p>
                   </div>
@@ -99,24 +99,24 @@ export const AboutView: React.FC<AboutViewProps> = ({
         </div>
 
         {/* Action Callout */}
-        <div className="liquid-glass-elevated rounded-2xl p-8 text-center border border-white/15">
-          <h2 className="font-display text-2xl sm:text-3xl text-white font-normal mb-3">
+        <div className="card-white bg-[#F7F7F5] p-8 text-center border border-black/8">
+          <h2 className="font-display text-2xl sm:text-3xl text-[#111111] font-normal mb-3">
             Ready to give your academic project a future?
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto mb-6">
+          <p className="text-xs sm:text-sm text-[#4A4A4A] max-w-md mx-auto mb-6">
             Join students and faculty collaborating across top academic institutions.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               onClick={onGetStarted}
-              className="w-full sm:w-auto px-6 py-3 rounded-full bg-white text-[#0A0F14] font-semibold text-xs sm:text-sm hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+              className="btn-primary-black w-full sm:w-auto px-6 py-3 flex items-center justify-center gap-1.5 cursor-pointer text-xs sm:text-sm font-medium"
             >
               <span>Get Started</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-white" />
             </button>
             <button
               onClick={onExploreHowItWorks}
-              className="w-full sm:w-auto px-6 py-3 rounded-full liquid-glass text-white font-medium text-xs sm:text-sm hover:bg-white/10 border-white/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              className="btn-secondary-white w-full sm:w-auto px-6 py-3 flex items-center justify-center gap-1.5 cursor-pointer text-xs sm:text-sm font-medium"
             >
               <span>View How It Works</span>
             </button>

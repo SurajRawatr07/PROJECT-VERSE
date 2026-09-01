@@ -4,44 +4,35 @@
   :root {
     --font-display: 'Instrument Serif', Georgia, serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color-scheme: dark;
 
-    /* Theme Variables - Dark Mode (Default) */
-    --background: #090A0C;
-    --foreground: #F5F5F5;
-    --muted-foreground: #A1A1AA;
-    --subtle-foreground: #71717A;
-    --card: rgba(255, 255, 255, 0.035);
-    --card-foreground: #F5F5F5;
-    --border: rgba(255, 255, 255, 0.10);
-    --primary: #F5F5F5;
-    --primary-foreground: #090A0C;
-  }
-
-  :root.light {
-    color-scheme: light;
-
-    /* Theme Variables - Light Mode */
-    --background: #F7F7F5;
+    /* Consistent Clean White Color System */
+    --background: #FFFFFF;
+    --background-secondary: #F7F7F5;
     --foreground: #111111;
-    --muted-foreground: #404040;
-    --subtle-foreground: #666666;
+    --muted-foreground: #4A4A4A;
+    --subtle-foreground: #737373;
     --card: #FFFFFF;
     --card-foreground: #111111;
+    --surface-soft: #F5F5F3;
     --border: rgba(0, 0, 0, 0.10);
+    --border-subtle: rgba(0, 0, 0, 0.08);
     --primary: #111111;
     --primary-foreground: #FFFFFF;
   }
 
   html {
     scroll-behavior: smooth;
+    background-color: #FFFFFF;
+    color: #111111;
   }
 
   body {
     font-family: var(--font-body);
-    background-color: var(--background);
-    color: var(--foreground);
-    transition: background-color 0.25s ease, color 0.25s ease;
+    background-color: #FFFFFF;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 }
 
@@ -62,213 +53,109 @@
 /* ========================================================================= */
 .brand-wordmark {
   font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 23px;
   font-weight: 400;
   letter-spacing: -0.035em;
   line-height: 1;
 }
 
 /* ========================================================================= */
-/* LIQUID GLASS DESIGN SYSTEM (DARK & LIGHT THEMES) */
+/* PREMIUM WHITE INTERFACE CARDS & SURFACES */
 /* ========================================================================= */
 
-/* Dark Mode Liquid Glass */
-.liquid-glass {
-  background: rgba(255, 255, 255, 0.035);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06), 0 10px 28px rgba(0, 0, 0, 0.35);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
-}
-
-.liquid-glass:hover {
-  transform: translateY(-2px);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 14px 32px rgba(0, 0, 0, 0.45);
-}
-
-.liquid-glass-subtle {
-  background: rgba(255, 255, 255, 0.025);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), 0 6px 20px rgba(0, 0, 0, 0.25);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.liquid-glass-elevated {
-  background: rgba(255, 255, 255, 0.045);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.1), 0 18px 44px rgba(0, 0, 0, 0.45);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.liquid-glass-nav {
-  background: rgba(9, 10, 12, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 10px 32px rgba(0, 0, 0, 0.45);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Light Mode Liquid Glass Overrides */
-:root.light .liquid-glass {
-  background: #FFFFFF;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 0, 0, 0.09);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-}
-
-:root.light .liquid-glass:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.03);
-}
-
-:root.light .liquid-glass-subtle {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+.card-white {
+  background-color: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: transform 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out;
 }
 
-:root.light .liquid-glass-elevated {
-  background: #FFFFFF;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(0, 0, 0, 0.10);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03);
+.card-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
-:root.light .liquid-glass-nav {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+.surface-soft {
+  background-color: #F5F5F3;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Floating Glass Navbar */
+.floating-navbar {
+  background-color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(0, 0, 0, 0.09);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
 }
 
-/* ========================================================================= */
-/* LIGHT MODE TEXT AND SECTION HELPERS */
-/* ========================================================================= */
-
-:root.light .text-white {
-  color: #111111 !important;
+/* Navigation Link Micro-interaction */
+.nav-link-btn {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: #4A4A4A;
+  transition: color 200ms ease-out, background-color 200ms ease-out, transform 200ms ease-out;
 }
 
-:root.light .text-slate-100,
-:root.light .text-slate-200 {
-  color: #111111 !important;
-}
-
-:root.light .text-slate-300 {
-  color: #404040 !important;
-}
-
-:root.light .text-slate-400 {
-  color: #555555 !important;
-}
-
-:root.light .text-slate-500 {
-  color: #777777 !important;
-}
-
-:root.light .text-indigo-400,
-:root.light .text-indigo-300 {
-  color: #4f46e5 !important;
-}
-
-:root.light .border-white\/5,
-:root.light .border-white\/8,
-:root.light .border-white\/10,
-:root.light .border-white\/12,
-:root.light .border-white\/15,
-:root.light .border-white\/20 {
-  border-color: rgba(0, 0, 0, 0.09) !important;
-}
-
-:root.light .bg-white\/5,
-:root.light .bg-white\/8,
-:root.light .bg-white\/10,
-:root.light .bg-white\/12 {
-  background-color: rgba(0, 0, 0, 0.04) !important;
-}
-
-:root.light .bg-white\/\[0\.03\],
-:root.light .bg-white\/\[0\.035\] {
-  background-color: rgba(0, 0, 0, 0.02) !important;
-}
-
-:root.light #nav-login-btn {
-  color: #404040 !important;
-}
-
-:root.light #nav-login-btn:hover {
-  color: #111111 !important;
-}
-
-:root.light #site-footer {
-  background-color: #F7F7F5 !important;
-  border-top-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-:root.light .bg-black\/40,
-:root.light .bg-black\/50 {
-  background-color: rgba(255, 255, 255, 0.90) !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-:root.light section,
-:root.light main,
-:root.light .bg-\[\#0A0F14\],
-:root.light .bg-\[\#090A0C\],
-:root.light .bg-\[\#040714\],
-:root.light .bg-\[\#050814\],
-:root.light .bg-\[\#03050d\],
-:root.light .bg-\[\#060a1c\] {
-  background-color: #F7F7F5 !important;
-}
-
-:root.light footer {
-  background-color: #F0EFEA !important;
-  border-top-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Light mode primary CTA inversion */
-:root.light #nav-get-started-btn,
-:root.light #cta-get-started-btn,
-:root.light #hero-explore-btn,
-:root.light .btn-primary-pill {
-  background-color: #111111 !important;
-  color: #ffffff !important;
-  box-shadow: 0 6px 20px -2px rgba(0, 0, 0, 0.20) !important;
-}
-
-:root.light #nav-get-started-btn svg,
-:root.light #cta-get-started-btn svg,
-:root.light #hero-explore-btn svg,
-:root.light .btn-primary-pill svg {
-  color: #ffffff !important;
-}
-
-:root.light #nav-get-started-btn:hover,
-:root.light #cta-get-started-btn:hover,
-:root.light #hero-explore-btn:hover,
-:root.light .btn-primary-pill:hover {
-  background-color: #222222 !important;
-}
-
-/* Nav Link Hover Micro-interaction */
-.nav-link-item {
-  transition: color 250ms ease, transform 250ms ease, opacity 250ms ease;
-}
-
-.nav-link-item:hover {
+.nav-link-btn:hover {
+  color: #111111;
+  background-color: #F3F3F1;
   transform: translateY(-1px);
+}
+
+.nav-link-btn.active {
+  color: #111111;
+  background-color: #F3F3F1;
+  font-weight: 600;
+}
+
+/* Primary Black CTA Button */
+.btn-primary-black {
+  background-color: #111111;
+  color: #FFFFFF;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.btn-primary-black:hover {
+  background-color: #262626;
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+}
+
+.btn-primary-black:active {
+  transform: scale(0.98);
+}
+
+/* Secondary Clean White Button */
+.btn-secondary-white {
+  background-color: #FFFFFF;
+  color: #111111;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: transform 200ms ease, background-color 200ms ease, border-color 200ms ease;
+}
+
+.btn-secondary-white:hover {
+  background-color: #F7F7F5;
+  border-color: rgba(0, 0, 0, 0.20);
+  transform: scale(1.02);
+}
+
+.btn-secondary-white:active {
+  transform: scale(0.98);
 }
 
 /* Custom subtle scrollbar */
@@ -278,21 +165,21 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #FFFFFF;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.25);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.45);
+  background: rgba(0, 0, 0, 0.30);
 }
 
 /* Focus rings & accessibility */
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 2px solid #6366f1;
+  outline: 2px solid #111111;
   outline-offset: 2px;
 }
 

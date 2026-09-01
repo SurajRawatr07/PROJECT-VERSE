@@ -7,61 +7,64 @@ export const ProblemSection: React.FC = () => {
     {
       num: '01',
       title: 'HARD TO DISCOVER',
-      desc: 'Valuable academic work remains scattered across institutions.',
+      desc: 'Valuable academic work remains scattered across institutions without a central repository.',
       icon: SearchX
     },
     {
       num: '02',
       title: 'REPEATED WORK',
-      desc: 'Students often rebuild solutions that already exist.',
+      desc: 'Incoming student cohorts frequently re-engineer existing starter applications from scratch.',
       icon: CopySlash
     },
     {
       num: '03',
       title: 'NO CONTINUITY',
-      desc: 'Useful projects lose their knowledge when a batch graduates.',
+      desc: 'High-potential capstone projects lose their domain knowledge as soon as the batch graduates.',
       icon: History
     }
   ];
 
   return (
-    <section id="problem" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#0A0F14] border-t border-white/5 transition-colors duration-300">
+    <section id="problem" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#F7F7F5] border-t border-black/8">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-normal leading-tight">
+          <span className="text-xs font-mono-code uppercase tracking-widest text-[#737373] font-semibold">
+            The Academic Challenge
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal leading-tight mt-2">
             “Good Projects Shouldn’t Disappear After Submission.”
           </h2>
         </div>
 
-        {/* 3 Short Problem Cards */}
+        {/* 3 Minimal Problem Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {problems.map((prob, idx) => {
             const Icon = prob.icon;
             return (
               <motion.div
                 key={prob.num}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: idx * 0.1 }}
-                className="liquid-glass rounded-2xl p-6 sm:p-7 flex flex-col justify-between hover:border-white/20 transition-all duration-300 group"
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="card-white p-6 sm:p-7 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="font-mono-code text-xs text-slate-500 font-medium">
+                    <span className="font-mono-code text-xs text-[#737373] font-medium">
                       {prob.num}
                     </span>
-                    <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 group-hover:text-white group-hover:bg-white/10 transition-all">
+                    <div className="w-9 h-9 rounded-xl bg-[#F5F5F3] border border-black/6 flex items-center justify-center text-[#111111]">
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>
 
-                  <h3 className="font-mono-code text-sm font-semibold text-white mb-2 tracking-wider uppercase">
+                  <h3 className="font-mono-code text-xs sm:text-sm font-semibold text-[#111111] mb-2 tracking-wider uppercase">
                     {prob.title}
                   </h3>
 
-                  <p className="font-body text-sm text-slate-300/90 leading-relaxed">
+                  <p className="font-body text-sm text-[#4A4A4A] leading-relaxed">
                     {prob.desc}
                   </p>
                 </div>

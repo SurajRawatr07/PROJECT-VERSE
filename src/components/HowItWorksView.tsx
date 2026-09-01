@@ -114,17 +114,17 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ onGetStarted }) 
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#0A0F14] text-slate-100 pt-32 pb-24 px-4 sm:px-6 transition-colors duration-300">
+    <div className="w-full min-h-screen bg-[#FFFFFF] text-[#111111] pt-32 pb-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-mono-code uppercase tracking-widest text-indigo-400 dark:text-indigo-300">
+          <span className="text-xs font-mono-code uppercase tracking-widest text-[#737373] font-semibold">
             Lifecycle Workflow
           </span>
-          <h1 className="font-display text-4xl sm:text-6xl text-white font-normal mt-3 leading-tight">
+          <h1 className="font-display text-4xl sm:text-6xl text-[#111111] font-normal mt-3 leading-tight">
             How ProjectVerse Works
           </h1>
-          <p className="mt-4 font-body text-sm sm:text-base text-slate-300/90 leading-relaxed">
+          <p className="mt-4 font-body text-sm sm:text-base text-[#4A4A4A] leading-relaxed">
             A 7-step visual workflow taking academic projects from initial creation to generational continuation and verified credentials.
           </p>
         </div>
@@ -138,22 +138,22 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ onGetStarted }) 
               <button
                 key={st.id}
                 onClick={() => setSelectedStep(idx)}
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center transition-all cursor-pointer ${
+                className={`p-3 rounded-2xl border text-center flex flex-col items-center justify-center transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-indigo-950/50 border-indigo-400/60 shadow-lg shadow-indigo-500/10'
-                    : 'liquid-glass border-white/10 hover:border-white/20'
+                    ? 'bg-[#111111] text-white border-[#111111] shadow-sm'
+                    : 'bg-[#F7F7F5] border-black/8 hover:bg-[#F3F3F1] text-[#4A4A4A]'
                 }`}
               >
-                <span className="font-mono-code text-[11px] text-slate-400 mb-1.5">
+                <span className={`font-mono-code text-[11px] mb-1.5 ${isSelected ? 'text-white/70' : 'text-[#737373]'}`}>
                   {st.num}
                 </span>
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-1.5 ${
-                  isSelected ? 'bg-indigo-500 text-white' : 'bg-white/5 text-slate-300'
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-1.5 ${
+                  isSelected ? 'bg-white/15 text-white' : 'bg-black/5 text-[#111111]'
                 }`}>
                   <Icon className="w-4 h-4" />
                 </div>
                 <span className={`text-[11px] font-semibold tracking-wide ${
-                  isSelected ? 'text-white' : 'text-slate-300'
+                  isSelected ? 'text-white' : 'text-[#111111]'
                 }`}>
                   {st.title}
                 </span>
@@ -167,60 +167,60 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ onGetStarted }) 
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedStep}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.25 }}
-              className="liquid-glass-elevated rounded-3xl p-6 sm:p-10 border border-white/15"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.22 }}
+              className="card-white p-6 sm:p-10 border border-black/8"
             >
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 <div className="md:col-span-7">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-xs font-mono-code text-indigo-300 mb-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5F5F3] border border-black/8 text-xs font-mono-code text-[#111111] mb-4">
                     <span>STEP {steps[selectedStep].num} OF 07</span>
                     <span>•</span>
-                    <span className="text-slate-400 uppercase">{steps[selectedStep].subtitle}</span>
+                    <span className="text-[#737373] uppercase">{steps[selectedStep].subtitle}</span>
                   </div>
 
-                  <h2 className="font-display text-3xl sm:text-4xl text-white font-normal mb-3">
+                  <h2 className="font-display text-3xl sm:text-4xl text-[#111111] font-normal mb-3">
                     {steps[selectedStep].title}
                   </h2>
 
-                  <p className="font-body text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                  <p className="font-body text-[#4A4A4A] text-sm sm:text-base leading-relaxed mb-6">
                     {steps[selectedStep].summary}
                   </p>
 
                   <div className="space-y-2.5">
                     {steps[selectedStep].details.map((detail, dIdx) => (
-                      <div key={dIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <div key={dIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#4A4A4A]">
+                        <CheckCircle2 className="w-4 h-4 text-[#111111] shrink-0 mt-0.5" />
                         <span>{detail}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="md:col-span-5 bg-black/40 border border-white/10 rounded-2xl p-6 font-mono-code text-xs">
-                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 text-slate-400 text-[11px]">
+                <div className="md:col-span-5 bg-[#F7F7F5] border border-black/8 rounded-2xl p-6 font-mono-code text-xs">
+                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-black/8 text-[#737373] text-[11px]">
                     <span>SYSTEM_WORKFLOW</span>
-                    <span className="text-emerald-400">READY</span>
+                    <span className="text-[#111111] font-semibold">ACTIVE</span>
                   </div>
 
-                  <div className="space-y-2 text-slate-400 text-[11px] leading-relaxed">
-                    <p><span className="text-indigo-400">#</span> stage: {steps[selectedStep].id}</p>
-                    <p><span className="text-indigo-400">#</span> execution: automated_protocol</p>
-                    <p><span className="text-indigo-400">#</span> validation: multi_stakeholder</p>
+                  <div className="space-y-2 text-[#4A4A4A] text-[11px] leading-relaxed">
+                    <p><span className="text-[#111111] font-bold">#</span> stage: {steps[selectedStep].id}</p>
+                    <p><span className="text-[#111111] font-bold">#</span> execution: automated_protocol</p>
+                    <p><span className="text-[#111111] font-bold">#</span> validation: multi_stakeholder</p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <div className="mt-6 pt-4 border-t border-black/8 flex items-center justify-between">
                     <button
                       onClick={() => setSelectedStep((prev) => (prev > 0 ? prev - 1 : steps.length - 1))}
-                      className="text-slate-400 hover:text-white transition-colors cursor-pointer text-[11px]"
+                      className="text-[#737373] hover:text-[#111111] transition-colors cursor-pointer text-[11px]"
                     >
                       ← Previous
                     </button>
                     <button
                       onClick={() => setSelectedStep((prev) => (prev + 1) % steps.length)}
-                      className="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 cursor-pointer text-[11px]"
+                      className="text-[#111111] hover:underline font-semibold flex items-center gap-1 cursor-pointer text-[11px]"
                     >
                       Next Step <ArrowRight className="w-3 h-3" />
                     </button>
@@ -232,13 +232,13 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ onGetStarted }) 
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center pt-8 border-t border-white/10">
+        <div className="text-center pt-8 border-t border-black/8">
           <button
             onClick={onGetStarted}
-            className="px-8 py-3.5 rounded-full bg-white text-[#0A0F14] font-semibold text-sm hover:bg-slate-100 shadow-xl transition-all cursor-pointer inline-flex items-center gap-2"
+            className="btn-primary-black px-8 py-3.5 inline-flex items-center gap-2 cursor-pointer text-sm font-medium"
           >
             <span>Get Started with ProjectVerse</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 text-white" />
           </button>
         </div>
       </div>

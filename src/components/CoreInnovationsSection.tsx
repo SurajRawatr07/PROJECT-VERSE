@@ -7,28 +7,31 @@ export const CoreInnovationsSection: React.FC = () => {
     {
       num: '01',
       title: 'PROJECT PASSPORT',
-      desc: 'Every project gets a structured academic identity with contributions, documentation, GitHub activity and verification.',
+      desc: 'Every project receives a structured academic identity documenting architectural decisions, contributions, GitHub telemetry, and formal validation.',
       icon: FileCheck2
     },
     {
       num: '02',
       title: 'PROJECT LINEAGE',
-      desc: 'Project history stays connected so future students can understand, improve and continue existing work.',
+      desc: 'Inheritance trees keep research and codebase history connected so incoming batches can understand, improve, and extend prior milestones.',
       icon: GitBranch
     },
     {
       num: '03',
       title: 'AI MATCHING',
-      desc: 'Skill-based recommendations connect students with relevant projects, teammates and mentors.',
+      desc: 'Domain and skill-based algorithms recommend complementary team contributors, active research projects, and verified inter-university faculty advisors.',
       icon: Sparkles
     }
   ];
 
   return (
-    <section id="innovations" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#0A0F14] border-t border-white/5 transition-colors duration-300">
+    <section id="innovations" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#F7F7F5] border-t border-black/8">
       <div className="max-w-5xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-normal">
+          <span className="text-xs font-mono-code uppercase tracking-widest text-[#737373] font-semibold">
+            Platform Capabilities
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal mt-2">
             Three Core Innovations
           </h2>
         </div>
@@ -39,27 +42,27 @@ export const CoreInnovationsSection: React.FC = () => {
             return (
               <motion.div
                 key={item.num}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.12 }}
-                className="liquid-glass-elevated rounded-2xl p-7 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-indigo-400/40 transition-all duration-300 group"
+                transition={{ duration: 0.45, delay: idx * 0.08 }}
+                className="card-white p-7 sm:p-8 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-8">
-                    <span className="font-mono-code text-xs text-indigo-400 dark:text-indigo-300 font-bold px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20">
+                    <span className="font-mono-code text-xs text-[#111111] font-bold px-2.5 py-1 rounded-full bg-[#F5F5F3] border border-black/8">
                       {item.num}
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 group-hover:text-indigo-400 group-hover:bg-white/10 transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-[#F5F5F3] border border-black/6 flex items-center justify-center text-[#111111]">
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>
 
-                  <h3 className="font-mono-code text-sm font-semibold text-white tracking-wider uppercase mb-3">
+                  <h3 className="font-mono-code text-xs sm:text-sm font-semibold text-[#111111] tracking-wider uppercase mb-3">
                     {item.title}
                   </h3>
 
-                  <p className="font-body text-sm text-slate-300/90 leading-relaxed">
+                  <p className="font-body text-sm text-[#4A4A4A] leading-relaxed">
                     {item.desc}
                   </p>
                 </div>

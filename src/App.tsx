@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ThemeProvider } from './context/ThemeContext';
 import { Navbar, PublicPage } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProblemSection } from './components/ProblemSection';
@@ -25,7 +24,7 @@ import { ProofOfWorkModal } from './components/modals/ProofOfWorkModal';
 
 import { ProjectItem } from './types';
 
-function MainAppContent() {
+export default function App() {
   // Navigation View State: public pages ('home' | 'about' | 'how-it-works') or authenticated workspace
   const [currentPage, setCurrentPage] = useState<PublicPage>('home');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -71,7 +70,7 @@ function MainAppContent() {
   // If user is inside the authenticated workspace
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#0A0F14] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden transition-colors duration-200">
+      <div className="min-h-screen bg-[#FFFFFF] text-[#111111] font-body relative overflow-x-hidden">
         <AuthAppView
           initialRole={currentRole}
           onLogout={handleLogout}
@@ -109,8 +108,8 @@ function MainAppContent() {
 
   // Public Website: Home, About, or How It Works
   return (
-    <div className="min-h-screen bg-[#0A0F14] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden transition-colors duration-200">
-      {/* Floating Liquid-Glass Navbar */}
+    <div className="min-h-screen bg-[#FFFFFF] text-[#111111] font-body relative overflow-x-hidden">
+      {/* Floating Navbar */}
       <Navbar
         currentPage={currentPage}
         onSelectPage={handleSelectPage}
@@ -121,25 +120,25 @@ function MainAppContent() {
       {/* Page Content Rendering */}
       {currentPage === 'home' && (
         <main>
-          {/* Hero Section */}
+          {/* Hero Section (Section 1: #FFFFFF) */}
           <Hero
             onExploreClick={() => handleSelectPage('how-it-works')}
             onGetStartedClick={handleOpenRegister}
           />
 
-          {/* Section 2: The Problem (3 Short Points) */}
+          {/* Section 2: The Problem (Section 2: #F7F7F5) */}
           <ProblemSection />
 
-          {/* Section 3: What ProjectVerse Changes (From Submission to Continuation flow) */}
+          {/* Section 3: What ProjectVerse Changes (Section 3: #FFFFFF) */}
           <ApproachFlowSection />
 
-          {/* Section 4: Three Core Innovations */}
+          {/* Section 4: Three Core Innovations (Section 4: #F7F7F5) */}
           <CoreInnovationsSection />
 
-          {/* Section 5: Trust (Proof, Not Just Claims) */}
+          {/* Section 5: Trust (Section 5: #FFFFFF) */}
           <TrustSection />
 
-          {/* Section 6: Final CTA */}
+          {/* Section 6: Final CTA (Section 6: #F7F7F5) */}
           <CTASection
             onGetStartedClick={handleOpenRegister}
             onHowItWorksClick={() => handleSelectPage('how-it-works')}
@@ -160,7 +159,7 @@ function MainAppContent() {
         />
       )}
 
-      {/* Footer */}
+      {/* Footer (Section: #F7F7F5) */}
       <Footer onSelectPage={handleSelectPage} />
 
       {/* Global Interactive Modals */}
@@ -193,13 +192,5 @@ function MainAppContent() {
         onClose={() => setIsProofOfWorkOpen(false)}
       />
     </div>
-  );
-}
-
-export default function App() {
-  return (
-    <ThemeProvider>
-      <MainAppContent />
-    </ThemeProvider>
   );
 }
