@@ -12,7 +12,7 @@ export const ApproachFlowSection: React.FC = () => {
   ];
 
   return (
-    <section id="approach-flow" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#040714] border-t border-white/5 overflow-hidden">
+    <section id="approach-flow" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#0A0F14] border-t border-white/5 overflow-hidden transition-colors duration-300">
       <div className="max-w-5xl mx-auto text-center">
         {/* Heading */}
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-normal mb-12 sm:mb-16">
@@ -26,13 +26,13 @@ export const ApproachFlowSection: React.FC = () => {
             return (
               <React.Fragment key={step.label}>
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.96 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
                   className="flex-1 liquid-glass rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center border border-white/10 hover:border-indigo-400/40 hover:bg-white/5 transition-all duration-200"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-indigo-300 mb-2.5">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-indigo-400 dark:text-indigo-300 mb-2.5">
                     <Icon className="w-5 h-5" />
                   </div>
                   <span className="font-mono-code text-xs font-semibold tracking-wider text-slate-100">
@@ -57,7 +57,7 @@ export const ApproachFlowSection: React.FC = () => {
             return (
               <React.Fragment key={step.label}>
                 <div className="w-full liquid-glass rounded-xl p-3.5 flex items-center justify-center gap-3 border border-white/10">
-                  <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-indigo-300">
+                  <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-indigo-400 dark:text-indigo-300">
                     <Icon className="w-4 h-4" />
                   </div>
                   <span className="font-mono-code text-xs font-semibold tracking-wider text-white">
@@ -80,7 +80,7 @@ export const ApproachFlowSection: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="font-body text-slate-300/90 text-sm sm:text-base max-w-xl mx-auto leading-relaxed"
         >
-          “ProjectVerse keeps academic projects discoverable, verifiable and useful beyond a single semester.”
+          “ProjectVerse keeps academic work discoverable, trusted and useful beyond a single semester.”
         </motion.p>
       </div>
     </section>

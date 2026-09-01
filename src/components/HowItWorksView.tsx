@@ -114,11 +114,11 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ onGetStarted }) 
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#040714] text-slate-100 pt-32 pb-24 px-4 sm:px-6">
+    <div className="w-full min-h-screen bg-[#0A0F14] text-slate-100 pt-32 pb-24 px-4 sm:px-6 transition-colors duration-300">
       <div className="max-w-5xl mx-auto">
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-mono-code uppercase tracking-widest text-indigo-400">
+          <span className="text-xs font-mono-code uppercase tracking-widest text-indigo-400 dark:text-indigo-300">
             Lifecycle Workflow
           </span>
           <h1 className="font-display text-4xl sm:text-6xl text-white font-normal mt-3 leading-tight">
@@ -235,7 +235,7 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = ({ onGetStarted }) 
         <div className="text-center pt-8 border-t border-white/10">
           <button
             onClick={onGetStarted}
-            className="px-8 py-3.5 rounded-full bg-white text-slate-950 font-semibold text-sm hover:bg-slate-100 shadow-xl transition-all cursor-pointer inline-flex items-center gap-2"
+            className="px-8 py-3.5 rounded-full bg-white text-[#0A0F14] font-semibold text-sm hover:bg-slate-100 shadow-xl transition-all cursor-pointer inline-flex items-center gap-2"
           >
             <span>Get Started with ProjectVerse</span>
             <ArrowRight className="w-4 h-4" />

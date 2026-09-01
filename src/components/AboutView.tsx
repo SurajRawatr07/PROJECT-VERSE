@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import { 
   History, 
   CopySlash, 
-  GitBranch, 
   Users2, 
   ShieldCheck, 
   ArrowRight,
@@ -48,16 +47,16 @@ export const AboutView: React.FC<AboutViewProps> = ({
       id: 'verified-academic-work',
       title: 'Verified Academic Work & Proof-of-Work',
       icon: ShieldCheck,
-      desc: 'Moving beyond unverified resumes. Every student contribution is cryptographically verified against real git telemetry, rubric-based faculty reviews, and institutional HOD sign-offs — creating immutable credentials recognized worldwide.'
+      desc: 'Moving beyond unverified resumes. Every student contribution is verified against real git telemetry, rubric-based faculty reviews, and institutional HOD sign-offs — creating immutable credentials recognized worldwide.'
     }
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#040714] text-slate-100 pt-32 pb-24 px-4 sm:px-6">
+    <div className="w-full min-h-screen bg-[#0A0F14] text-slate-100 pt-32 pb-24 px-4 sm:px-6 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
-          <span className="text-xs font-mono-code uppercase tracking-widest text-indigo-400">
+          <span className="text-xs font-mono-code uppercase tracking-widest text-indigo-400 dark:text-indigo-300">
             About ProjectVerse
           </span>
           <h1 className="font-display text-4xl sm:text-6xl text-white font-normal mt-3 leading-tight">
@@ -82,7 +81,7 @@ export const AboutView: React.FC<AboutViewProps> = ({
                 className="liquid-glass rounded-2xl p-6 sm:p-8 border border-white/10 hover:border-indigo-400/30 transition-all"
               >
                 <div className="flex items-start gap-4 sm:gap-5">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-indigo-300 shrink-0 mt-0.5">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-indigo-400 dark:text-indigo-300 shrink-0 mt-0.5">
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
@@ -110,7 +109,7 @@ export const AboutView: React.FC<AboutViewProps> = ({
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               onClick={onGetStarted}
-              className="w-full sm:w-auto px-6 py-3 rounded-full bg-white text-slate-950 font-semibold text-xs sm:text-sm hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3 rounded-full bg-white text-[#0A0F14] font-semibold text-xs sm:text-sm hover:bg-slate-100 transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
             >
               <span>Get Started</span>
               <ArrowRight className="w-4 h-4" />

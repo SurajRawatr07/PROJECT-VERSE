@@ -1,5 +1,4 @@
 import React from 'react';
-import { Layers, Github, Linkedin, ArrowUpRight } from 'lucide-react';
 import { PublicPage } from './Navbar';
 
 interface FooterProps {
@@ -19,25 +18,22 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="w-full bg-[#03050d] border-t border-white/10 pt-16 pb-12 px-4 sm:px-6 text-slate-400 font-body">
+    <footer className="w-full bg-[#070B0F] dark:bg-[#070B0F] border-t border-white/8 pt-16 pb-12 px-4 sm:px-6 text-slate-400 font-body transition-colors duration-300">
       <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/8">
           {/* Col 1: Brand */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-inner">
-                <Layers className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-semibold tracking-wider text-base text-white font-body">
-                PROJECT<span className="text-indigo-400">VERSE</span>
+            <div className="flex items-center">
+              <span className="font-display text-[26px] font-normal tracking-[-0.04em] text-white">
+                PROJECT<span className="text-indigo-400 dark:text-indigo-300">VERSE</span>
               </span>
             </div>
 
             <p className="text-xs text-slate-300 max-w-sm leading-relaxed">
-              “Academic projects, built to continue.”
+              “Where academic projects find their next chapter.”
             </p>
-            <p className="text-[11px] text-slate-500 max-w-xs leading-relaxed">
-              The universal ecosystem for students, faculty, and institutions to turn academic capstones into work that continues.
+            <p className="text-[11px] text-slate-400 max-w-xs leading-relaxed">
+              The universal ecosystem for students, faculty, and institutions to turn academic projects into work that continues.
             </p>
           </div>
 
@@ -91,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li>
                 <button
                   onClick={onOpenRegister}
-                  className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors cursor-pointer"
+                  className="text-indigo-400 dark:text-indigo-300 hover:underline font-semibold transition-colors cursor-pointer"
                 >
                   Get Started (Register)
                 </button>

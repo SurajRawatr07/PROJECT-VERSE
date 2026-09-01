@@ -4,7 +4,7 @@ import { GitBranch, UserCheck, ShieldCheck, ArrowDown, CheckCircle2 } from 'luci
 
 export const TrustSection: React.FC = () => {
   return (
-    <section id="trust" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 bg-[#040714] border-t border-white/5">
+    <section id="trust" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#0A0F14] border-t border-white/5 transition-colors duration-300">
       <div className="max-w-4xl mx-auto text-center">
         {/* Heading */}
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-normal mb-10 sm:mb-12">
@@ -33,7 +33,7 @@ export const TrustSection: React.FC = () => {
             </div>
 
             <div className="liquid-glass-subtle rounded-xl p-3.5 flex items-center justify-center gap-2 border border-white/10">
-              <UserCheck className="w-4 h-4 text-indigo-300" />
+              <UserCheck className="w-4 h-4 text-indigo-400 dark:text-indigo-300" />
               <span className="font-mono-code text-xs sm:text-sm text-slate-200 font-medium">
                 Faculty Review
               </span>
@@ -59,15 +59,15 @@ export const TrustSection: React.FC = () => {
           </div>
 
           {/* Verified Project Result Badge */}
-          <div className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 font-mono-code text-xs sm:text-sm font-semibold shadow-lg shadow-emerald-950/40">
+          <div className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-emerald-400 dark:text-emerald-300 font-mono-code text-xs sm:text-sm font-semibold shadow-lg shadow-emerald-950/30">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             <span>VERIFIED PROJECT</span>
           </div>
         </motion.div>
 
-        {/* One line summary */}
+        {/* Supporting Line */}
         <p className="font-body text-slate-300/90 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-          “Technical contribution and academic validation come together in one project record.”
+          “Technical contribution and academic validation come together in one trusted project record.”
         </p>
       </div>
     </section>

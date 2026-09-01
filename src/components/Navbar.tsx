@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowRight, Layers, Sun, Moon } from 'lucide-react';
+import { Menu, X, ArrowRight, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 export type PublicPage = 'home' | 'about' | 'how-it-works';
@@ -46,42 +46,32 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-3 sm:px-6 py-3 sm:py-4 pointer-events-none transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-3.5 sm:px-6 py-3 sm:py-4 pointer-events-none transition-all duration-300">
         <motion.nav
-          initial={{ y: -20, opacity: 0 }}
+          initial={{ y: -16, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className={`pointer-events-auto w-full max-w-5xl flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-full transition-all duration-300 ${
+          className={`pointer-events-auto w-full max-w-5xl flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-full transition-all duration-300 ${
             isScrolled
               ? 'liquid-glass-nav shadow-2xl backdrop-blur-2xl'
               : 'liquid-glass backdrop-blur-xl'
           }`}
           aria-label="Main Navigation"
         >
-          {/* Left: Refined Brand Mark */}
+          {/* Left: Refined Typographic Wordmark in Instrument Serif */}
           <button
             id="nav-logo-btn"
             onClick={() => handleNavClick('home')}
-            className="flex items-center gap-2.5 text-left focus:outline-none group cursor-pointer shrink-0"
+            className="flex items-center text-left focus:outline-none group cursor-pointer shrink-0 py-0.5"
             aria-label="ProjectVerse Home"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-indigo-500 via-indigo-600 to-slate-900 border border-indigo-400/30 flex items-center justify-center text-white shadow-inner group-hover:border-indigo-400/60 group-hover:shadow-indigo-500/20 transition-all">
-              <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-100" />
-            </div>
-            
-            {/* Premium Typography: Inter 500 + Instrument Serif display contrast */}
-            <div className="flex items-baseline tracking-[-0.03em] select-none">
-              <span className="font-body font-medium text-[15px] sm:text-[16px] text-white tracking-[-0.03em]">
-                PROJECT
-              </span>
-              <span className="font-display italic text-indigo-400 font-normal text-[18px] sm:text-[19px] tracking-[-0.02em] ml-0.5">
-                VERSE
-              </span>
-            </div>
+            <span className="font-display text-[24px] sm:text-[26px] font-normal tracking-[-0.04em] text-white leading-none select-none transition-opacity duration-200 group-hover:opacity-90">
+              PROJECT<span className="text-indigo-400 dark:text-indigo-300 font-normal">VERSE</span>
+            </span>
           </button>
 
           {/* Center: Home | About | How It Works */}
-          <div className="hidden md:flex items-center gap-1 sm:gap-1.5">
+          <div className="hidden md:flex items-center gap-1 sm:gap-2">
             {navItems.map((item) => {
               const isActive = currentPage === item.page;
               return (
@@ -89,17 +79,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={item.page}
                   id={`nav-link-${item.page}`}
                   onClick={() => handleNavClick(item.page)}
-                  className={`relative text-[14px] font-medium tracking-[-0.01em] px-3.5 py-1.5 rounded-full transition-colors duration-200 cursor-pointer ${
+                  className={`nav-link-item relative font-body text-[14px] font-medium tracking-[-0.01em] px-4 py-1.5 rounded-full cursor-pointer select-none ${
                     isActive
-                      ? 'text-white'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                      ? 'text-white font-semibold'
+                      : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="active-nav-indicator"
-                      className="absolute inset-0 bg-white/10 border border-white/15 rounded-full shadow-inner"
-                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      className="absolute inset-0 bg-white/10 dark:bg-white/10 border border-white/15 rounded-full shadow-inner pointer-events-none"
+                      transition={{ type: 'spring', stiffness: 450, damping: 35 }}
                     />
                   )}
                   <span className="relative z-10">{item.label}</span>
@@ -109,12 +99,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Right Action Tools: [Theme Toggle] | Login | Get Started */}
-          <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
-            {/* Compact Glass Theme Toggle */}
+          <div className="hidden md:flex items-center gap-2.5 sm:gap-3">
+            {/* Compact Glass Theme Toggle Pill */}
             <button
               id="nav-theme-toggle-btn"
               onClick={toggleTheme}
-              className="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer focus:outline-none"
+              className="w-8 h-8 rounded-full liquid-glass-subtle flex items-center justify-center text-slate-300 hover:text-white hover:border-white/20 transition-all duration-200 cursor-pointer focus:outline-none"
               aria-label={themeToggleLabel}
               title={themeToggleLabel}
             >
@@ -125,20 +115,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </button>
 
-            {/* Minimal Login */}
+            {/* Minimal Clean Typography Login */}
             <button
               id="nav-login-btn"
               onClick={onOpenLogin}
-              className="text-[14px] font-medium tracking-[-0.01em] text-slate-300 hover:text-white px-3 py-1.5 rounded-full hover:bg-white/5 transition-colors duration-200 cursor-pointer"
+              className="font-body text-[14px] font-medium tracking-[-0.01em] text-slate-300 hover:text-white px-3 py-1.5 transition-colors duration-200 cursor-pointer"
             >
               Login
             </button>
 
-            {/* Primary Get Started CTA with liquid-glass / pill highlight & subtle scale */}
+            {/* Strongest Navbar Element: Get Started Rounded Pill */}
             <button
               id="nav-get-started-btn"
               onClick={onOpenRegister}
-              className="inline-flex items-center gap-1.5 text-[14px] font-medium tracking-[-0.01em] bg-white text-slate-950 px-4 py-1.5 sm:py-2 rounded-full font-body shadow-md shadow-white/10 hover:shadow-white/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-[13.5px] font-medium tracking-[-0.01em] bg-white text-[#0A0F14] px-4 py-1.5 rounded-full font-body shadow-md shadow-white/10 hover:shadow-white/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer"
             >
               <span>Get Started</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -151,7 +141,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="mobile-nav-theme-toggle-btn"
               onClick={toggleTheme}
-              className="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer focus:outline-none"
+              className="w-8 h-8 rounded-full liquid-glass-subtle flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer focus:outline-none"
               aria-label={themeToggleLabel}
               title={themeToggleLabel}
             >
@@ -176,24 +166,23 @@ export const Navbar: React.FC<NavbarProps> = ({
         </motion.nav>
       </header>
 
-      {/* Mobile Menu: Smooth glass dropdown / fullscreen overlay */}
+      {/* Mobile Menu: Premium Fullscreen Glass Panel */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-[#040714]/95 backdrop-blur-2xl md:hidden flex flex-col justify-between p-6 pt-24"
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-[#0A0F14]/95 dark:bg-[#0A0F14]/95 backdrop-blur-3xl md:hidden flex flex-col justify-between p-6 pt-24"
           >
-            <div className="flex flex-col space-y-2">
-              <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
-                <div className="flex items-baseline tracking-[-0.03em]">
-                  <span className="font-body font-medium text-[15px] text-white">PROJECT</span>
-                  <span className="font-display italic text-indigo-400 text-[18px] ml-0.5">VERSE</span>
-                </div>
-                <span className="text-[10px] font-mono-code text-slate-400 uppercase tracking-wider">
-                  Menu
+            <div className="flex flex-col space-y-3">
+              <div className="flex items-center justify-between pb-4 mb-3 border-b border-white/10">
+                <span className="font-display text-[26px] font-normal tracking-[-0.04em] text-white">
+                  PROJECT<span className="text-indigo-400">VERSE</span>
+                </span>
+                <span className="text-[11px] font-mono-code text-slate-400 uppercase tracking-widest">
+                  Navigation
                 </span>
               </div>
 
@@ -205,9 +194,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                     id={`mobile-nav-link-${item.page}`}
                     initial={{ x: -16, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: idx * 0.04 }}
+                    transition={{ delay: idx * 0.05 }}
                     onClick={() => handleNavClick(item.page)}
-                    className={`flex items-center justify-between text-left py-3 px-4 rounded-xl text-base font-medium tracking-[-0.01em] transition-all cursor-pointer ${
+                    className={`flex items-center justify-between text-left py-3.5 px-4 rounded-2xl text-[15px] font-medium tracking-[-0.01em] transition-all cursor-pointer ${
                       isActive
                         ? 'bg-white/10 text-white border border-white/15 shadow-inner'
                         : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
@@ -220,14 +209,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               })}
             </div>
 
-            <div className="pt-6 border-t border-white/10 flex flex-col gap-2.5">
+            <div className="pt-6 border-t border-white/10 flex flex-col gap-3">
               <button
                 id="mobile-nav-login-btn"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenLogin();
                 }}
-                className="w-full py-2.5 px-4 rounded-xl liquid-glass text-slate-200 text-sm font-medium hover:text-white text-center cursor-pointer"
+                className="w-full py-3 px-4 rounded-2xl liquid-glass text-slate-200 text-sm font-medium hover:text-white text-center cursor-pointer"
               >
                 Login
               </button>
@@ -237,7 +226,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenRegister();
                 }}
-                className="w-full py-3 px-4 rounded-xl bg-white text-slate-950 text-sm font-semibold flex items-center justify-center gap-1.5 shadow-lg active:scale-[0.98] transition-transform cursor-pointer"
+                className="w-full py-3.5 px-4 rounded-2xl bg-white text-[#0A0F14] text-sm font-semibold flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-transform cursor-pointer"
               >
                 <span>Get Started</span>
                 <ArrowRight className="w-4 h-4" />

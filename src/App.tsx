@@ -71,7 +71,7 @@ function MainAppContent() {
   // If user is inside the authenticated workspace
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#040714] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden transition-colors duration-200">
+      <div className="min-h-screen bg-[#0A0F14] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden transition-colors duration-200">
         <AuthAppView
           initialRole={currentRole}
           onLogout={handleLogout}
@@ -109,7 +109,7 @@ function MainAppContent() {
 
   // Public Website: Home, About, or How It Works
   return (
-    <div className="min-h-screen bg-[#040714] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden transition-colors duration-200">
+    <div className="min-h-screen bg-[#0A0F14] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden transition-colors duration-200">
       {/* Floating Liquid-Glass Navbar */}
       <Navbar
         currentPage={currentPage}

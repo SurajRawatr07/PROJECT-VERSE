@@ -6,26 +6,26 @@ export const ProblemSection: React.FC = () => {
   const problems = [
     {
       num: '01',
-      title: 'Hard to Discover',
-      desc: 'Valuable projects remain scattered across colleges.',
+      title: 'HARD TO DISCOVER',
+      desc: 'Valuable academic work remains scattered across institutions.',
       icon: SearchX
     },
     {
       num: '02',
-      title: 'Repeated Work',
+      title: 'REPEATED WORK',
       desc: 'Students often rebuild solutions that already exist.',
       icon: CopySlash
     },
     {
       num: '03',
-      title: 'No Continuity',
-      desc: 'Good projects lose their knowledge when a batch graduates.',
+      title: 'NO CONTINUITY',
+      desc: 'Useful projects lose their knowledge when a batch graduates.',
       icon: History
     }
   ];
 
   return (
-    <section id="problem" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#040714] border-t border-white/5">
+    <section id="problem" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#0A0F14] border-t border-white/5 transition-colors duration-300">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
@@ -44,7 +44,7 @@ export const ProblemSection: React.FC = () => {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                transition={{ duration: 0.45, delay: idx * 0.1 }}
                 className="liquid-glass rounded-2xl p-6 sm:p-7 flex flex-col justify-between hover:border-white/20 transition-all duration-300 group"
               >
                 <div>
@@ -57,7 +57,7 @@ export const ProblemSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <h3 className="font-body text-lg font-semibold text-white mb-2 tracking-tight">
+                  <h3 className="font-mono-code text-sm font-semibold text-white mb-2 tracking-wider uppercase">
                     {prob.title}
                   </h3>
 

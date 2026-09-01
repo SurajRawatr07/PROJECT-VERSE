@@ -7,34 +7,28 @@ export const CoreInnovationsSection: React.FC = () => {
     {
       num: '01',
       title: 'PROJECT PASSPORT',
-      desc: 'Every project gets a structured identity with GitHub activity, contributions, documentation and academic verification.',
-      icon: FileCheck2,
-      tag: 'Structured Identity'
+      desc: 'Every project gets a structured academic identity with contributions, documentation, GitHub activity and verification.',
+      icon: FileCheck2
     },
     {
       num: '02',
       title: 'PROJECT LINEAGE',
-      desc: 'Project history stays connected, allowing future batches to understand, improve and continue existing work.',
-      icon: GitBranch,
-      tag: 'Multi-Batch Continuity'
+      desc: 'Project history stays connected so future students can understand, improve and continue existing work.',
+      icon: GitBranch
     },
     {
       num: '03',
       title: 'AI MATCHING',
       desc: 'Skill-based recommendations connect students with relevant projects, teammates and mentors.',
-      icon: Sparkles,
-      tag: 'Intelligent Synthesis'
+      icon: Sparkles
     }
   ];
 
   return (
-    <section id="innovations" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#040714] border-t border-white/5">
+    <section id="innovations" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#0A0F14] border-t border-white/5 transition-colors duration-300">
       <div className="max-w-5xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <span className="text-xs font-mono-code uppercase tracking-widest text-indigo-400">
-            Core Foundations
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-normal mt-2">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-normal">
             Three Core Innovations
           </h2>
         </div>
@@ -53,25 +47,21 @@ export const CoreInnovationsSection: React.FC = () => {
               >
                 <div>
                   <div className="flex items-center justify-between mb-8">
-                    <span className="font-mono-code text-xs text-indigo-400 font-bold px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20">
+                    <span className="font-mono-code text-xs text-indigo-400 dark:text-indigo-300 font-bold px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20">
                       {item.num}
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 group-hover:text-indigo-300 group-hover:bg-white/10 transition-all">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 group-hover:text-indigo-400 group-hover:bg-white/10 transition-all">
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>
 
-                  <h3 className="font-body text-base font-semibold text-white tracking-wider uppercase mb-3 font-mono-code">
+                  <h3 className="font-mono-code text-sm font-semibold text-white tracking-wider uppercase mb-3">
                     {item.title}
                   </h3>
 
                   <p className="font-body text-sm text-slate-300/90 leading-relaxed">
-                    “{item.desc}”
+                    {item.desc}
                   </p>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono-code">
-                  <span>{item.tag}</span>
                 </div>
               </motion.div>
             );
