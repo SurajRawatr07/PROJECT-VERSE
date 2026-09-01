@@ -1,0 +1,6 @@
+{
+  "name": "ProjectVerse",
+  "description": "The academic project ecosystem for students, faculty, mentors, and institutions — turning academic projects into work that continues.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

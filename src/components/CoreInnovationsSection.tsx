@@ -1,0 +1,83 @@
+import React from 'react';
+import { motion } from 'motion/react';
+import { FileCheck2, GitBranch, Sparkles } from 'lucide-react';
+
+export const CoreInnovationsSection: React.FC = () => {
+  const innovations = [
+    {
+      num: '01',
+      title: 'PROJECT PASSPORT',
+      desc: 'Every project gets a structured identity with GitHub activity, contributions, documentation and academic verification.',
+      icon: FileCheck2,
+      tag: 'Structured Identity'
+    },
+    {
+      num: '02',
+      title: 'PROJECT LINEAGE',
+      desc: 'Project history stays connected, allowing future batches to understand, improve and continue existing work.',
+      icon: GitBranch,
+      tag: 'Multi-Batch Continuity'
+    },
+    {
+      num: '03',
+      title: 'AI MATCHING',
+      desc: 'Skill-based recommendations connect students with relevant projects, teammates and mentors.',
+      icon: Sparkles,
+      tag: 'Intelligent Synthesis'
+    }
+  ];
+
+  return (
+    <section id="innovations" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#040714] border-t border-white/5">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <span className="text-xs font-mono-code uppercase tracking-widest text-indigo-400">
+            Core Foundations
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white font-normal mt-2">
+            Three Core Innovations
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {innovations.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={item.num}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.12 }}
+                className="liquid-glass-elevated rounded-2xl p-7 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-indigo-400/40 transition-all duration-300 group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="font-mono-code text-xs text-indigo-400 font-bold px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20">
+                      {item.num}
+                    </span>
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 group-hover:text-indigo-300 group-hover:bg-white/10 transition-all">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <h3 className="font-body text-base font-semibold text-white tracking-wider uppercase mb-3 font-mono-code">
+                    {item.title}
+                  </h3>
+
+                  <p className="font-body text-sm text-slate-300/90 leading-relaxed">
+                    “{item.desc}”
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono-code">
+                  <span>{item.tag}</span>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
