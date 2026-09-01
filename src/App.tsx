@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import { Navbar, PublicPage } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProblemSection } from './components/ProblemSection';
@@ -23,10 +24,9 @@ import { AuthModal } from './components/modals/AuthModal';
 import { ProofOfWorkModal } from './components/modals/ProofOfWorkModal';
 
 import { ProjectItem } from './types';
-import { SAMPLE_PROJECTS } from './data/mockData';
 
-export default function App() {
-  // Navigation View State: public pages ('home' | 'about' | 'how-it-works') or 'app' (authenticated workspace)
+function MainAppContent() {
+  // Navigation View State: public pages ('home' | 'about' | 'how-it-works') or authenticated workspace
   const [currentPage, setCurrentPage] = useState<PublicPage>('home');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [currentRole, setCurrentRole] = useState<UserRole>('STUDENT');
@@ -71,7 +71,7 @@ export default function App() {
   // If user is inside the authenticated workspace
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#040714] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden">
+      <div className="min-h-screen bg-[#040714] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden transition-colors duration-200">
         <AuthAppView
           initialRole={currentRole}
           onLogout={handleLogout}
@@ -109,8 +109,8 @@ export default function App() {
 
   // Public Website: Home, About, or How It Works
   return (
-    <div className="min-h-screen bg-[#040714] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden">
-      {/* Floating Liquid-Glass Navbar (PROJECTVERSE | Home | About | How It Works | Login | Get Started) */}
+    <div className="min-h-screen bg-[#040714] text-slate-100 selection:bg-indigo-500 selection:text-white font-body relative overflow-x-hidden transition-colors duration-200">
+      {/* Floating Liquid-Glass Navbar */}
       <Navbar
         currentPage={currentPage}
         onSelectPage={handleSelectPage}
@@ -197,5 +197,13 @@ export default function App() {
         onClose={() => setIsProofOfWorkOpen(false)}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <MainAppContent />
+    </ThemeProvider>
   );
 }

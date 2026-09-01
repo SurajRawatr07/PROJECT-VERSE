@@ -4,12 +4,23 @@
   :root {
     --font-display: 'Instrument Serif', Georgia, serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color-scheme: dark;
+  }
+
+  :root.light {
+    color-scheme: light;
   }
 
   body {
     font-family: var(--font-body);
     background-color: #040714;
-    color: #e2e8f0;
+    color: #f1f5f9;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  :root.light body {
+    background-color: #f6f8fb;
+    color: #0b0f24;
   }
 }
 
@@ -25,13 +36,18 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Liquid Glass utility class */
+/* ========================================================================= */
+/* LIQUID GLASS DESIGN SYSTEM (DARK & LIGHT THEMES) */
+/* ========================================================================= */
+
+/* Dark Mode Liquid Glass */
 .liquid-glass {
   background: rgba(255, 255, 255, 0.035);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 10px 40px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
 }
 
 .liquid-glass-subtle {
@@ -40,6 +56,7 @@
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
 .liquid-glass-elevated {
@@ -48,14 +65,133 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.14), 0 20px 50px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
 }
 
 .liquid-glass-nav {
-  background: rgba(10, 15, 30, 0.65);
+  background: rgba(6, 10, 24, 0.72);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 12px 36px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+/* Light Mode Liquid Glass Overrides */
+:root.light .liquid-glass {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(15, 23, 42, 0.09);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+:root.light .liquid-glass-subtle {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 6px 20px rgba(15, 23, 42, 0.03);
+}
+
+:root.light .liquid-glass-elevated {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.95), 0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+:root.light .liquid-glass-nav {
+  background: rgba(246, 248, 251, 0.84);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.95), 0 12px 36px rgba(15, 23, 42, 0.06);
+}
+
+/* ========================================================================= */
+/* LIGHT MODE TEXT AND SECTION HELPERS */
+/* ========================================================================= */
+
+:root.light .text-white {
+  color: #0b0f24 !important;
+}
+
+:root.light .text-slate-100,
+:root.light .text-slate-200 {
+  color: #1e293b !important;
+}
+
+:root.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+:root.light .text-slate-400 {
+  color: #475569 !important;
+}
+
+:root.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+:root.light .border-white\/5,
+:root.light .border-white\/10,
+:root.light .border-white\/15,
+:root.light .border-white\/20 {
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+:root.light .bg-white\/5 {
+  background-color: rgba(15, 23, 42, 0.04) !important;
+}
+
+:root.light .bg-white\/10 {
+  background-color: rgba(15, 23, 42, 0.07) !important;
+}
+
+:root.light .bg-black\/40,
+:root.light .bg-black\/50 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+:root.light section,
+:root.light main,
+:root.light .bg-\[\#040714\],
+:root.light .bg-\[\#050814\],
+:root.light .bg-\[\#03050d\],
+:root.light .bg-\[\#060a1c\] {
+  background-color: #f6f8fb !important;
+}
+
+:root.light footer {
+  background-color: #eef2f7 !important;
+  border-top-color: rgba(15, 23, 42, 0.09) !important;
+}
+
+/* Light mode primary CTA inversion (Dark navy pill on light mode) */
+:root.light #nav-get-started-btn,
+:root.light #cta-get-started-btn,
+:root.light #hero-explore-btn,
+:root.light .btn-primary-pill {
+  background-color: #0b0f24 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px -4px rgba(11, 15, 36, 0.25) !important;
+}
+
+:root.light #nav-get-started-btn svg,
+:root.light #cta-get-started-btn svg,
+:root.light #hero-explore-btn svg,
+:root.light .btn-primary-pill svg {
+  color: #ffffff !important;
+}
+
+:root.light #nav-get-started-btn:hover,
+:root.light #cta-get-started-btn:hover,
+:root.light #hero-explore-btn:hover,
+:root.light .btn-primary-pill:hover {
+  background-color: #1e293b !important;
 }
 
 /* Custom subtle scrollbar */
@@ -65,20 +201,32 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #040714;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(148, 163, 184, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(148, 163, 184, 0.45);
 }
 
-/* Focus rings */
+/* Focus rings & accessibility */
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 2px solid rgba(129, 140, 248, 0.8);
+  outline: 2px solid #6366f1;
   outline-offset: 2px;
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

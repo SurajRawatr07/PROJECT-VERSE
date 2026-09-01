@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowRight, Layers } from 'lucide-react';
+import { Menu, X, ArrowRight, Layers, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 export type PublicPage = 'home' | 'about' | 'how-it-works';
 
@@ -19,6 +20,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,37 +42,46 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const themeToggleLabel = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-4 sm:px-6 py-4 pointer-events-none transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-3 sm:px-6 py-3 sm:py-4 pointer-events-none transition-all duration-300">
         <motion.nav
-          initial={{ y: -24, opacity: 0 }}
+          initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className={`pointer-events-auto w-full max-w-5xl flex items-center justify-between px-5 sm:px-7 py-3 rounded-full transition-all duration-300 ${
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className={`pointer-events-auto w-full max-w-5xl flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-full transition-all duration-300 ${
             isScrolled
-              ? 'liquid-glass-nav border-white/15 shadow-2xl backdrop-blur-xl'
-              : 'liquid-glass border-white/10 backdrop-blur-lg'
+              ? 'liquid-glass-nav shadow-2xl backdrop-blur-2xl'
+              : 'liquid-glass backdrop-blur-xl'
           }`}
           aria-label="Main Navigation"
         >
-          {/* Left: Brand Logo */}
+          {/* Left: Refined Brand Mark */}
           <button
             id="nav-logo-btn"
             onClick={() => handleNavClick('home')}
-            className="flex items-center gap-2.5 text-left focus:outline-none group cursor-pointer"
+            className="flex items-center gap-2.5 text-left focus:outline-none group cursor-pointer shrink-0"
             aria-label="ProjectVerse Home"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-slate-900 border border-indigo-400/30 flex items-center justify-center text-white font-bold text-sm shadow-inner group-hover:border-indigo-400/60 transition-all">
-              <Layers className="w-4 h-4 text-indigo-200" />
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-indigo-500 via-indigo-600 to-slate-900 border border-indigo-400/30 flex items-center justify-center text-white shadow-inner group-hover:border-indigo-400/60 group-hover:shadow-indigo-500/20 transition-all">
+              <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-100" />
             </div>
-            <span className="font-semibold tracking-wider text-base sm:text-lg text-white font-body">
-              PROJECT<span className="text-indigo-400">VERSE</span>
-            </span>
+            
+            {/* Premium Typography: Inter 500 + Instrument Serif display contrast */}
+            <div className="flex items-baseline tracking-[-0.03em] select-none">
+              <span className="font-body font-medium text-[15px] sm:text-[16px] text-white tracking-[-0.03em]">
+                PROJECT
+              </span>
+              <span className="font-display italic text-indigo-400 font-normal text-[18px] sm:text-[19px] tracking-[-0.02em] ml-0.5">
+                VERSE
+              </span>
+            </div>
           </button>
 
           {/* Center: Home | About | How It Works */}
-          <div className="hidden md:flex items-center gap-1 sm:gap-2">
+          <div className="hidden md:flex items-center gap-1 sm:gap-1.5">
             {navItems.map((item) => {
               const isActive = currentPage === item.page;
               return (
@@ -78,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={item.page}
                   id={`nav-link-${item.page}`}
                   onClick={() => handleNavClick(item.page)}
-                  className={`relative text-xs sm:text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-150 cursor-pointer ${
+                  className={`relative text-[14px] font-medium tracking-[-0.01em] px-3.5 py-1.5 rounded-full transition-colors duration-200 cursor-pointer ${
                     isActive
                       ? 'text-white'
                       : 'text-slate-300 hover:text-white hover:bg-white/5'
@@ -86,9 +97,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   {isActive && (
                     <motion.div
-                      layoutId="active-pill-indicator"
+                      layoutId="active-nav-indicator"
                       className="absolute inset-0 bg-white/10 border border-white/15 rounded-full shadow-inner"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                     />
                   )}
                   <span className="relative z-10">{item.label}</span>
@@ -97,41 +108,75 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </div>
 
-          {/* Right: Login | Get Started */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Right Action Tools: [Theme Toggle] | Login | Get Started */}
+          <div className="hidden md:flex items-center gap-2 sm:gap-2.5">
+            {/* Compact Glass Theme Toggle */}
+            <button
+              id="nav-theme-toggle-btn"
+              onClick={toggleTheme}
+              className="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer focus:outline-none"
+              aria-label={themeToggleLabel}
+              title={themeToggleLabel}
+            >
+              {theme === 'dark' ? (
+                <Moon className="w-3.5 h-3.5 text-indigo-300 hover:text-indigo-200 transition-colors" />
+              ) : (
+                <Sun className="w-3.5 h-3.5 text-amber-500 hover:text-amber-600 transition-colors" />
+              )}
+            </button>
+
+            {/* Minimal Login */}
             <button
               id="nav-login-btn"
               onClick={onOpenLogin}
-              className="text-xs sm:text-sm font-medium text-slate-300 hover:text-white px-3.5 py-1.5 rounded-full hover:bg-white/5 transition-all duration-150 cursor-pointer"
+              className="text-[14px] font-medium tracking-[-0.01em] text-slate-300 hover:text-white px-3 py-1.5 rounded-full hover:bg-white/5 transition-colors duration-200 cursor-pointer"
             >
               Login
             </button>
+
+            {/* Primary Get Started CTA with liquid-glass / pill highlight & subtle scale */}
             <button
               id="nav-get-started-btn"
               onClick={onOpenRegister}
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-white text-slate-950 hover:bg-slate-100 px-4 py-2 rounded-full font-body shadow-lg shadow-white/10 hover:shadow-white/20 transition-all duration-150 active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-[14px] font-medium tracking-[-0.01em] bg-white text-slate-950 px-4 py-1.5 sm:py-2 rounded-full font-body shadow-md shadow-white/10 hover:shadow-white/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer"
             >
               <span>Get Started</span>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-950" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Right Controls: Theme Toggle & Hamburger */}
           <div className="flex md:hidden items-center gap-2">
+            {/* Theme toggle directly accessible on mobile */}
+            <button
+              id="mobile-nav-theme-toggle-btn"
+              onClick={toggleTheme}
+              className="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer focus:outline-none"
+              aria-label={themeToggleLabel}
+              title={themeToggleLabel}
+            >
+              {theme === 'dark' ? (
+                <Moon className="w-3.5 h-3.5 text-indigo-300" />
+              ) : (
+                <Sun className="w-3.5 h-3.5 text-amber-500" />
+              )}
+            </button>
+
+            {/* Hamburger Toggle */}
             <button
               id="nav-mobile-toggle-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="w-9 h-9 rounded-full liquid-glass flex items-center justify-center text-slate-200 hover:text-white focus:outline-none cursor-pointer"
+              className="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-200 hover:text-white focus:outline-none cursor-pointer"
               aria-label="Toggle Mobile Menu"
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </motion.nav>
       </header>
 
-      {/* Mobile Menu: Elegant liquid-glass fullscreen overlay */}
+      {/* Mobile Menu: Smooth glass dropdown / fullscreen overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -139,25 +184,32 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-[#040714]/90 backdrop-blur-2xl md:hidden flex flex-col justify-between p-6 pt-24"
+            className="fixed inset-0 z-40 bg-[#040714]/95 backdrop-blur-2xl md:hidden flex flex-col justify-between p-6 pt-24"
           >
-            <div className="flex flex-col space-y-3">
-              <div className="text-[11px] font-semibold tracking-widest text-indigo-400 uppercase mb-2">
-                ProjectVerse
+            <div className="flex flex-col space-y-2">
+              <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
+                <div className="flex items-baseline tracking-[-0.03em]">
+                  <span className="font-body font-medium text-[15px] text-white">PROJECT</span>
+                  <span className="font-display italic text-indigo-400 text-[18px] ml-0.5">VERSE</span>
+                </div>
+                <span className="text-[10px] font-mono-code text-slate-400 uppercase tracking-wider">
+                  Menu
+                </span>
               </div>
+
               {navItems.map((item, idx) => {
                 const isActive = currentPage === item.page;
                 return (
                   <motion.button
                     key={item.page}
                     id={`mobile-nav-link-${item.page}`}
-                    initial={{ x: -20, opacity: 0 }}
+                    initial={{ x: -16, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: idx * 0.05 }}
+                    transition={{ delay: idx * 0.04 }}
                     onClick={() => handleNavClick(item.page)}
-                    className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-lg font-medium transition-all ${
+                    className={`flex items-center justify-between text-left py-3 px-4 rounded-xl text-base font-medium tracking-[-0.01em] transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-white/10 text-white border border-white/20'
+                        ? 'bg-white/10 text-white border border-white/15 shadow-inner'
                         : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
                     }`}
                   >
@@ -168,14 +220,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               })}
             </div>
 
-            <div className="pt-6 border-t border-white/10 flex flex-col gap-3">
+            <div className="pt-6 border-t border-white/10 flex flex-col gap-2.5">
               <button
                 id="mobile-nav-login-btn"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenLogin();
                 }}
-                className="w-full py-3 px-4 rounded-xl liquid-glass text-slate-200 text-sm font-medium hover:text-white text-center cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl liquid-glass text-slate-200 text-sm font-medium hover:text-white text-center cursor-pointer"
               >
                 Login
               </button>
@@ -185,7 +237,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenRegister();
                 }}
-                className="w-full py-3.5 px-4 rounded-xl bg-white text-slate-950 text-sm font-semibold flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-white text-slate-950 text-sm font-semibold flex items-center justify-center gap-1.5 shadow-lg active:scale-[0.98] transition-transform cursor-pointer"
               >
                 <span>Get Started</span>
                 <ArrowRight className="w-4 h-4" />
