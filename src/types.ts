@@ -1,3 +1,5 @@
+export type UserRole = 'STUDENT' | 'FACULTY' | 'HOD' | 'ADMIN';
+
 export type ProjectDomain = 
   | 'All'
   | 'Artificial Intelligence & ML'

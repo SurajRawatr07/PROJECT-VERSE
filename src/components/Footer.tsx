@@ -1,9 +1,9 @@
 import React from 'react';
 import { Github, Linkedin } from 'lucide-react';
-import { PublicPage, ProjectVerseLogo } from './Navbar';
+import { PublicPage, ProjectVerseLogo, ProjectVerseBrand } from './Navbar';
 
 const GITHUB_URL = 'https://github.com/SurajRawatr07';
-const LINKEDIN_URL = 'YOUR_LINKEDIN_URL';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/suraj-rawat-30513b340/';
 
 interface FooterProps {
   onSelectPage?: (page: PublicPage) => void;
@@ -26,12 +26,12 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Top section: Editorial Brand & Tagline */}
         <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-3 pb-6 border-b border-black/8">
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <ProjectVerseLogo className="w-5 h-5 text-[#111111]" />
-            <span className="font-display text-[22px] sm:text-[24px] font-normal tracking-[-0.035em] text-[#111111]">
-              PROJECT<span className="inline-block w-[0.24em]" aria-hidden="true" />VERSE
-            </span>
-          </div>
+          <ProjectVerseBrand
+            theme="light"
+            logoSize={26}
+            textSizeClassName="text-[22px] sm:text-[24px]"
+            interactive={true}
+          />
           <p className="font-display italic text-base sm:text-lg text-[#4A4A4A] tracking-tight">
             “Academic projects, built to continue.”
           </p>
@@ -116,11 +116,15 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
           </div>
         </div>
 
-        {/* Bottom Bar: Built by Suraj Rawat & Copyright */}
+        {/* Bottom Bar: Built by TEAM TECH NOVA • 2026 */}
         <div className="pt-6 border-t border-black/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-          <div className="text-[#4A4A4A]">
-            <span className="text-[#737373] font-normal">Built by </span>
-            <span className="text-[#111111] font-semibold tracking-normal">Suraj Rawat</span>
+          <div className="flex items-center gap-2 text-[#4A4A4A]">
+            <span className="text-[#737373] font-normal text-[12px]">Built by</span>
+            <span className="text-[#111111] uppercase font-medium tracking-[0.08em] text-[12px]">
+              TEAM TECH NOVA
+            </span>
+            <span className="text-[#737373] text-[11px] font-mono-code">•</span>
+            <span className="text-[#737373] font-mono-code text-[11.5px]">2026</span>
           </div>
 
           <div className="text-[#737373] font-mono-code text-[11.5px]">

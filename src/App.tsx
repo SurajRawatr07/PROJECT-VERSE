@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, PublicPage } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProblemSection } from './components/ProblemSection';
@@ -14,6 +14,7 @@ import { HowItWorksView } from './components/HowItWorksView';
 
 // Authenticated Application
 import { AuthAppView, UserRole } from './components/AuthAppView';
+import { getCurrentSession, clearSession } from './lib/authService';
 
 // Modals
 import { ProjectDetailModal } from './components/modals/ProjectDetailModal';
@@ -38,6 +39,15 @@ export default function App() {
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [isProofOfWorkOpen, setIsProofOfWorkOpen] = useState(false);
 
+  // Check existing session on mount
+  useEffect(() => {
+    const session = getCurrentSession();
+    if (session) {
+      setCurrentRole(session.user.role);
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   // Authentication Handlers
   const handleOpenLogin = () => {
     setAuthMode('login');
@@ -52,10 +62,12 @@ export default function App() {
   const handleAuthenticated = (role: UserRole) => {
     setCurrentRole(role);
     setIsAuthenticated(true);
+    setIsAuthModalOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleLogout = () => {
+    clearSession();
     setIsAuthenticated(false);
     setCurrentPage('home');
     window.scrollTo({ top: 0, behavior: 'smooth' });
