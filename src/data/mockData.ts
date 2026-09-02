@@ -1,4 +1,5 @@
 import { ProjectItem, ProjectDomain } from '../types';
+import { getInitialsAvatar } from '../lib/authService';
 
 export const SAMPLE_PROJECTS: ProjectItem[] = [
   {
@@ -25,7 +26,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Team Lead & SLAM Pipeline',
         institution: 'IIT Bombay',
         batch: 'B.Tech \'25',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Devansh Kulkarni', 'STUDENT'),
         githubHandle: 'devanshk-slam',
         commitsCount: 384
       },
@@ -34,7 +35,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Edge AI & Spiking Neural Nets',
         institution: 'IIIT Hyderabad',
         batch: 'M.Tech \'26',
-        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Aarohi Sen', 'STUDENT'),
         githubHandle: 'aarohi-snns',
         commitsCount: 260
       },
@@ -43,7 +44,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'PX4 Flight Control Integrator',
         institution: 'BITS Pilani',
         batch: 'B.E. \'25',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Marcus Vance', 'STUDENT'),
         githubHandle: 'mvance-px4',
         commitsCount: 196
       }
@@ -159,7 +160,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Lead Cryptographer',
         institution: 'MIT CSAIL',
         batch: 'M.S. \'25',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Elena Rostova', 'STUDENT'),
         githubHandle: 'elena-zkbio',
         commitsCount: 310
       },
@@ -168,7 +169,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Bioinformatics & VCF Parsers',
         institution: 'Stanford BioE',
         batch: 'Ph.D. Candidate',
-        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Kavya Pillai', 'STUDENT'),
         githubHandle: 'kavyap-genomics',
         commitsCount: 215
       }
@@ -268,7 +269,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Power Electronics & IoT Firmware',
         institution: 'BITS Pilani',
         batch: 'B.E. \'25',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Rohan Deshmukh', 'STUDENT'),
         githubHandle: 'rohand-grid',
         commitsCount: 280
       },
@@ -277,7 +278,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Distributed Settlement & State Machine',
         institution: 'IIT Delhi',
         batch: 'B.Tech \'26',
-        avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Nisha Sundaram', 'STUDENT'),
         githubHandle: 'nisha-contracts',
         commitsCount: 210
       }
@@ -377,7 +378,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Multi-Raft Consensus Lead',
         institution: 'CMU SCS',
         batch: 'B.S. \'25',
-        avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Zane Chen', 'STUDENT'),
         githubHandle: 'zanec-systems',
         commitsCount: 520
       },
@@ -386,7 +387,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'LSM-Tree Storage Compaction Engine',
         institution: 'IIT Madras',
         batch: 'Dual Degree \'26',
-        avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Priya Nambiar', 'STUDENT'),
         githubHandle: 'priyan-db',
         commitsCount: 380
       }
@@ -490,7 +491,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Acoustic Model Architect',
         institution: 'IIIT Hyderabad',
         batch: 'B.Tech \'25',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Tanvi Joshi', 'STUDENT'),
         githubHandle: 'tanvij-nlp',
         commitsCount: 310
       },
@@ -499,7 +500,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Data Pipelines & Audio Preprocessing',
         institution: 'Jadavpur University',
         batch: 'B.E. \'26',
-        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Siddharth Roy', 'STUDENT'),
         githubHandle: 'sidroy-dsp',
         commitsCount: 230
       }
@@ -592,7 +593,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'Hardware Security Architect',
         institution: 'IIT Delhi',
         batch: 'M.Tech \'25',
-        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Ananya Mehra', 'STUDENT'),
         githubHandle: 'ananyam-pqc',
         commitsCount: 240
       },
@@ -601,7 +602,7 @@ export const SAMPLE_PROJECTS: ProjectItem[] = [
         role: 'PCIe Driver & Linux Kernel Module',
         institution: 'IIT Madras',
         batch: 'B.Tech \'25',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+        avatar: getInitialsAvatar('Varun Swaminathan', 'STUDENT'),
         githubHandle: 'varuns-vlsi',
         commitsCount: 170
       }
@@ -722,7 +723,7 @@ export const SAMPLE_PEERS = [
     skills: ['React', 'TypeScript', 'Node.js', 'PostgreSQL'],
     matchScore: 96,
     role: 'Full-Stack Frontend Lead',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+    avatar: getInitialsAvatar('Aarav Sharma', 'STUDENT')
   },
   {
     name: 'Maya Chen',
@@ -731,7 +732,7 @@ export const SAMPLE_PEERS = [
     skills: ['PyTorch', 'Python', 'FastAPI', 'ROS 2'],
     matchScore: 92,
     role: 'Computer Vision / Robotics Researcher',
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80'
+    avatar: getInitialsAvatar('Maya Chen', 'STUDENT')
   },
   {
     name: 'Ibrahim Al-Mansoor',
@@ -740,7 +741,7 @@ export const SAMPLE_PEERS = [
     skills: ['Rust', 'Distributed Systems', 'Raft', 'Go'],
     matchScore: 89,
     role: 'Systems & Consensus Engineer',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
+    avatar: getInitialsAvatar('Ibrahim Al-Mansoor', 'STUDENT')
   }
 ];
 
@@ -752,7 +753,7 @@ export const SAMPLE_MENTORS = [
     domains: ['Autonomous Systems & Robotics', 'Edge AI'],
     verifiedProjectsCount: 14,
     matchScore: 98,
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'
+    avatar: getInitialsAvatar('Dr. Siddharth Anand', 'FACULTY')
   },
   {
     name: 'Dr. Kimberly Vance',
@@ -761,7 +762,7 @@ export const SAMPLE_MENTORS = [
     domains: ['Healthcare & Biotech', 'Zero-Knowledge Cryptography'],
     verifiedProjectsCount: 9,
     matchScore: 94,
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80'
+    avatar: getInitialsAvatar('Dr. Kimberly Vance', 'FACULTY')
   },
   {
     name: 'Prof. Harish R. Iyer',
@@ -770,6 +771,6 @@ export const SAMPLE_MENTORS = [
     domains: ['Clean Energy & IoT', 'Distributed Systems'],
     verifiedProjectsCount: 18,
     matchScore: 91,
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80'
+    avatar: getInitialsAvatar('Prof. Harish R. Iyer', 'FACULTY')
   }
 ];

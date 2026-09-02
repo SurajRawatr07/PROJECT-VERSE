@@ -7,19 +7,19 @@ export const CoreInnovationsSection: React.FC = () => {
     {
       num: '01',
       title: 'PROJECT PASSPORT',
-      desc: 'Every project receives a structured academic identity documenting architectural decisions, contributions, GitHub telemetry, and formal validation.',
+      desc: 'Every project gets a structured digital identity containing: contributors, documentation, GitHub activity, reviews and verification status.',
       icon: FileCheck2
     },
     {
       num: '02',
       title: 'PROJECT LINEAGE',
-      desc: 'Inheritance trees keep research and codebase history connected so incoming batches can understand, improve, and extend prior milestones.',
+      desc: 'Preserve the journey of a project across batches so future students can understand what was built and continue from where others stopped.',
       icon: GitBranch
     },
     {
       num: '03',
       title: 'AI MATCHING',
-      desc: 'Domain and skill-based algorithms recommend complementary team contributors, active research projects, and verified inter-university faculty advisors.',
+      desc: 'Match students with relevant teammates, mentors and projects using skills, interests, requirements and project context.',
       icon: Sparkles
     }
   ];
@@ -29,10 +29,10 @@ export const CoreInnovationsSection: React.FC = () => {
       <div className="max-w-5xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <span className="text-xs font-mono-code uppercase tracking-widest text-[#737373] font-semibold">
-            Platform Capabilities
+            Platform Innovations
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal mt-2">
-            Three Core Innovations
+            Core Innovations
           </h2>
         </div>
 

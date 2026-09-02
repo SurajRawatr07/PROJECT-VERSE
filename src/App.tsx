@@ -168,6 +168,7 @@ export default function App() {
       {currentPage === 'how-it-works' && (
         <HowItWorksView
           onGetStarted={handleOpenRegister}
+          onExploreProjects={() => handleSelectPage('home')}
         />
       )}
 

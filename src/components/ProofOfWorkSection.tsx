@@ -14,6 +14,8 @@ import {
   Quote
 } from 'lucide-react';
 
+import { getInitialsAvatar } from '../lib/authService';
+
 interface ProofOfWorkSectionProps {
   onViewProofOfWorkModal: () => void;
 }
@@ -62,10 +64,10 @@ export const ProofOfWorkSection: React.FC<ProofOfWorkSectionProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-white/10 gap-4">
             <div className="flex items-center gap-4">
               <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80"
-                alt="Aarav Sharma"
+                src={getInitialsAvatar('Devansh Kulkarni', 'STUDENT')}
+                alt="Devansh Kulkarni"
                 referrerPolicy="no-referrer"
-                className="w-16 h-16 rounded-2xl object-cover border-2 border-indigo-400/40 shadow-md"
+                className="w-16 h-16 rounded-2xl object-cover border-2 border-indigo-400/40 shadow-md bg-slate-900"
               />
               <div>
                 <div className="flex items-center gap-2">

@@ -7,19 +7,19 @@ export const ProblemSection: React.FC = () => {
     {
       num: '01',
       title: 'HARD TO DISCOVER',
-      desc: 'Valuable academic work remains scattered across institutions without a central repository.',
+      desc: 'Valuable academic projects remain scattered across colleges, departments and individual drives.',
       icon: SearchX
     },
     {
       num: '02',
       title: 'REPEATED WORK',
-      desc: 'Incoming student cohorts frequently re-engineer existing starter applications from scratch.',
+      desc: 'Students often rebuild solutions that already exist because previous project work is difficult to find.',
       icon: CopySlash
     },
     {
       num: '03',
       title: 'NO CONTINUITY',
-      desc: 'High-potential capstone projects lose their domain knowledge as soon as the batch graduates.',
+      desc: 'Most projects end after submission instead of becoming a foundation for the next batch.',
       icon: History
     }
   ];
@@ -33,11 +33,14 @@ export const ProblemSection: React.FC = () => {
             The Academic Challenge
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal leading-tight mt-2">
-            “Good Projects Shouldn’t Disappear After Submission.”
+            Academic Projects Have a Continuity Problem.
           </h2>
+          <p className="mt-4 font-body text-sm sm:text-base text-[#4A4A4A] leading-relaxed">
+            Great projects are often difficult to discover, repeated by new students, and forgotten after submission.
+          </p>
         </div>
 
-        {/* 3 Minimal Problem Cards */}
+        {/* 3 Clean Minimal White Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {problems.map((prob, idx) => {
             const Icon = prob.icon;

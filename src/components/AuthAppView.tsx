@@ -39,12 +39,17 @@ import {
   AlertTriangle,
   Github,
   Mail,
-  FileText
+  FileText,
+  UploadCloud,
+  X,
+  AlertCircle
 } from 'lucide-react';
-import { ProjectItem, ProjectDomain } from '../types';
+import { ProjectItem, ProjectDomain, DocumentType } from '../types';
 import { SAMPLE_PROJECTS, DOMAINS_LIST, SAMPLE_PEERS, SAMPLE_MENTORS } from '../data/mockData';
 import { ProjectVerseBrand } from './ProjectVerseBrand';
-import { getCurrentSession, resolveProfileWithPrivacy, UserProfile } from '../lib/authService';
+import { getCurrentSession, resolveProfileWithPrivacy, UserProfile, submitVerificationDocument } from '../lib/authService';
+import { StudentVerificationManager } from './verification/StudentVerificationManager';
+import { DocumentUploadDropzone } from './verification/DocumentUploadDropzone';
 
 export type UserRole = 'STUDENT' | 'FACULTY' | 'HOD' | 'ADMIN';
 
@@ -107,9 +112,16 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
         institution: 'Graphic Era Hill University',
         department: 'Dept of Computer Science & Engineering',
         batch: "B.Tech '26",
+        rollNumber: 'GEHU/2022/CS/089',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
         githubHandle: 'surajrawat-dev',
         verifiedStatus: 'Verified',
+        verificationSignals: {
+          emailVerified: true,
+          institutionalDomain: true,
+          idProofVerified: true,
+          nodeApproval: true
+        },
         projectsCount: 2,
         commitsCount: 384,
         rubricScore: 9.6,
@@ -123,8 +135,17 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
         role: 'FACULTY',
         institution: 'Graphic Era Hill University',
         department: 'Dept of Computer Science & Engineering',
+        facultyId: 'EMP-GEHU-FAC-409',
+        designation: 'Associate Professor & Senior Research Advisor',
+        researchAreas: ['Artificial Intelligence', 'Edge Computing', 'Computer Vision'],
         avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
         verifiedStatus: 'Verified',
+        verificationSignals: {
+          emailVerified: true,
+          institutionalDomain: true,
+          idProofVerified: true,
+          nodeApproval: true
+        },
         projectsCount: 14,
         rubricScore: 9.8,
         bio: 'Associate Professor & Senior Research Advisor in Artificial Intelligence, Edge Computing, and Computer Vision.',
@@ -137,8 +158,17 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
         role: 'HOD',
         institution: 'Graphic Era Hill University',
         department: 'Dept of Computer Science & Engineering',
+        facultyId: 'HOD-CSE-001',
+        designation: 'Professor & Head of Department',
+        departmentToken: 'GEHU-HOD-CSE-2025',
         avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
         verifiedStatus: 'Verified',
+        verificationSignals: {
+          emailVerified: true,
+          institutionalDomain: true,
+          idProofVerified: true,
+          nodeApproval: true
+        },
         projectsCount: 48,
         bio: 'Head of Department, Computer Science & Engineering. Overseeing capstone governance, institutional accreditation, and NAAC/ABET compliance.',
         skills: ['Curriculum Design', 'Academic Governance', 'Accreditation', 'Capstone Verification']
@@ -150,8 +180,16 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
         role: 'ADMIN',
         institution: 'Graphic Era Hill University',
         department: 'Institutional Academic Office',
+        facultyId: 'ROOT-ADMIN-01',
+        designation: 'Lead Ledger Administrator',
         avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
         verifiedStatus: 'Verified',
+        verificationSignals: {
+          emailVerified: true,
+          institutionalDomain: true,
+          idProofVerified: true,
+          nodeApproval: true
+        },
         projectsCount: 128,
         bio: 'System Administrator for ProjectVerse Federated Ledger, SAML SSO, and node verification.',
         skills: ['Network Administration', 'Ledger Governance', 'SAML SSO', 'Node Consensus']
@@ -172,6 +210,10 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     return matchSearch && matchDomain;
   });
 
+  // Document upload modal state for Student
+  const [isDocUploadModalOpen, setIsDocUploadModalOpen] = useState(false);
+  const [pendingUploadDoc, setPendingUploadDoc] = useState<{ documentType: DocumentType; fileName: string; fileSize: string } | null>(null);
+
   // Role navigation tabs configuration
   const roleTabs: Record<UserRole, { id: string; label: string; icon: any }[]> = {
     STUDENT: [
@@ -189,7 +231,8 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     ],
     FACULTY: [
       { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-      { id: 'verification-queue', label: 'Verification Queue', icon: FileCheck2 },
+      { id: 'student-verifications', label: 'Student Verifications', icon: UserCheck },
+      { id: 'verification-queue', label: 'Capstone Queue', icon: FileCheck2 },
       { id: 'projects', label: 'Advised Projects', icon: FolderGit2 },
       { id: 'students', label: 'Advised Students', icon: Users },
       { id: 'mentorship', label: 'Mentorship Inquiries', icon: Sparkles },
@@ -199,6 +242,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     ],
     HOD: [
       { id: 'dashboard', label: 'Executive Dashboard', icon: BarChart3 },
+      { id: 'student-verifications', label: 'Student Identity Queue', icon: UserCheck },
       { id: 'registry', label: 'Capstone Registry', icon: FileSpreadsheet },
       { id: 'governance', label: 'Institutional Sign-Off', icon: ShieldCheck },
       { id: 'accreditation', label: 'NAAC / ABET Metrics', icon: Award },
@@ -208,6 +252,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     ],
     ADMIN: [
       { id: 'dashboard', label: 'Network Overview', icon: Cpu },
+      { id: 'student-verifications', label: 'Student ID Verifications', icon: UserCheck },
       { id: 'universities', label: 'Registered Universities', icon: Building2 },
       { id: 'audit-stream', label: 'Immutable Audit Stream', icon: Clock },
       { id: 'access-control', label: 'RBAC Access Control', icon: Lock },
@@ -224,6 +269,35 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     }
     setReviewingProject(null);
     setApprovalToast(`Academic Verification and Cryptographic Passport Seal published for ${projectId}!`);
+    setTimeout(() => setApprovalToast(null), 4000);
+  };
+
+  const handleStudentDocumentSubmit = () => {
+    if (!pendingUploadDoc) return;
+    const session = getCurrentSession();
+    if (session) {
+      const res = submitVerificationDocument(session.user.id, {
+        documentType: pendingUploadDoc.documentType,
+        documentFileName: pendingUploadDoc.fileName,
+        documentFileSize: pendingUploadDoc.fileSize
+      });
+      if (res.success && res.updatedProfile) {
+        setCurrentProfile(res.updatedProfile);
+      }
+    } else if (currentProfile) {
+      setCurrentProfile({
+        ...currentProfile,
+        verifiedStatus: 'Pending',
+        documentStatus: 'PENDING_REVIEW',
+        documentType: pendingUploadDoc.documentType,
+        documentName: pendingUploadDoc.fileName,
+        documentSize: pendingUploadDoc.fileSize,
+        documentSubmittedAt: 'Just now'
+      });
+    }
+    setIsDocUploadModalOpen(false);
+    setPendingUploadDoc(null);
+    setApprovalToast('Academic document submitted to faculty and institutional review queue.');
     setTimeout(() => setApprovalToast(null), 4000);
   };
 
@@ -796,6 +870,49 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                     </div>
                   </div>
 
+                  {/* Verification Status Alerts */}
+                  {currentProfile?.verifiedStatus === 'Pending' && (
+                    <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex items-start gap-2.5">
+                        <Clock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                        <div>
+                          <h4 className="font-semibold text-amber-950">Verification Review in Progress</h4>
+                          <p className="text-amber-800/90 mt-0.5">
+                            Your academic credentials and document proofs are in the faculty review queue. You can continue building projects in sandbox mode while verification completes.
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setIsDocUploadModalOpen(true)}
+                        className="px-3.5 py-1.5 rounded-xl bg-amber-800 hover:bg-amber-900 text-white font-medium text-xs self-start sm:self-auto shrink-0 cursor-pointer shadow-xs"
+                      >
+                        Update Document Proof
+                      </button>
+                    </div>
+                  )}
+
+                  {currentProfile?.verifiedStatus === 'Rejected' && (
+                    <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-900 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex items-start gap-2.5">
+                        <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                        <div>
+                          <h4 className="font-semibold text-red-950">Verification Action Required</h4>
+                          <p className="text-red-800/90 mt-0.5">
+                            {currentProfile?.rejectionReason 
+                              ? `Document Review Note: "${currentProfile.rejectionReason}"`
+                              : 'Your identity document could not be validated against university records. Please upload a clearer copy.'}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setIsDocUploadModalOpen(true)}
+                        className="px-3.5 py-1.5 rounded-xl bg-red-700 hover:bg-red-800 text-white font-medium text-xs self-start sm:self-auto shrink-0 cursor-pointer shadow-xs"
+                      >
+                        Re-upload Valid Document
+                      </button>
+                    </div>
+                  )}
+
                   {/* Main Profile Card */}
                   <div className="bg-white rounded-2xl p-6 sm:p-8 border border-black/8 shadow-xs space-y-6">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-6 border-b border-black/8">
@@ -807,16 +924,111 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                       <div className="flex-1">
                         <div className="flex flex-wrap items-center gap-2">
                           <h3 className="text-xl font-bold text-[#111111]">{currentProfile?.fullName || 'Suraj Rawat'}</h3>
-                          <span className="text-[11px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
+                          <span className={`text-[11px] font-mono-code px-2 py-0.5 rounded-full font-medium ${
+                            currentProfile?.verifiedStatus === 'Verified'
+                              ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                              : currentProfile?.verifiedStatus === 'Rejected'
+                              ? 'bg-red-50 text-red-800 border border-red-200'
+                              : 'bg-amber-50 text-amber-800 border border-amber-200'
+                          }`}>
                             {currentProfile?.verifiedStatus || 'Verified'} Identity
                           </span>
+                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-semibold">
+                            ROLE: {currentProfile?.role || 'STUDENT'}
+                          </span>
+                          {currentProfile?.studentType && (
+                            <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-[#111111] text-white font-semibold">
+                              {currentProfile.studentType === 'ALUMNI' ? 'ALUMNI / PASS-OUT' : 'CURRENT STUDENT'}
+                            </span>
+                          )}
                         </div>
                         <p className="text-xs text-[#4A4A4A] mt-0.5">
                           {currentProfile?.institution || 'Graphic Era Hill University'} • {currentProfile?.department || 'Dept of Computer Science & Engineering'}
                         </p>
-                        <p className="text-xs text-[#737373] font-mono-code mt-1">
-                          Cohort: {currentProfile?.batch || "B.Tech '26"} • GitHub: {currentProfile?.githubHandle || 'surajrawat-dev'}
-                        </p>
+                        
+                        {/* Badges / metadata */}
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-[#737373] font-mono-code mt-2">
+                          {currentProfile?.rollNumber && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">Roll: {currentProfile.rollNumber}</span>
+                          )}
+                          {currentProfile?.batch && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">Cohort: {currentProfile.batch}</span>
+                          )}
+                          {currentProfile?.graduationYear && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">Graduated: {currentProfile.graduationYear}</span>
+                          )}
+                          {currentProfile?.currentOrganization && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">Org: {currentProfile.currentOrganization}</span>
+                          )}
+                          {currentProfile?.currentJobRole && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">Role: {currentProfile.currentJobRole}</span>
+                          )}
+                          {currentProfile?.email && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">{currentProfile.email}</span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Upload Document CTA button */}
+                      <button
+                        onClick={() => setIsDocUploadModalOpen(true)}
+                        className="px-3.5 py-2 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/10 text-xs font-medium text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+                      >
+                        <UploadCloud className="w-3.5 h-3.5" />
+                        <span>Academic Proof</span>
+                      </button>
+                    </div>
+
+                    {/* Multi-Signal Verification Pipeline Status */}
+                    <div className="bg-[#FAFAFA] rounded-xl p-4 border border-black/6">
+                      <span className="text-[10.5px] font-mono-code uppercase font-semibold text-[#737373] block mb-2.5">
+                        Multi-Signal Identity Verification Architecture
+                      </span>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Email Verified</span>
+                            <span className="text-[10px] text-[#737373]">OTP Confirmed ✓</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Edu Domain</span>
+                            <span className="text-[10px] text-[#737373]">.ac.in / .edu node</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          {currentProfile?.documentStatus === 'VERIFIED' ? (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          ) : currentProfile?.documentStatus === 'REJECTED' ? (
+                            <AlertCircle className="w-3.5 h-3.5 text-red-600 shrink-0" />
+                          ) : currentProfile?.documentStatus === 'PENDING_REVIEW' || currentProfile?.documentName ? (
+                            <Clock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                          ) : (
+                            <div className="w-3.5 h-3.5 rounded-full border border-dashed border-[#737373]" />
+                          )}
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">ID Document</span>
+                            <span className="text-[10px] text-[#737373]">
+                              {currentProfile?.documentStatus === 'VERIFIED'
+                                ? 'Hash Verified ✓'
+                                : currentProfile?.documentStatus === 'REJECTED'
+                                ? 'Action Required'
+                                : currentProfile?.documentStatus === 'PENDING_REVIEW' || currentProfile?.documentName
+                                ? 'In Review ⏳'
+                                : 'Pending Upload'}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Ledger Node</span>
+                            <span className="text-[10px] text-[#737373]">Consensus sealed</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -925,6 +1137,13 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 </div>
               )}
 
+              {/* Student Identity Verification Management Tab for Faculty */}
+              {activeTab === 'student-verifications' && (
+                <div className="space-y-4">
+                  <StudentVerificationManager reviewerRole="FACULTY" />
+                </div>
+              )}
+
               {/* Verification Queue Tab */}
               {(activeTab === 'verification-queue' || activeTab === 'dashboard') && (
                 <div className="space-y-4">
@@ -1025,15 +1244,107 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               )}
 
               {activeTab === 'profile' && (
-                <div className="space-y-4">
-                  <h2 className="font-display text-2xl text-[#111111] font-normal">Faculty Profile</h2>
-                  <div className="bg-white rounded-2xl p-6 border border-black/8 shadow-xs space-y-4">
-                    <div className="flex items-center gap-4">
-                      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" alt="Dr. Anil Sharma" className="w-16 h-16 rounded-2xl object-cover border border-black/10" />
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-display text-2xl text-[#111111] font-normal">Faculty Reviewer Profile</h2>
+                    <p className="text-xs text-[#4A4A4A]">Authenticated institutional advisor & cryptographic evaluation signatory.</p>
+                  </div>
+
+                  <div className="bg-white rounded-2xl p-6 sm:p-8 border border-black/8 shadow-xs space-y-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-6 border-b border-black/8">
+                      <img
+                        src={currentProfile?.avatar || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'}
+                        alt={currentProfile?.fullName || 'Dr. Anil Sharma'}
+                        className="w-20 h-20 rounded-2xl object-cover border border-black/10"
+                      />
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="text-xl font-bold text-[#111111]">{currentProfile?.fullName || 'Dr. Anil Sharma'}</h3>
+                          <span className="text-[11px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
+                            {currentProfile?.verifiedStatus || 'Verified'} Faculty
+                          </span>
+                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-semibold">
+                            ROLE: FACULTY
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#4A4A4A] mt-0.5">
+                          {currentProfile?.designation || 'Associate Professor & Senior Research Advisor'} • {currentProfile?.institution || 'Graphic Era Hill University'}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-[#737373] font-mono-code mt-1.5">
+                          {currentProfile?.facultyId && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">Faculty ID: {currentProfile.facultyId}</span>
+                          )}
+                          {currentProfile?.department && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">{currentProfile.department}</span>
+                          )}
+                          {currentProfile?.email && (
+                            <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">{currentProfile.email}</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Multi-Signal Verification Pipeline Status */}
+                    <div className="bg-[#FAFAFA] rounded-xl p-4 border border-black/6">
+                      <span className="text-[10.5px] font-mono-code uppercase font-semibold text-[#737373] block mb-2.5">
+                        Institutional Multi-Signal Verification Status
+                      </span>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Faculty Email</span>
+                            <span className="text-[10px] text-[#737373]">Domain verified</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Employee ID</span>
+                            <span className="text-[10px] text-[#737373]">Payroll matched</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Signing Key</span>
+                            <span className="text-[10px] text-[#737373]">ECDSA active</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">HOD Approval</span>
+                            <span className="text-[10px] text-[#737373]">Consensus sealed</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h3 className="text-lg font-semibold text-[#111111]">Dr. Anil Sharma</h3>
-                        <p className="text-xs text-[#4A4A4A]">Associate Professor • Graphic Era Hill University</p>
-                        <p className="text-xs text-[#737373] font-mono-code mt-0.5">Verified Academic Reviewer • 14 Capstones Advised</p>
+                        <h4 className="text-xs font-mono-code uppercase font-semibold text-[#737373] mb-2">Research Specializations</h4>
+                        <div className="flex flex-wrap gap-1.5">
+                          {(currentProfile?.researchAreas || currentProfile?.skills || ['AI/ML', 'Edge Computing', 'Computer Vision']).map((area) => (
+                            <span key={area} className="text-xs font-mono-code px-2.5 py-1 rounded-lg bg-[#F7F7F5] border border-black/8 text-[#111111]">
+                              {area}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-xs font-mono-code uppercase font-semibold text-[#737373] mb-2">Advisory Metrics</h4>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="p-3 rounded-xl bg-[#FBFBFA] border border-black/8">
+                            <span className="text-[10px] font-mono-code text-[#737373] uppercase">Advised Projects</span>
+                            <p className="text-lg font-bold text-[#111111] mt-0.5">{currentProfile?.projectsCount || 14}</p>
+                          </div>
+                          <div className="p-3 rounded-xl bg-[#FBFBFA] border border-black/8">
+                            <span className="text-[10px] font-mono-code text-[#737373] uppercase">Mean Score</span>
+                            <p className="text-lg font-bold text-emerald-700 mt-0.5">{currentProfile?.rubricScore || 9.8} / 10</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1090,30 +1401,115 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 </div>
               </div>
 
-              {/* Department Projects List */}
-              <div className="space-y-4">
-                <h3 className="text-base font-semibold text-[#111111]">Department Capstone Registry</h3>
-                <div className="space-y-3">
-                  {SAMPLE_PROJECTS.map((p) => (
-                    <div key={p.id} className="bg-white rounded-2xl p-4 border border-black/8 flex items-center justify-between shadow-xs">
-                      <div>
-                        <span className="text-[10px] font-mono-code text-[#737373] uppercase font-semibold">{p.passportId}</span>
-                        <h4 className="text-sm font-semibold text-[#111111]">{p.title}</h4>
-                        <p className="text-xs text-[#737373]">Faculty Guide: {p.passport.facultyReviewer.name} • Score: {p.passport.facultyReviewer.score}/10</p>
+              {/* HOD Profile Tab */}
+              {activeTab === 'profile' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-display text-2xl text-[#111111] font-normal">Head of Department Profile</h2>
+                    <p className="text-xs text-[#4A4A4A]">Institutional governance authority & academic accreditation lead.</p>
+                  </div>
+
+                  <div className="bg-white rounded-2xl p-6 sm:p-8 border border-black/8 shadow-xs space-y-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-6 border-b border-black/8">
+                      <img
+                        src={currentProfile?.avatar || 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80'}
+                        alt={currentProfile?.fullName || 'Dr. Rajesh Kumar'}
+                        className="w-20 h-20 rounded-2xl object-cover border border-black/10"
+                      />
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="text-xl font-bold text-[#111111]">{currentProfile?.fullName || 'Dr. Rajesh Kumar'}</h3>
+                          <span className="text-[11px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
+                            {currentProfile?.verifiedStatus || 'Verified'} HOD Authority
+                          </span>
+                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-semibold">
+                            ROLE: HOD
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#4A4A4A] mt-0.5">
+                          {currentProfile?.designation || 'Head of Department'} • {currentProfile?.department || 'Dept of Computer Science & Engineering'}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-[#737373] font-mono-code mt-1.5">
+                          <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">Token: {currentProfile?.departmentToken || 'GEHU-HOD-CSE-2025'}</span>
+                          <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">{currentProfile?.institution || 'Graphic Era Hill University'}</span>
+                          <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">{currentProfile?.email || 'rajesh.kumar@gehu.ac.in'}</span>
+                        </div>
                       </div>
-                      <button
-                        onClick={() => {
-                          setApprovalToast(`Official Institutional Seal granted to ${p.passportId}!`);
-                          setTimeout(() => setApprovalToast(null), 3000);
-                        }}
-                        className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-semibold text-white cursor-pointer shadow-xs"
-                      >
-                        Grant Institutional Seal
-                      </button>
                     </div>
-                  ))}
+
+                    {/* Multi-Signal Verification Pipeline Status */}
+                    <div className="bg-[#FAFAFA] rounded-xl p-4 border border-black/6">
+                      <span className="text-[10.5px] font-mono-code uppercase font-semibold text-[#737373] block mb-2.5">
+                        Departmental Governance & Multi-Signal Authority Status
+                      </span>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Institutional Domain</span>
+                            <span className="text-[10px] text-[#737373]">.ac.in node</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Dept Token</span>
+                            <span className="text-[10px] text-[#737373]">Consensus matched</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Accreditation Key</span>
+                            <span className="text-[10px] text-[#737373]">NAAC/ABET Level</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Ledger Root Sign</span>
+                            <span className="text-[10px] text-[#737373]">Master seal active</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* HOD Student Identity Queue Tab */}
+              {activeTab === 'student-verifications' && (
+                <div className="space-y-4">
+                  <StudentVerificationManager reviewerRole="HOD" />
+                </div>
+              )}
+
+              {/* Department Projects List */}
+              {activeTab !== 'profile' && activeTab !== 'student-verifications' && (
+                <div className="space-y-4">
+                  <h3 className="text-base font-semibold text-[#111111]">Department Capstone Registry</h3>
+                  <div className="space-y-3">
+                    {SAMPLE_PROJECTS.map((p) => (
+                      <div key={p.id} className="bg-white rounded-2xl p-4 border border-black/8 flex items-center justify-between shadow-xs">
+                        <div>
+                          <span className="text-[10px] font-mono-code text-[#737373] uppercase font-semibold">{p.passportId}</span>
+                          <h4 className="text-sm font-semibold text-[#111111]">{p.title}</h4>
+                          <p className="text-xs text-[#737373]">Faculty Guide: {p.passport.facultyReviewer.name} • Score: {p.passport.facultyReviewer.score}/10</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            setApprovalToast(`Official Institutional Seal granted to ${p.passportId}!`);
+                            setTimeout(() => setApprovalToast(null), 3000);
+                          }}
+                          className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-semibold text-white cursor-pointer shadow-xs"
+                        >
+                          Grant Institutional Seal
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -1132,42 +1528,186 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                  <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Registered Universities</span>
-                  <p className="text-2xl font-bold text-[#111111] mt-1">128</p>
-                  <span className="text-[11px] text-emerald-700 font-medium">Federated SAML SSO</span>
-                </div>
-                <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                  <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Total Passports</span>
-                  <p className="text-2xl font-bold text-[#111111] mt-1">4,920</p>
-                  <span className="text-[11px] text-[#4A4A4A]">On-Chain Hashes</span>
-                </div>
-                <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                  <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Network Health</span>
-                  <p className="text-2xl font-bold text-emerald-700 mt-1">99.99%</p>
-                  <span className="text-[11px] text-[#737373]">Zero cryptographic faults</span>
-                </div>
-                <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                  <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Cross-College PRs</span>
-                  <p className="text-2xl font-bold text-[#111111] mt-1">1,840</p>
-                  <span className="text-[11px] text-[#4A4A4A]">Inter-campus collaboration</span>
-                </div>
-              </div>
+              {activeTab === 'profile' && (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="font-display text-2xl text-[#111111] font-normal">System Administrator Profile</h2>
+                    <p className="text-xs text-[#4A4A4A]">Root administrator for federated nodes, cryptographic keys, and SAML SSO.</p>
+                  </div>
 
-              {/* System Audit Logs */}
-              <div className="bg-white rounded-2xl p-6 border border-black/8 font-mono-code text-xs shadow-xs">
-                <h3 className="text-sm font-semibold text-[#111111] mb-4">Live Immutable Audit Stream</h3>
-                <div className="space-y-2 text-[#4A4A4A]">
-                  <p><span className="text-emerald-700 font-semibold">[05:02:11]</span> HOD_VALIDATION_EVENT: PV-2025-GEHU-CS089 sealed by Dean Academic Office.</p>
-                  <p><span className="text-[#111111] font-semibold">[04:58:30]</span> GIT_SYNC_TELEMETRY: Merged PR #116 in repo projectverse-academic/aerosync.</p>
-                  <p><span className="text-[#737373] font-semibold">[04:45:12]</span> AI_MATCH_ENGINE: Skill gap match generated between Graphic Era Hill University & IIT Delhi.</p>
+                  <div className="bg-white rounded-2xl p-6 sm:p-8 border border-black/8 shadow-xs space-y-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-6 border-b border-black/8">
+                      <img
+                        src={currentProfile?.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80'}
+                        alt={currentProfile?.fullName || 'Admin User'}
+                        className="w-20 h-20 rounded-2xl object-cover border border-black/10"
+                      />
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="text-xl font-bold text-[#111111]">{currentProfile?.fullName || 'Root System Admin'}</h3>
+                          <span className="text-[11px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
+                            {currentProfile?.verifiedStatus || 'Verified'} Root Authority
+                          </span>
+                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-semibold">
+                            ROLE: ADMIN
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#4A4A4A] mt-0.5">
+                          Lead Ledger Administrator • Institutional Academic Office • Graphic Era Hill University Anchor
+                        </p>
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-[#737373] font-mono-code mt-1.5">
+                          <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">Root Key: ROOT-NODE-GEHU-01</span>
+                          <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">RBAC: Level 0 Master</span>
+                          <span className="bg-[#F5F5F3] px-2 py-0.5 rounded border border-black/5">{currentProfile?.email || 'admin@gehu.ac.in'}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Multi-Signal Verification Pipeline Status */}
+                    <div className="bg-[#FAFAFA] rounded-xl p-4 border border-black/6">
+                      <span className="text-[10.5px] font-mono-code uppercase font-semibold text-[#737373] block mb-2.5">
+                        Root Security & Node Telemetry Status
+                      </span>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">SAML SSO</span>
+                            <span className="text-[10px] text-[#737373]">128 Unis sync</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Consensus Node</span>
+                            <span className="text-[10px] text-[#737373]">0 cryptographic faults</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">Audit Pipeline</span>
+                            <span className="text-[10px] text-[#737373]">Immutable stream</span>
+                          </div>
+                        </div>
+                        <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <div className="text-[11px] leading-tight">
+                            <span className="font-semibold text-[#111111] block">RBAC Enforcement</span>
+                            <span className="text-[10px] text-[#737373]">Zero breach detected</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
+              {/* Admin Student ID Verifications Tab */}
+              {activeTab === 'student-verifications' && (
+                <div className="space-y-4">
+                  <StudentVerificationManager reviewerRole="ADMIN" />
+                </div>
+              )}
+
+              {activeTab !== 'profile' && activeTab !== 'student-verifications' && (
+                <>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
+                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Registered Universities</span>
+                      <p className="text-2xl font-bold text-[#111111] mt-1">128</p>
+                      <span className="text-[11px] text-emerald-700 font-medium">Federated SAML SSO</span>
+                    </div>
+                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
+                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Total Passports</span>
+                      <p className="text-2xl font-bold text-[#111111] mt-1">4,920</p>
+                      <span className="text-[11px] text-[#4A4A4A]">On-Chain Hashes</span>
+                    </div>
+                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
+                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Network Health</span>
+                      <p className="text-2xl font-bold text-emerald-700 mt-1">99.99%</p>
+                      <span className="text-[11px] text-[#737373]">Zero cryptographic faults</span>
+                    </div>
+                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
+                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Cross-College PRs</span>
+                      <p className="text-2xl font-bold text-[#111111] mt-1">1,840</p>
+                      <span className="text-[11px] text-[#4A4A4A]">Inter-campus collaboration</span>
+                    </div>
+                  </div>
+
+                  {/* System Audit Logs */}
+                  <div className="bg-white rounded-2xl p-6 border border-black/8 font-mono-code text-xs shadow-xs">
+                    <h3 className="text-sm font-semibold text-[#111111] mb-4">Live Immutable Audit Stream</h3>
+                    <div className="space-y-2 text-[#4A4A4A]">
+                      <p><span className="text-emerald-700 font-semibold">[05:02:11]</span> HOD_VALIDATION_EVENT: PV-2025-GEHU-CS089 sealed by Dean Academic Office.</p>
+                      <p><span className="text-[#111111] font-semibold">[04:58:30]</span> GIT_SYNC_TELEMETRY: Merged PR #116 in repo projectverse-academic/aerosync.</p>
+                      <p><span className="text-[#737373] font-semibold">[04:45:12]</span> AI_MATCH_ENGINE: Skill gap match generated between Graphic Era Hill University & IIT Delhi.</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
         </main>
       </div>
+
+      {/* Student/Alumni Academic Document Proof Upload Modal */}
+      {isDocUploadModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm overflow-y-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-black/10 shadow-2xl text-[#111111] max-h-[90vh] overflow-y-auto"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <FileCheck2 className="w-5 h-5 text-[#111111]" />
+                <h3 className="font-display text-2xl text-[#111111] font-normal">
+                  {currentProfile?.studentType === 'ALUMNI' ? 'Alumni Academic Proof' : 'Student Identity Verification'}
+                </h3>
+              </div>
+              <button
+                onClick={() => {
+                  setIsDocUploadModalOpen(false);
+                  setPendingUploadDoc(null);
+                }}
+                className="w-7 h-7 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] border border-black/8 flex items-center justify-center text-[#4A4A4A] cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+            
+            <p className="text-xs text-[#4A4A4A] mb-4">
+              Upload your valid academic proof (Student ID card, Degree Certificate, Provisional Pass Certificate, or Official Enrollment Letter). All documents remain strictly private and encrypted.
+            </p>
+
+            <DocumentUploadDropzone
+              studentType={currentProfile?.studentType || 'CURRENT_STUDENT'}
+              onFileSelected={(data) => setPendingUploadDoc(data)}
+              onFileRemoved={() => setPendingUploadDoc(null)}
+            />
+
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-black/8 mt-4">
+              <button
+                onClick={() => {
+                  setIsDocUploadModalOpen(false);
+                  setPendingUploadDoc(null);
+                }}
+                className="px-4 py-2 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] text-xs text-[#4A4A4A] font-medium cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleStudentDocumentSubmit}
+                disabled={!pendingUploadDoc}
+                className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
+              >
+                <UploadCloud className="w-3.5 h-3.5" />
+                <span>Submit for Verification</span>
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* Faculty Evaluation Rubric Modal in Clean White Visual System */}
       {reviewingProject && (

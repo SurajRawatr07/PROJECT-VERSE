@@ -10,8 +10,8 @@ export const TrustSection: React.FC = () => {
         <span className="text-xs font-mono-code uppercase tracking-widest text-[#737373] font-semibold">
           Verification Model
         </span>
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal mb-10 sm:mb-12 mt-2">
-          “Proof, Not Just Claims.”
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal mb-6 sm:mb-8 mt-2">
+          Built on Evidence. Not Just Claims.
         </h2>
 
         {/* Verification Equation / Block */}
@@ -20,10 +20,10 @@ export const TrustSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45 }}
-          className="card-white p-6 sm:p-8 max-w-3xl mx-auto mb-8"
+          className="card-white p-6 sm:p-8 max-w-3xl mx-auto mb-8 border border-black/8"
         >
           {/* Top 3 pillars */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 sm:gap-2 items-center">
             <div className="surface-soft rounded-xl p-3.5 flex items-center justify-center gap-2 border border-black/6">
               <GitBranch className="w-4 h-4 text-[#111111]" />
               <span className="font-mono-code text-xs sm:text-sm text-[#111111] font-medium">
@@ -31,7 +31,7 @@ export const TrustSection: React.FC = () => {
               </span>
             </div>
 
-            <div className="hidden sm:flex justify-center text-[#737373] font-mono-code text-sm">
+            <div className="flex justify-center text-[#737373] font-mono-code text-base font-bold">
               +
             </div>
 
@@ -42,14 +42,14 @@ export const TrustSection: React.FC = () => {
               </span>
             </div>
 
-            <div className="hidden sm:flex justify-center text-[#737373] font-mono-code text-sm">
+            <div className="flex justify-center text-[#737373] font-mono-code text-base font-bold">
               +
             </div>
 
-            <div className="surface-soft rounded-xl p-3.5 flex items-center justify-center gap-2 border border-black/6 sm:col-start-3">
+            <div className="surface-soft rounded-xl p-3.5 flex items-center justify-center gap-2 border border-black/6">
               <ShieldCheck className="w-4 h-4 text-[#111111]" />
               <span className="font-mono-code text-xs sm:text-sm text-[#111111] font-medium">
-                HOD Validation
+                Institutional / HOD Validation
               </span>
             </div>
           </div>
@@ -64,13 +64,13 @@ export const TrustSection: React.FC = () => {
           {/* Verified Project Result Badge */}
           <div className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-[#F5F5F3] border border-black/10 text-[#111111] font-mono-code text-xs sm:text-sm font-semibold">
             <CheckCircle2 className="w-4 h-4 text-[#111111]" />
-            <span>VERIFIED PROJECT RECORD</span>
+            <span>VERIFIED PROJECT</span>
           </div>
         </motion.div>
 
         {/* Supporting Line */}
         <p className="font-body text-[#4A4A4A] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-          “Technical contribution and academic validation come together in one trusted, immutable project record.”
+          ProjectVerse combines technical evidence with academic review to create more credible project records.
         </p>
       </div>
     </section>

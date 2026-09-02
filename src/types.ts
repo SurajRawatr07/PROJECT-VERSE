@@ -1,5 +1,51 @@
 export type UserRole = 'STUDENT' | 'FACULTY' | 'HOD' | 'ADMIN';
 
+export type StudentType = 'CURRENT_STUDENT' | 'ALUMNI';
+
+export type DocumentVerificationStatus = 'NOT_SUBMITTED' | 'PENDING_REVIEW' | 'VERIFIED' | 'REJECTED';
+
+export type DocumentType = 
+  | 'Student ID Card' 
+  | 'Enrollment Letter' 
+  | 'Admission / Enrollment Proof' 
+  | 'Degree Certificate / Marksheet' 
+  | 'Official Academic Document';
+
+export interface VerificationSignals {
+  emailVerified: boolean;
+  institutionalDomain: boolean;
+  idProofVerified: boolean;
+  nodeApproval: boolean;
+  rollVerified?: boolean;
+  documentVerified?: boolean;
+  statusVerified?: boolean;
+}
+
+export type AccountVerificationStatus = 'Verified' | 'Under Review' | 'Active' | 'Pending Review' | 'Verification Pending' | 'Verification Rejected';
+
+export interface VerificationRequest {
+  id: string;
+  userId: string;
+  fullName: string;
+  email: string;
+  role: UserRole;
+  studentType?: StudentType;
+  institution: string;
+  department: string;
+  course?: string;
+  batch?: string;
+  graduationYear?: string;
+  rollNumber?: string;
+  documentType: DocumentType;
+  documentFileName: string;
+  documentFileSize: string;
+  documentUploadedAt: string;
+  status: DocumentVerificationStatus;
+  rejectionReason?: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
+}
+
 export type ProjectDomain = 
   | 'All'
   | 'Artificial Intelligence & ML'
