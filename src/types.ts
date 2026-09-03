@@ -180,31 +180,91 @@ export interface PeerCandidate {
   avatar: string;
 }
 
+export type ProjectLifecycleStatus = 
+  | 'DRAFT' 
+  | 'IN_PROGRESS' 
+  | 'UNDER_REVIEW' 
+  | 'CHANGES_REQUIRED' 
+  | 'APPROVED' 
+  | 'REJECTED' 
+  | 'COMPLETED';
+
+export type AppNotificationType = 
+  | 'FACULTY_FEEDBACK' 
+  | 'PROJECT_APPROVED' 
+  | 'PROJECT_REJECTED' 
+  | 'REVIEW_UPDATED' 
+  | 'COLLABORATION_REQUEST' 
+  | 'PROJECT_STATUS_UPDATE' 
+  | 'TEAM_UPDATE' 
+  | 'REPOSITORY_UPDATE'
+  | 'SYSTEM'
+  | 'PROPOSAL';
+
 export interface ProjectFeedback {
-  feedbackId: string;
+  id: string;
   projectId: string;
-  projectTitle: string;
   studentId: string;
   facultyId: string;
-  facultyName: string;
-  facultyDesignation?: string;
-  facultyAvatar?: string;
   message: string;
   createdAt: string;
-  isRead: boolean;
+  read: boolean;
+  // Optional metadata for display
+  feedbackId?: string;
+  projectTitle?: string;
+  facultyName?: string;
+  facultyDesignation?: string;
+  facultyAvatar?: string;
 }
 
 export interface StudentNotification {
   id: string;
-  userId: string;
+  type: AppNotificationType;
   title: string;
   message: string;
-  type: 'FACULTY_FEEDBACK' | 'SYSTEM' | 'PROPOSAL';
   projectId?: string;
+  relatedId?: string;
+  createdAt: string;
+  read: boolean;
+  userId?: string;
   projectTitle?: string;
   feedbackId?: string;
   feedbackMessage?: string;
   facultyName?: string;
+  senderName?: string;
+  senderAvatar?: string;
+  actionUrl?: string;
+}
+
+export type AppNotification = StudentNotification;
+
+export type CollaborationStatus = 'PENDING' | 'ACCEPTED' | 'REJECTED';
+
+export interface CollaborationRequest {
+  id: string;
+  projectId: string;
+  projectTitle: string;
+  studentId: string;
+  studentName: string;
+  studentAvatar?: string;
+  studentInstitution?: string;
+  roleInterest: string;
+  message: string;
+  status: CollaborationStatus;
   createdAt: string;
-  read: boolean;
+  reviewedAt?: string;
+  targetOwnerId?: string;
+}
+
+export interface ProjectActivityItem {
+  id: string;
+  projectId: string;
+  type: 'CREATED' | 'TEAM_ADDED' | 'REPO_CONNECTED' | 'FACULTY_REVIEW' | 'FEEDBACK_RECEIVED' | 'PROJECT_UPDATED' | 'STATUS_CHANGED';
+  title: string;
+  description: string;
+  actorName?: string;
+  actorRole?: string;
+  actorAvatar?: string;
+  createdAt: string;
+  statusIndicator: 'completed' | 'in_progress' | 'pending' | 'verified';
 }

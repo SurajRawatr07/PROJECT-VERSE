@@ -1,247 +1,193 @@
 import { ProjectFeedback, StudentNotification } from '../types';
-import { getCurrentSession } from './authService';
+import { createNotification, getAllNotifications, saveNotifications } from './notificationService';
+import { addProjectActivity } from './activityService';
 
-export interface SubmitFeedbackResponse {
+export const STORAGE_KEY_FEEDBACK = 'projectverse_faculty_feedback';
+
+export interface SubmitFeedbackResult {
   success: boolean;
   feedback?: ProjectFeedback;
   notification?: StudentNotification;
   error?: string;
 }
 
-export interface GetFeedbacksResponse {
-  success: boolean;
-  feedbacks: ProjectFeedback[];
-  error?: string;
+/**
+ * Retrieve all faculty feedback stored in browser localStorage
+ */
+export function getAllFeedbacks(): ProjectFeedback[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_FEEDBACK);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error('Error reading localStorage feedback:', err);
+    return [];
+  }
 }
 
-export interface GetNotificationsResponse {
-  success: boolean;
-  notifications: StudentNotification[];
-  error?: string;
+/**
+ * Persist feedbacks to browser localStorage
+ */
+function saveFeedbacks(feedbacks: ProjectFeedback[]): void {
+  try {
+    localStorage.setItem(STORAGE_KEY_FEEDBACK, JSON.stringify(feedbacks));
+  } catch (err) {
+    console.error('Error saving feedback to localStorage:', err);
+  }
 }
 
-export interface MarkNotificationResponse {
+/**
+ * Submit faculty feedback for a student project (100% Frontend-Only)
+ */
+export function submitProjectFeedbackFrontend(params: {
+  projectId: string;
+  projectTitle?: string;
+  studentId: string;
+  facultyId: string;
+  facultyName?: string;
+  facultyDesignation?: string;
+  facultyAvatar?: string;
+  message: string;
+}): SubmitFeedbackResult {
+  const trimmed = (params.message || '').trim();
+
+  // Validation
+  if (!trimmed) {
+    return {
+      success: false,
+      error: 'Feedback cannot be empty.'
+    };
+  }
+
+  if (trimmed.length > 2000) {
+    return {
+      success: false,
+      error: 'Feedback cannot exceed 2000 characters.'
+    };
+  }
+
+  const feedbackId = `fb_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+  const now = new Date().toISOString();
+
+  // Create feedback object adhering to the specified schema:
+  // { id, projectId, studentId, facultyId, message, createdAt, read }
+  const newFeedback: ProjectFeedback = {
+    id: feedbackId,
+    feedbackId: feedbackId,
+    projectId: params.projectId,
+    projectTitle: params.projectTitle || 'Capstone Project',
+    studentId: params.studentId,
+    facultyId: params.facultyId,
+    facultyName: params.facultyName || 'Faculty Advisor',
+    facultyDesignation: params.facultyDesignation,
+    facultyAvatar: params.facultyAvatar,
+    message: trimmed,
+    createdAt: now,
+    read: false
+  };
+
+  // Save to frontend persistence
+  const currentFeedbacks = getAllFeedbacks();
+  saveFeedbacks([newFeedback, ...currentFeedbacks]);
+
+  // Create corresponding student notification
+  const newNotification = createNotification({
+    type: 'FACULTY_FEEDBACK',
+    title: 'Faculty Feedback',
+    message: `Your faculty has added feedback to ${params.projectTitle || 'your project'}.`,
+    projectId: params.projectId,
+    projectTitle: params.projectTitle || 'Capstone Project',
+    relatedId: feedbackId,
+    feedbackId: feedbackId,
+    feedbackMessage: trimmed,
+    facultyName: params.facultyName || 'Faculty Advisor',
+    userId: params.studentId
+  });
+
+  // Log activity on the project
+  addProjectActivity(params.projectId, {
+    type: 'FEEDBACK_RECEIVED',
+    title: 'Feedback Received',
+    description: `${params.facultyName || 'Faculty Advisor'} provided review guidance: "${trimmed.slice(0, 100)}${trimmed.length > 100 ? '...' : ''}"`,
+    actorName: params.facultyName || 'Faculty Advisor',
+    actorRole: params.facultyDesignation || 'Faculty Reviewer',
+    actorAvatar: params.facultyAvatar,
+    statusIndicator: 'verified'
+  });
+
+  return {
+    success: true,
+    feedback: newFeedback,
+    notification: newNotification
+  };
+}
+
+/**
+ * Get feedback items for a specific project
+ */
+export function getFeedbacksForProject(projectId: string): ProjectFeedback[] {
+  const all = getAllFeedbacks();
+  return all.filter((fb) => fb.projectId === projectId);
+}
+
+/**
+ * Get notifications for a specific student
+ * Respects Data Isolation (only shows feedback belonging to that student)
+ */
+export function getNotificationsForStudent(studentId: string): StudentNotification[] {
+  const all = getAllNotifications();
+  return all.filter((n) => !n.userId || n.userId === studentId);
+}
+
+/**
+ * Mark a notification as read in frontend persistence
+ */
+export function markNotificationAsReadFrontend(notificationId: string): {
   success: boolean;
   notification?: StudentNotification;
-  error?: string;
+} {
+  const notifications = getAllNotifications();
+  let updatedNotif: StudentNotification | undefined;
+
+  const updatedNotifications = notifications.map((n) => {
+    if (n.id === notificationId) {
+      updatedNotif = { ...n, read: true };
+      return updatedNotif;
+    }
+    return n;
+  });
+
+  saveNotifications(updatedNotifications);
+
+  // If associated with a feedback item, also mark the feedback as read
+  if (updatedNotif?.feedbackId) {
+    const feedbacks = getAllFeedbacks();
+    const updatedFeedbacks = feedbacks.map((fb) => {
+      if (fb.id === updatedNotif!.feedbackId || fb.feedbackId === updatedNotif!.feedbackId) {
+        return { ...fb, read: true };
+      }
+      return fb;
+    });
+    saveFeedbacks(updatedFeedbacks);
+  }
+
+  return {
+    success: true,
+    notification: updatedNotif
+  };
 }
 
 /**
- * Synchronize the current client session with the backend session registry
+ * Find a specific feedback item by ID
  */
-export async function syncSessionWithBackend(): Promise<boolean> {
-  try {
-    const session = getCurrentSession();
-    if (!session || !session.token || !session.user) {
-      return false;
-    }
-
-    const response = await fetch('/api/auth/session/sync', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        token: session.token,
-        user: session.user
-      })
-    });
-
-    return response.ok;
-  } catch (err) {
-    console.warn('Failed to sync session to backend:', err);
-    return false;
-  }
+export function getFeedbackById(feedbackId: string): ProjectFeedback | null {
+  const feedbacks = getAllFeedbacks();
+  return feedbacks.find((fb) => fb.id === feedbackId || fb.feedbackId === feedbackId) || null;
 }
 
-/**
- * Submit faculty feedback for a student's capstone project
- * Strictly authenticated via backend session bearer token
- */
-export async function submitProjectFeedback(
-  projectId: string,
-  message: string
-): Promise<SubmitFeedbackResponse> {
-  try {
-    const cleanMessage = (message || '').trim();
-    if (!cleanMessage) {
-      return {
-        success: false,
-        error: 'Feedback message cannot be empty.'
-      };
-    }
+// Convenient export aliases
+export const submitProjectFeedback = submitProjectFeedbackFrontend;
+export const getProjectFeedbacks = getFeedbacksForProject;
+export const getStudentNotifications = getNotificationsForStudent;
+export const markNotificationAsRead = markNotificationAsReadFrontend;
 
-    if (cleanMessage.length > 2000) {
-      return {
-        success: false,
-        error: 'Feedback message exceeds the maximum limit of 2000 characters.'
-      };
-    }
-
-    const session = getCurrentSession();
-    if (!session || !session.token) {
-      return {
-        success: false,
-        error: 'Authentication required. Please sign in as a faculty member.'
-      };
-    }
-
-    // Ensure session is synchronized before submitting
-    await syncSessionWithBackend();
-
-    const response = await fetch(`/api/projects/${encodeURIComponent(projectId)}/feedback`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.token}`
-      },
-      body: JSON.stringify({
-        message: cleanMessage
-      })
-    });
-
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok) {
-      return {
-        success: false,
-        error: data?.error || `Submission failed (${response.status}). Please try again.`
-      };
-    }
-
-    if (!data || !data.success) {
-      return {
-        success: false,
-        error: data?.error || 'Failed to submit faculty feedback.'
-      };
-    }
-
-    return {
-      success: true,
-      feedback: data.feedback,
-      notification: data.notification
-    };
-  } catch (err: any) {
-    return {
-      success: false,
-      error: err?.message || 'Network error while submitting faculty feedback.'
-    };
-  }
-}
-
-/**
- * Fetch all faculty feedback items for a project
- */
-export async function getProjectFeedbacks(projectId: string): Promise<GetFeedbacksResponse> {
-  try {
-    const session = getCurrentSession();
-    const headers: Record<string, string> = {};
-    if (session?.token) {
-      headers['Authorization'] = `Bearer ${session.token}`;
-    }
-
-    const response = await fetch(`/api/projects/${encodeURIComponent(projectId)}/feedback`, {
-      method: 'GET',
-      headers
-    });
-
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok || !data?.success) {
-      return {
-        success: false,
-        feedbacks: [],
-        error: data?.error || 'Failed to load project feedback.'
-      };
-    }
-
-    return {
-      success: true,
-      feedbacks: data.feedbacks || []
-    };
-  } catch (err: any) {
-    return {
-      success: false,
-      feedbacks: [],
-      error: err?.message || 'Network error fetching project feedback.'
-    };
-  }
-}
-
-/**
- * Fetch notifications for the currently logged-in user
- */
-export async function getStudentNotifications(): Promise<GetNotificationsResponse> {
-  try {
-    const session = getCurrentSession();
-    const headers: Record<string, string> = {};
-    if (session?.token) {
-      headers['Authorization'] = `Bearer ${session.token}`;
-    }
-
-    const response = await fetch('/api/notifications', {
-      method: 'GET',
-      headers
-    });
-
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok || !data?.success) {
-      return {
-        success: false,
-        notifications: [],
-        error: data?.error || 'Failed to load notifications.'
-      };
-    }
-
-    return {
-      success: true,
-      notifications: data.notifications || []
-    };
-  } catch (err: any) {
-    return {
-      success: false,
-      notifications: [],
-      error: err?.message || 'Network error loading notifications.'
-    };
-  }
-}
-
-/**
- * Mark a notification as read
- */
-export async function markNotificationAsRead(
-  notificationId: string
-): Promise<MarkNotificationResponse> {
-  try {
-    const session = getCurrentSession();
-    const headers: Record<string, string> = {};
-    if (session?.token) {
-      headers['Authorization'] = `Bearer ${session.token}`;
-    }
-
-    const response = await fetch(`/api/notifications/${encodeURIComponent(notificationId)}/read`, {
-      method: 'PATCH',
-      headers
-    });
-
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok || !data?.success) {
-      return {
-        success: false,
-        error: data?.error || 'Failed to mark notification as read.'
-      };
-    }
-
-    return {
-      success: true,
-      notification: data.notification
-    };
-  } catch (err: any) {
-    return {
-      success: false,
-      error: err?.message || 'Network error updating notification.'
-    };
-  }
-}

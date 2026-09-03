@@ -43,7 +43,11 @@ import {
   UploadCloud,
   X,
   AlertCircle,
-  MessageSquare
+  MessageSquare,
+  Heart,
+  Bookmark,
+  TrendingUp,
+  Activity
 } from 'lucide-react';
 import { ProjectItem, ProjectDomain, DocumentType, ProjectFeedback, StudentNotification } from '../types';
 import { SAMPLE_PROJECTS, DOMAINS_LIST, SAMPLE_PEERS, SAMPLE_MENTORS } from '../data/mockData';
@@ -53,12 +57,36 @@ import { uploadAcademicDocument } from '../lib/documentService';
 import { StudentVerificationManager } from './verification/StudentVerificationManager';
 import { DocumentUploadDropzone } from './verification/DocumentUploadDropzone';
 import {
-  submitProjectFeedback,
-  getProjectFeedbacks,
-  getStudentNotifications,
-  markNotificationAsRead,
-  syncSessionWithBackend
+  submitProjectFeedbackFrontend,
+  getFeedbacksForProject,
+  getNotificationsForStudent,
+  markNotificationAsReadFrontend,
+  getFeedbackById,
+  getAllFeedbacks
 } from '../lib/feedbackService';
+import { ProjectStatusBadge } from './common/ProjectStatusBadge';
+import { ProjectDashboardModal } from './modals/ProjectDashboardModal';
+import { ProjectPassportModal } from './modals/ProjectPassportModal';
+import { CollaborationRequestModal } from './modals/CollaborationRequestModal';
+import { GlobalSearchModal } from './search/GlobalSearchModal';
+import { NotificationDropdown } from './notifications/NotificationDropdown';
+import { NotificationCenterView } from './notifications/NotificationCenterView';
+import { AdvancedProjectDiscovery } from './discovery/AdvancedProjectDiscovery';
+import { SavedProjectsView } from './saved/SavedProjectsView';
+import { RecentlyViewedSection } from './recent/RecentlyViewedSection';
+import { CollaborationRequestsView } from './collaboration/CollaborationRequestsView';
+import { FacultyAnalyticsDashboard } from './analytics/FacultyAnalyticsDashboard';
+import { HODDepartmentDashboard } from './hod/HODDepartmentDashboard';
+import { AdminManagementDashboard } from './admin/AdminManagementDashboard';
+import { AIMatchingDashboard } from './matching/AIMatchingDashboard';
+import { recordProjectView } from '../lib/recentlyViewedService';
+import { 
+  getAllNotifications, 
+  getUnreadCount, 
+  markNotificationAsRead, 
+  markAllNotificationsAsRead, 
+  deleteNotification 
+} from '../lib/notificationService';
 
 export type UserRole = 'STUDENT' | 'FACULTY' | 'HOD' | 'ADMIN';
 
@@ -184,7 +212,6 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
   const [reviewingProject, setReviewingProject] = useState<ProjectItem | null>(null);
   const [reviewModalTab, setReviewModalTab] = useState<'rubric' | 'feedback'>('rubric');
   const [facultyFeedbackText, setFacultyFeedbackText] = useState('');
-  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
   const [feedbackError, setFeedbackError] = useState<string | null>(null);
   const [feedbackSuccess, setFeedbackSuccess] = useState<string | null>(null);
   const [projectFeedbacks, setProjectFeedbacks] = useState<ProjectFeedback[]>([]);
@@ -246,20 +273,54 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
   const [isSubmittingDoc, setIsSubmittingDoc] = useState(false);
   const [docUploadError, setDocUploadError] = useState<string | null>(null);
 
+  // New Modal and Feature states for ProjectVerse
+  const [activeDashboardProject, setActiveDashboardProject] = useState<ProjectItem | null>(null);
+  const [selectedPassportProject, setSelectedPassportProject] = useState<ProjectItem | null>(null);
+  const [collaboratingProject, setCollaboratingProject] = useState<ProjectItem | null>(null);
+  const [isGlobalSearchOpen, setIsGlobalSearchOpen] = useState(false);
+  const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
+
+  const handleOpenProjectModal = (p: ProjectItem) => {
+    recordProjectView(p);
+    setActiveDashboardProject(p);
+  };
+
+  const handleOpenPassportModal = (p: ProjectItem) => {
+    recordProjectView(p);
+    setSelectedPassportProject(p);
+  };
+
+  const handleOpenCollaborateModal = (p: ProjectItem) => {
+    setCollaboratingProject(p);
+  };
+
+  // Keyboard shortcut Cmd+K / Ctrl+K for Global Search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsGlobalSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Role navigation tabs configuration
   const roleTabs: Record<UserRole, { id: string; label: string; icon: any }[]> = {
     STUDENT: [
       { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
       { id: 'discover', label: 'Discover Projects', icon: Compass },
       { id: 'my-projects', label: 'My Projects', icon: FolderGit2 },
+      { id: 'saved', label: 'Saved Projects', icon: Heart },
+      { id: 'collaboration', label: 'Collaboration Hub', icon: Users },
       { id: 'ai-matches', label: 'AI Matches', icon: Sparkles },
       { id: 'mentors', label: 'Mentors', icon: GraduationCap },
-      { id: 'collaboration', label: 'Collaboration', icon: Users },
       { id: 'passport', label: 'Project Passport', icon: FileCheck2 },
       { id: 'lineage', label: 'Project Lineage', icon: GitBranch },
       { id: 'proof-of-work', label: 'Proof of Work', icon: Award },
-      { id: 'profile', label: 'Profile', icon: UserCheck },
-      { id: 'notifications', label: 'Notifications', icon: Bell }
+      { id: 'notifications', label: 'Notifications', icon: Bell },
+      { id: 'profile', label: 'Profile', icon: UserCheck }
     ],
     FACULTY: [
       { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -321,19 +382,17 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
       } catch {
         // ignore storage errors
       }
-      syncSessionWithBackend();
     }
   };
 
-  const loadNotifications = async () => {
+  const loadNotifications = () => {
     setIsLoadingNotifications(true);
     try {
-      const res = await getStudentNotifications();
-      if (res.success && res.notifications) {
-        setNotifications(res.notifications);
-      }
+      const studentId = currentProfile?.id || 'usr-student-01';
+      const notifs = getNotificationsForStudent(studentId);
+      setNotifications(notifs);
     } catch {
-      // ignore network errors
+      // ignore
     } finally {
       setIsLoadingNotifications(false);
     }
@@ -341,48 +400,56 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
   useEffect(() => {
     loadNotifications();
-  }, [activeRole, activeTab]);
+  }, [activeRole, activeTab, currentProfile?.id]);
 
   useEffect(() => {
     if (reviewingProject) {
-      getProjectFeedbacks(reviewingProject.id).then((res) => {
-        if (res.success && res.feedbacks) {
-          setProjectFeedbacks(res.feedbacks);
-        }
-      });
+      const fbs = getFeedbacksForProject(reviewingProject.id);
+      setProjectFeedbacks(fbs);
       setFacultyFeedbackText('');
       setFeedbackError(null);
       setFeedbackSuccess(null);
     }
   }, [reviewingProject]);
 
-  const handleSubmitFeedback = async () => {
+  const handleSubmitFeedback = () => {
     if (!reviewingProject) return;
 
     const trimmed = facultyFeedbackText.trim();
     if (!trimmed) {
-      setFeedbackError('Feedback message cannot be empty.');
+      setFeedbackError('Feedback cannot be empty.');
       return;
     }
 
     if (trimmed.length > 2000) {
-      setFeedbackError('Feedback message cannot exceed 2000 characters.');
+      setFeedbackError('Feedback cannot exceed 2000 characters.');
       return;
     }
 
-    setIsSubmittingFeedback(true);
     setFeedbackError(null);
     setFeedbackSuccess(null);
 
-    const res = await submitProjectFeedback(reviewingProject.id, trimmed);
-    setIsSubmittingFeedback(false);
+    const studentId = (reviewingProject as any).studentId || 'usr-student-01';
+    const facultyId = currentProfile?.id || 'usr-faculty-01';
+    const facultyName = currentProfile?.fullName || 'Dr. Anil Sharma';
+
+    const res = submitProjectFeedbackFrontend({
+      projectId: reviewingProject.id,
+      projectTitle: reviewingProject.title,
+      studentId,
+      facultyId,
+      facultyName,
+      facultyDesignation: currentProfile?.designation || 'Associate Professor & Research Advisor',
+      facultyAvatar: currentProfile?.avatar,
+      message: trimmed
+    });
 
     if (!res.success) {
-      setFeedbackError(res.error || 'Failed to submit feedback. Please check authorization and try again.');
+      setFeedbackError(res.error || 'Failed to submit feedback.');
       return;
     }
 
-    setFeedbackSuccess('Feedback submitted successfully and student notified.');
+    setFeedbackSuccess('Feedback submitted successfully.');
     setFacultyFeedbackText('');
     if (res.feedback) {
       setProjectFeedbacks((prev) => [res.feedback!, ...prev]);
@@ -392,21 +459,22 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     loadNotifications();
   };
 
-  const handleViewFeedback = async (notif: StudentNotification) => {
+  const handleViewFeedback = (notif: StudentNotification) => {
     if (!notif.read) {
-      await markNotificationAsRead(notif.id);
+      markNotificationAsReadFrontend(notif.id);
       setNotifications((prev) =>
         prev.map((n) => (n.id === notif.id ? { ...n, read: true } : n))
       );
     }
 
     const matchedProject = SAMPLE_PROJECTS.find((p) => p.id === notif.projectId) || SAMPLE_PROJECTS[0];
+    const storedFeedback = notif.feedbackId ? getFeedbackById(notif.feedbackId) : null;
 
     setViewingFeedbackDetail({
       notif: { ...notif, read: true },
       project: matchedProject,
-      feedbackMessage: notif.feedbackMessage || notif.message,
-      facultyName: notif.facultyName || 'Dr. Anil Sharma'
+      feedbackMessage: storedFeedback?.message || notif.feedbackMessage || notif.message,
+      facultyName: storedFeedback?.facultyName || notif.facultyName || 'Dr. Anil Sharma'
     });
   };
 
@@ -513,25 +581,63 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          {/* Quick Role Switcher for Testing / Demonstration */}
-          <div className="hidden lg:flex items-center gap-1 bg-[#F7F7F5] p-1 rounded-xl border border-black/8 text-xs font-mono-code">
-            {(['STUDENT', 'FACULTY', 'HOD', 'ADMIN'] as UserRole[]).map((r) => (
-              <button
-                key={r}
-                id={`workspace-role-switch-${r.toLowerCase()}`}
-                onClick={() => {
-                  handleSwitchRole(r);
-                }}
-                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
-                  activeRole === r
-                    ? 'bg-[#111111] text-white font-medium shadow-xs'
-                    : 'text-[#4A4A4A] hover:text-[#111111]'
-                }`}
-              >
-                {r}
-              </button>
-            ))}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Global Search Button */}
+          <button
+            id="navbar-global-search-btn"
+            onClick={() => setIsGlobalSearchOpen(true)}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/8 text-[#737373] hover:text-[#111111] transition-all cursor-pointer text-xs"
+            title="Search projects, peers, tech... (Cmd+K)"
+          >
+            <Search className="w-3.5 h-3.5 text-[#111111]" />
+            <span className="hidden md:inline text-xs text-[#4A4A4A]">Search projects, tech...</span>
+            <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded bg-white text-[10px] font-mono-code text-[#737373] border border-black/10 shadow-2xs">
+              ⌘K
+            </kbd>
+          </button>
+
+          {/* Notification Bell with Dropdown */}
+          <div className="relative">
+            <button
+              id="navbar-notifications-bell-btn"
+              onClick={() => setIsNotificationDropdownOpen(!isNotificationDropdownOpen)}
+              className="relative p-2 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/8 text-[#111111] transition-colors cursor-pointer"
+              title="Notifications"
+            >
+              <Bell className="w-4 h-4" />
+              {notifications.filter((n) => !n.read).length > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full bg-amber-500 text-white font-mono-code font-bold text-[10px] flex items-center justify-center px-1 shadow-xs">
+                  {notifications.filter((n) => !n.read).length}
+                </span>
+              )}
+            </button>
+
+            {/* Dropdown menu */}
+            <NotificationDropdown
+              isOpen={isNotificationDropdownOpen}
+              onClose={() => setIsNotificationDropdownOpen(false)}
+              notifications={notifications}
+              onMarkAsRead={(id) => {
+                markNotificationAsRead(id);
+                loadNotifications();
+              }}
+              onMarkAllAsRead={() => {
+                markAllNotificationsAsRead();
+                loadNotifications();
+              }}
+              onDeleteNotification={(id) => {
+                deleteNotification(id);
+                loadNotifications();
+              }}
+              onViewNotificationDetail={(notif) => {
+                setIsNotificationDropdownOpen(false);
+                handleViewFeedback(notif);
+              }}
+              onViewAllNotifications={() => {
+                setIsNotificationDropdownOpen(false);
+                setActiveTab('notifications');
+              }}
+            />
           </div>
 
           {/* User Profile Mini Badge */}
@@ -541,7 +647,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               alt={currentProfile?.fullName || 'User'}
               className="w-6 h-6 rounded-full object-cover border border-black/10"
             />
-            <span className="text-xs font-medium text-[#111111] hidden sm:inline">
+            <span className="text-xs font-medium text-[#111111] hidden sm:inline truncate max-w-[120px]">
               {currentProfile?.fullName || 'Suraj Rawat'}
             </span>
           </div>
@@ -718,12 +824,18 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                     </div>
                   </div>
 
+                  {/* Recently Viewed Projects History */}
+                  <RecentlyViewedSection
+                    allProjects={SAMPLE_PROJECTS}
+                    onSelectProject={handleOpenProjectModal}
+                  />
+
                   {/* Active Project Highlight */}
                   <div className="bg-white rounded-2xl p-6 border border-black/8 shadow-xs">
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="text-base font-semibold text-[#111111]">Current Active Capstone</h2>
                       <button
-                        onClick={() => onOpenProjectDetail(SAMPLE_PROJECTS[0])}
+                        onClick={() => handleOpenProjectModal(SAMPLE_PROJECTS[0])}
                         className="text-xs text-[#111111] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
                       >
                         Inspect Passport & Lineage <ArrowRight className="w-3 h-3" />
@@ -756,83 +868,23 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               {/* Discover Projects Tab */}
               {activeTab === 'discover' && (
                 <div className="space-y-6">
-                  <div>
-                    <h2 className="font-display text-2xl text-[#111111] font-normal">Discover Academic Projects</h2>
-                    <p className="text-xs text-[#4A4A4A]">Search verified repositories, predecessor foundations, and cross-college projects.</p>
-                  </div>
+                  <AdvancedProjectDiscovery
+                    projects={SAMPLE_PROJECTS}
+                    onSelectProject={handleOpenProjectModal}
+                    onOpenPassport={handleOpenPassportModal}
+                    onOpenCollaborate={handleOpenCollaborateModal}
+                  />
+                </div>
+              )}
 
-                  {/* Search and Domain Filters */}
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <div className="relative flex-1">
-                      <Search className="w-4 h-4 text-[#737373] absolute left-3.5 top-1/2 -translate-y-1/2" />
-                      <input
-                        type="text"
-                        placeholder="Search by title, technology (e.g. PyTorch, Rust, ROS 2), or university..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] placeholder-[#737373] focus:outline-none focus:border-[#111111] focus:bg-white text-xs transition-colors"
-                      />
-                    </div>
-                    <select
-                      value={selectedDomain}
-                      onChange={(e) => setSelectedDomain(e.target.value as ProjectDomain)}
-                      className="px-3 py-2.5 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] text-xs focus:outline-none focus:border-[#111111] transition-colors"
-                    >
-                      {DOMAINS_LIST.map((d) => (
-                        <option key={d} value={d} className="bg-white text-[#111111]">
-                          {d}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Project Cards Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {filteredProjects.map((proj) => (
-                      <div
-                        key={proj.id}
-                        className="bg-white rounded-2xl p-5 border border-black/8 hover:border-black/20 transition-all flex flex-col justify-between shadow-xs"
-                      >
-                        <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-[10px] font-mono-code text-[#737373] uppercase font-semibold">
-                              {proj.domain}
-                            </span>
-                            <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
-                              {proj.status}
-                            </span>
-                          </div>
-                          <h3 className="text-base font-semibold text-[#111111] mb-1">{proj.title}</h3>
-                          <p className="text-xs text-[#4A4A4A] mb-3 line-clamp-2">{proj.description}</p>
-                          <div className="flex flex-wrap gap-1.5 mb-4">
-                            {proj.techStack.map((tech) => (
-                              <span key={tech} className="text-[10px] font-mono-code px-2 py-0.5 rounded bg-[#F7F7F5] border border-black/5 text-[#4A4A4A]">
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="pt-3 border-t border-black/8 flex items-center justify-between">
-                          <span className="text-[11px] text-[#737373]">{proj.institution}</span>
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => onOpenJoinProject(proj)}
-                              className="px-2.5 py-1 rounded-lg bg-[#F7F7F5] hover:bg-[#EBEBE8] text-[#111111] text-xs font-medium border border-black/8 cursor-pointer"
-                            >
-                              Join
-                            </button>
-                            <button
-                              onClick={() => onOpenProjectDetail(proj)}
-                              className="px-2.5 py-1 rounded-lg bg-[#111111] text-white hover:bg-black text-xs font-medium cursor-pointer"
-                            >
-                              Details
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+              {/* Saved Projects Tab */}
+              {activeTab === 'saved' && (
+                <div className="space-y-6">
+                  <SavedProjectsView
+                    allProjects={SAMPLE_PROJECTS}
+                    onSelectProject={handleOpenProjectModal}
+                    onOpenPassport={handleOpenPassportModal}
+                  />
                 </div>
               )}
 
@@ -893,74 +945,10 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               {/* AI Matches Tab */}
               {activeTab === 'ai-matches' && (
                 <div className="space-y-6">
-                  <div>
-                    <h2 className="font-display text-2xl text-[#111111] font-normal">AI Skill-Gap & Peer Matching</h2>
-                    <p className="text-xs text-[#4A4A4A]">Intelligent recommendations for cross-college capstone collaborators and academic mentors.</p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Recommended Peers */}
-                    <div className="space-y-3">
-                      <h3 className="text-xs font-mono-code uppercase font-semibold text-[#737373]">Recommended Teammates</h3>
-                      {SAMPLE_PEERS.map((peer, i) => (
-                        <div key={i} className="bg-white rounded-2xl p-4 border border-black/8 flex items-center justify-between shadow-xs">
-                          <div className="flex items-center gap-3">
-                            <img src={peer.avatar} alt={peer.name} className="w-10 h-10 rounded-full object-cover border border-black/10" />
-                            <div>
-                              <h4 className="text-sm font-semibold text-[#111111]">{peer.name}</h4>
-                              <p className="text-xs text-[#737373]">{peer.institution} • {peer.role}</p>
-                              <div className="flex gap-1 mt-1">
-                                {peer.skills.slice(0, 3).map((s) => (
-                                  <span key={s} className="text-[9px] font-mono-code px-1.5 py-0.5 rounded bg-[#F7F7F5] text-[#4A4A4A]">{s}</span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-xs font-bold text-emerald-700 font-mono-code">{peer.matchScore}% Match</span>
-                            <button
-                              onClick={() => {
-                                setApprovalToast(`Invitation proposal sent to ${peer.name}!`);
-                                setTimeout(() => setApprovalToast(null), 3000);
-                              }}
-                              className="block mt-1 text-[11px] px-2.5 py-1 rounded-lg bg-[#111111] text-white hover:bg-black font-medium cursor-pointer"
-                            >
-                              Invite
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Recommended Mentors */}
-                    <div className="space-y-3">
-                      <h3 className="text-xs font-mono-code uppercase font-semibold text-[#737373]">Faculty & Industry Guides</h3>
-                      {SAMPLE_MENTORS.map((m, i) => (
-                        <div key={i} className="bg-white rounded-2xl p-4 border border-black/8 flex items-center justify-between shadow-xs">
-                          <div className="flex items-center gap-3">
-                            <img src={m.avatar} alt={m.name} className="w-10 h-10 rounded-full object-cover border border-black/10" />
-                            <div>
-                              <h4 className="text-sm font-semibold text-[#111111]">{m.name}</h4>
-                              <p className="text-xs text-[#737373]">{m.title} • {m.institution}</p>
-                              <span className="text-[10px] text-emerald-700 font-mono-code font-medium">{m.verifiedProjectsCount} Verified Projects Advised</span>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-xs font-bold text-[#111111] font-mono-code">{m.matchScore}% Synergy</span>
-                            <button
-                              onClick={() => {
-                                setApprovalToast(`Mentorship guidance requested from ${m.name}!`);
-                                setTimeout(() => setApprovalToast(null), 3000);
-                              }}
-                              className="block mt-1 text-[11px] px-2.5 py-1 rounded-lg bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/10 text-[#111111] font-medium cursor-pointer"
-                            >
-                              Request
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <AIMatchingDashboard
+                    onSelectProject={handleOpenProjectModal}
+                    onOpenPassport={handleOpenPassportModal}
+                  />
                 </div>
               )}
 
@@ -990,25 +978,16 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 </div>
               )}
 
-              {/* Collaboration */}
+              {/* Collaboration Hub */}
               {activeTab === 'collaboration' && (
                 <div className="space-y-4">
-                  <h2 className="font-display text-2xl text-[#111111] font-normal">Cross-Institution Team Collaborations</h2>
-                  <div className="bg-white rounded-2xl p-6 border border-black/8 space-y-4 shadow-xs">
-                    <p className="text-xs text-[#4A4A4A]">You have 2 pending team invitations for the 2026 Batch Roadmap.</p>
-                    <div className="p-4 rounded-xl bg-[#FBFBFA] border border-black/8 flex items-center justify-between">
-                      <div>
-                        <h4 className="text-sm font-semibold text-[#111111]">AegisShield: Post-Quantum TLS 1.3 Hardware Accelerator</h4>
-                        <p className="text-xs text-[#737373]">Graphic Era Hill University & IIT Delhi • Looking for VLSI Synthesis Leads</p>
-                      </div>
-                      <button
-                        onClick={() => onOpenJoinProject(SAMPLE_PROJECTS[2] || SAMPLE_PROJECTS[0])}
-                        className="px-3 py-1.5 rounded-xl bg-[#111111] text-white hover:bg-black text-xs font-medium cursor-pointer"
-                      >
-                        Review Proposal
-                      </button>
-                    </div>
-                  </div>
+                  <CollaborationRequestsView
+                    currentUserId={currentProfile?.id}
+                    onOpenProject={(id) => {
+                      const p = SAMPLE_PROJECTS.find(x => x.id === id);
+                      if (p) handleOpenProjectModal(p);
+                    }}
+                  />
                 </div>
               )}
 
@@ -1306,87 +1285,22 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               {/* Notifications Tab */}
               {activeTab === 'notifications' && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="font-display text-2xl text-[#111111] font-normal">Notifications</h2>
-                      <p className="text-xs text-[#4A4A4A]">Real-time academic alerts, faculty reviews, and collaborative invitations.</p>
-                    </div>
-                    <button
-                      onClick={() => loadNotifications()}
-                      className="px-3 py-1.5 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] text-xs text-[#4A4A4A] font-medium flex items-center gap-1.5 cursor-pointer border border-black/8 transition-colors"
-                    >
-                      <RefreshCw className={`w-3.5 h-3.5 ${isLoadingNotifications ? 'animate-spin' : ''}`} />
-                      <span>Refresh</span>
-                    </button>
-                  </div>
-
-                  {isLoadingNotifications ? (
-                    <div className="p-8 text-center bg-white rounded-2xl border border-black/8">
-                      <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                      <p className="text-xs text-[#737373]">Loading notifications...</p>
-                    </div>
-                  ) : notifications.length === 0 ? (
-                    <div className="bg-white rounded-2xl p-8 border border-black/8 text-center">
-                      <Bell className="w-8 h-8 text-[#737373] mx-auto mb-2 opacity-50" />
-                      <p className="text-xs text-[#4A4A4A]">No notifications at this time.</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-2.5">
-                      {notifications.map((notif) => (
-                        <div
-                          key={notif.id}
-                          id={`notification-item-${notif.id}`}
-                          className={`rounded-2xl p-4 border transition-all text-xs shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                            !notif.read
-                              ? 'bg-amber-50/75 border-amber-200/90'
-                              : 'bg-white border-black/8'
-                          }`}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div
-                              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                                !notif.read ? 'bg-amber-100 text-amber-800' : 'bg-[#F5F5F3] text-[#737373]'
-                              }`}
-                            >
-                              <Bell className="w-4 h-4" />
-                            </div>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <p className="font-semibold text-[#111111]">{notif.title}</p>
-                                {!notif.read && (
-                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-200 text-amber-900 font-mono-code">
-                                    New
-                                  </span>
-                                )}
-                              </div>
-                              <p className="text-[#4A4A4A] mt-0.5">{notif.message}</p>
-                              {notif.projectTitle && (
-                                <p className="text-[11px] text-[#737373] mt-0.5">
-                                  Project: <span className="font-medium text-[#111111]">{notif.projectTitle}</span>
-                                </p>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-3 self-end sm:self-center shrink-0">
-                            <span className="text-[10px] text-[#737373] font-mono-code whitespace-nowrap">
-                              {formatTimeAgo(notif.createdAt)}
-                            </span>
-                            {notif.type === 'FACULTY_FEEDBACK' && (
-                              <button
-                                id={`view-feedback-btn-${notif.id}`}
-                                onClick={() => handleViewFeedback(notif)}
-                                className="px-3.5 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs shrink-0"
-                              >
-                                <Eye className="w-3.5 h-3.5" />
-                                <span>View Feedback</span>
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <NotificationCenterView
+                    notifications={notifications}
+                    onMarkAsRead={(id) => {
+                      markNotificationAsRead(id);
+                      loadNotifications();
+                    }}
+                    onMarkAllAsRead={() => {
+                      markAllNotificationsAsRead();
+                      loadNotifications();
+                    }}
+                    onDeleteNotification={(id) => {
+                      deleteNotification(id);
+                      loadNotifications();
+                    }}
+                    onSelectNotification={handleViewFeedback}
+                  />
                 </div>
               )}
             </div>
@@ -1431,6 +1345,12 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                       <span className="text-[11px] text-[#737373]">Inherited by next batch</span>
                     </div>
                   </div>
+
+                  {/* Faculty Deep Analytics & Distribution */}
+                  <FacultyAnalyticsDashboard
+                    projects={SAMPLE_PROJECTS}
+                    onSelectProject={handleOpenProjectModal}
+                  />
                 </div>
               )}
 
@@ -1836,30 +1756,13 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 </div>
               )}
 
-              {/* Department Projects List */}
+              {/* Department Projects and Governance Dashboard */}
               {activeTab !== 'profile' && activeTab !== 'student-verifications' && (
-                <div className="space-y-4">
-                  <h3 className="text-base font-semibold text-[#111111]">Department Capstone Registry</h3>
-                  <div className="space-y-3">
-                    {SAMPLE_PROJECTS.map((p) => (
-                      <div key={p.id} className="bg-white rounded-2xl p-4 border border-black/8 flex items-center justify-between shadow-xs">
-                        <div>
-                          <span className="text-[10px] font-mono-code text-[#737373] uppercase font-semibold">{p.passportId}</span>
-                          <h4 className="text-sm font-semibold text-[#111111]">{p.title}</h4>
-                          <p className="text-xs text-[#737373]">Faculty Guide: {p.passport.facultyReviewer.name} • Score: {p.passport.facultyReviewer.score}/10</p>
-                        </div>
-                        <button
-                          onClick={() => {
-                            setApprovalToast(`Official Institutional Seal granted to ${p.passportId}!`);
-                            setTimeout(() => setApprovalToast(null), 3000);
-                          }}
-                          className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-semibold text-white cursor-pointer shadow-xs"
-                        >
-                          Grant Institutional Seal
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                <div className="space-y-6">
+                  <HODDepartmentDashboard
+                    projects={SAMPLE_PROJECTS}
+                    onSelectProject={handleOpenProjectModal}
+                  />
                 </div>
               )}
             </div>
@@ -1962,40 +1865,9 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               )}
 
               {activeTab !== 'profile' && activeTab !== 'student-verifications' && (
-                <>
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Registered Universities</span>
-                      <p className="text-2xl font-bold text-[#111111] mt-1">128</p>
-                      <span className="text-[11px] text-emerald-700 font-medium">Federated SAML SSO</span>
-                    </div>
-                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Total Passports</span>
-                      <p className="text-2xl font-bold text-[#111111] mt-1">4,920</p>
-                      <span className="text-[11px] text-[#4A4A4A]">On-Chain Hashes</span>
-                    </div>
-                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Network Health</span>
-                      <p className="text-2xl font-bold text-emerald-700 mt-1">99.99%</p>
-                      <span className="text-[11px] text-[#737373]">Zero cryptographic faults</span>
-                    </div>
-                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Cross-College PRs</span>
-                      <p className="text-2xl font-bold text-[#111111] mt-1">1,840</p>
-                      <span className="text-[11px] text-[#4A4A4A]">Inter-campus collaboration</span>
-                    </div>
-                  </div>
-
-                  {/* System Audit Logs */}
-                  <div className="bg-white rounded-2xl p-6 border border-black/8 font-mono-code text-xs shadow-xs">
-                    <h3 className="text-sm font-semibold text-[#111111] mb-4">Live Immutable Audit Stream</h3>
-                    <div className="space-y-2 text-[#4A4A4A]">
-                      <p><span className="text-emerald-700 font-semibold">[05:02:11]</span> HOD_VALIDATION_EVENT: PV-2025-GEHU-CS089 sealed by Dean Academic Office.</p>
-                      <p><span className="text-[#111111] font-semibold">[04:58:30]</span> GIT_SYNC_TELEMETRY: Merged PR #116 in repo projectverse-academic/aerosync.</p>
-                      <p><span className="text-[#737373] font-semibold">[04:45:12]</span> AI_MATCH_ENGINE: Skill gap match generated between Graphic Era Hill University & IIT Delhi.</p>
-                    </div>
-                  </div>
-                </>
+                <div className="space-y-6">
+                  <AdminManagementDashboard />
+                </div>
               )}
             </div>
           )}
@@ -2174,20 +2046,11 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                     type="button"
                     id="submit-feedback-btn"
                     onClick={handleSubmitFeedback}
-                    disabled={isSubmittingFeedback || !facultyFeedbackText.trim()}
+                    disabled={!facultyFeedbackText.trim()}
                     className="btn-primary-black w-full py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs disabled:opacity-50"
                   >
-                    {isSubmittingFeedback ? (
-                      <>
-                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        <span>Submitting Feedback...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-3.5 h-3.5" />
-                        <span>Submit Feedback</span>
-                      </>
-                    )}
+                    <Send className="w-3.5 h-3.5" />
+                    <span>Submit Feedback</span>
                   </button>
                 </div>
 
