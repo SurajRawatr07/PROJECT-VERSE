@@ -179,3 +179,32 @@ export interface PeerCandidate {
   role: string;
   avatar: string;
 }
+
+export interface ProjectFeedback {
+  feedbackId: string;
+  projectId: string;
+  projectTitle: string;
+  studentId: string;
+  facultyId: string;
+  facultyName: string;
+  facultyDesignation?: string;
+  facultyAvatar?: string;
+  message: string;
+  createdAt: string;
+  isRead: boolean;
+}
+
+export interface StudentNotification {
+  id: string;
+  userId: string;
+  title: string;
+  message: string;
+  type: 'FACULTY_FEEDBACK' | 'SYSTEM' | 'PROPOSAL';
+  projectId?: string;
+  projectTitle?: string;
+  feedbackId?: string;
+  feedbackMessage?: string;
+  facultyName?: string;
+  createdAt: string;
+  read: boolean;
+}

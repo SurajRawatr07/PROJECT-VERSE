@@ -1,0 +1,28 @@
+{
+  "fbk_1788418745113_17c74924": {
+    "feedbackId": "fbk_1788418745113_17c74924",
+    "projectId": "proj-1",
+    "projectTitle": "AeroSync: Edge-Neuromorphic Drone Swarm Guidance",
+    "studentId": "usr-student-01",
+    "facultyId": "usr-faculty-01",
+    "facultyName": "Dr. Anil Sharma",
+    "facultyDesignation": "Associate Professor & Senior Research Advisor",
+    "facultyAvatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    "message": "Please improve the project documentation and add proper API error handling.",
+    "createdAt": "2026-09-03T06:59:05.113Z",
+    "isRead": true
+  },
+  "fbk_1788419115136_8299ae9f": {
+    "feedbackId": "fbk_1788419115136_8299ae9f",
+    "projectId": "proj-1",
+    "projectTitle": "AeroSync: Edge-Neuromorphic Drone Swarm Guidance",
+    "studentId": "usr-student-01",
+    "facultyId": "usr-faculty-01",
+    "facultyName": "Dr. Anil Sharma",
+    "facultyDesignation": "Associate Professor & Senior Research Advisor",
+    "facultyAvatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    "message": "Please add latency benchmarks for ROS 2 nodes under packet drop scenarios and document power draw measurements.",
+    "createdAt": "2026-09-03T07:05:15.136Z",
+    "isRead": true
+  }
+}

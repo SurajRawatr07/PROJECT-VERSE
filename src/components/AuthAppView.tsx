@@ -42,17 +42,118 @@ import {
   FileText,
   UploadCloud,
   X,
-  AlertCircle
+  AlertCircle,
+  MessageSquare
 } from 'lucide-react';
-import { ProjectItem, ProjectDomain, DocumentType } from '../types';
+import { ProjectItem, ProjectDomain, DocumentType, ProjectFeedback, StudentNotification } from '../types';
 import { SAMPLE_PROJECTS, DOMAINS_LIST, SAMPLE_PEERS, SAMPLE_MENTORS } from '../data/mockData';
 import { ProjectVerseBrand } from './ProjectVerseBrand';
 import { getCurrentSession, resolveProfileWithPrivacy, UserProfile, submitVerificationDocument } from '../lib/authService';
 import { uploadAcademicDocument } from '../lib/documentService';
 import { StudentVerificationManager } from './verification/StudentVerificationManager';
 import { DocumentUploadDropzone } from './verification/DocumentUploadDropzone';
+import {
+  submitProjectFeedback,
+  getProjectFeedbacks,
+  getStudentNotifications,
+  markNotificationAsRead,
+  syncSessionWithBackend
+} from '../lib/feedbackService';
 
 export type UserRole = 'STUDENT' | 'FACULTY' | 'HOD' | 'ADMIN';
+
+export const FALLBACK_PROFILES: Record<UserRole, UserProfile> = {
+  STUDENT: {
+    id: 'usr-student-01',
+    email: 'suraj@gehu.ac.in',
+    fullName: 'Suraj Rawat',
+    role: 'STUDENT',
+    institution: 'Graphic Era Hill University',
+    department: 'Dept of Computer Science & Engineering',
+    batch: "B.Tech '26",
+    rollNumber: 'GEHU/2022/CS/089',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    githubHandle: 'surajrawat-dev',
+    verifiedStatus: 'Verified',
+    verificationSignals: {
+      emailVerified: true,
+      institutionalDomain: true,
+      idProofVerified: true,
+      nodeApproval: true
+    },
+    projectsCount: 2,
+    commitsCount: 384,
+    rubricScore: 9.6,
+    bio: 'Undergraduate researcher specializing in edge AI, distributed systems, and verifiable academic project architectures.',
+    skills: ['React', 'TypeScript', 'Node.js', 'PyTorch', 'ROS 2', 'PostgreSQL']
+  },
+  FACULTY: {
+    id: 'usr-faculty-01',
+    email: 'anil.sharma@gehu.ac.in',
+    fullName: 'Dr. Anil Sharma',
+    role: 'FACULTY',
+    institution: 'Graphic Era Hill University',
+    department: 'Dept of Computer Science & Engineering',
+    facultyId: 'EMP-GEHU-FAC-409',
+    designation: 'Associate Professor & Senior Research Advisor',
+    researchAreas: ['Artificial Intelligence', 'Edge Computing', 'Computer Vision'],
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    verifiedStatus: 'Verified',
+    verificationSignals: {
+      emailVerified: true,
+      institutionalDomain: true,
+      idProofVerified: true,
+      nodeApproval: true
+    },
+    projectsCount: 14,
+    rubricScore: 9.8,
+    bio: 'Associate Professor & Senior Research Advisor in Artificial Intelligence, Edge Computing, and Computer Vision.',
+    skills: ['AI/ML', 'Computer Vision', 'Edge Systems', 'Academic Peer Review']
+  },
+  HOD: {
+    id: 'usr-hod-01',
+    email: 'rajesh.kumar@gehu.ac.in',
+    fullName: 'Dr. Rajesh Kumar',
+    role: 'HOD',
+    institution: 'Graphic Era Hill University',
+    department: 'Dept of Computer Science & Engineering',
+    facultyId: 'HOD-CSE-001',
+    designation: 'Professor & Head of Department',
+    departmentToken: 'GEHU-HOD-CSE-2025',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+    verifiedStatus: 'Verified',
+    verificationSignals: {
+      emailVerified: true,
+      institutionalDomain: true,
+      idProofVerified: true,
+      nodeApproval: true
+    },
+    projectsCount: 48,
+    bio: 'Head of Department, Computer Science & Engineering. Overseeing capstone governance, institutional accreditation, and NAAC/ABET compliance.',
+    skills: ['Curriculum Design', 'Academic Governance', 'Accreditation', 'Capstone Verification']
+  },
+  ADMIN: {
+    id: 'usr-admin-01',
+    email: 'admin@gehu.ac.in',
+    fullName: 'Admin User',
+    role: 'ADMIN',
+    institution: 'Graphic Era Hill University',
+    department: 'Institutional Academic Office',
+    facultyId: 'ROOT-ADMIN-01',
+    designation: 'Lead Ledger Administrator',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    verifiedStatus: 'Verified',
+    verificationSignals: {
+      emailVerified: true,
+      institutionalDomain: true,
+      idProofVerified: true,
+      nodeApproval: true
+    },
+    projectsCount: 128,
+    bio: 'System Administrator for ProjectVerse Federated Ledger, SAML SSO, and node verification.',
+    skills: ['Network Administration', 'Ledger Governance', 'SAML SSO', 'Node Consensus']
+  }
+};
 
 interface AuthAppViewProps {
   initialRole: UserRole;
@@ -81,6 +182,23 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
   // Faculty review simulation state
   const [reviewingProject, setReviewingProject] = useState<ProjectItem | null>(null);
+  const [reviewModalTab, setReviewModalTab] = useState<'rubric' | 'feedback'>('rubric');
+  const [facultyFeedbackText, setFacultyFeedbackText] = useState('');
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
+  const [feedbackSuccess, setFeedbackSuccess] = useState<string | null>(null);
+  const [projectFeedbacks, setProjectFeedbacks] = useState<ProjectFeedback[]>([]);
+
+  // Notifications state
+  const [notifications, setNotifications] = useState<StudentNotification[]>([]);
+  const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
+  const [viewingFeedbackDetail, setViewingFeedbackDetail] = useState<{
+    notif: StudentNotification;
+    project?: ProjectItem;
+    feedbackMessage: string;
+    facultyName: string;
+  } | null>(null);
+
   const [rubricScores, setRubricScores] = useState({
     novelty: 9.5,
     technicalRigor: 9.4,
@@ -103,101 +221,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
       }
     }
 
-    // Default fallback profile based on role if no session in storage
-    const fallbackProfiles: Record<UserRole, UserProfile> = {
-      STUDENT: {
-        id: 'usr-student-01',
-        email: 'suraj@gehu.ac.in',
-        fullName: 'Suraj Rawat',
-        role: 'STUDENT',
-        institution: 'Graphic Era Hill University',
-        department: 'Dept of Computer Science & Engineering',
-        batch: "B.Tech '26",
-        rollNumber: 'GEHU/2022/CS/089',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-        githubHandle: 'surajrawat-dev',
-        verifiedStatus: 'Verified',
-        verificationSignals: {
-          emailVerified: true,
-          institutionalDomain: true,
-          idProofVerified: true,
-          nodeApproval: true
-        },
-        projectsCount: 2,
-        commitsCount: 384,
-        rubricScore: 9.6,
-        bio: 'Undergraduate researcher specializing in edge AI, distributed systems, and verifiable academic project architectures.',
-        skills: ['React', 'TypeScript', 'Node.js', 'PyTorch', 'ROS 2', 'PostgreSQL']
-      },
-      FACULTY: {
-        id: 'usr-faculty-01',
-        email: 'anil.sharma@gehu.ac.in',
-        fullName: 'Dr. Anil Sharma',
-        role: 'FACULTY',
-        institution: 'Graphic Era Hill University',
-        department: 'Dept of Computer Science & Engineering',
-        facultyId: 'EMP-GEHU-FAC-409',
-        designation: 'Associate Professor & Senior Research Advisor',
-        researchAreas: ['Artificial Intelligence', 'Edge Computing', 'Computer Vision'],
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-        verifiedStatus: 'Verified',
-        verificationSignals: {
-          emailVerified: true,
-          institutionalDomain: true,
-          idProofVerified: true,
-          nodeApproval: true
-        },
-        projectsCount: 14,
-        rubricScore: 9.8,
-        bio: 'Associate Professor & Senior Research Advisor in Artificial Intelligence, Edge Computing, and Computer Vision.',
-        skills: ['AI/ML', 'Computer Vision', 'Edge Systems', 'Academic Peer Review']
-      },
-      HOD: {
-        id: 'usr-hod-01',
-        email: 'rajesh.kumar@gehu.ac.in',
-        fullName: 'Dr. Rajesh Kumar',
-        role: 'HOD',
-        institution: 'Graphic Era Hill University',
-        department: 'Dept of Computer Science & Engineering',
-        facultyId: 'HOD-CSE-001',
-        designation: 'Professor & Head of Department',
-        departmentToken: 'GEHU-HOD-CSE-2025',
-        avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
-        verifiedStatus: 'Verified',
-        verificationSignals: {
-          emailVerified: true,
-          institutionalDomain: true,
-          idProofVerified: true,
-          nodeApproval: true
-        },
-        projectsCount: 48,
-        bio: 'Head of Department, Computer Science & Engineering. Overseeing capstone governance, institutional accreditation, and NAAC/ABET compliance.',
-        skills: ['Curriculum Design', 'Academic Governance', 'Accreditation', 'Capstone Verification']
-      },
-      ADMIN: {
-        id: 'usr-admin-01',
-        email: 'admin@gehu.ac.in',
-        fullName: 'Admin User',
-        role: 'ADMIN',
-        institution: 'Graphic Era Hill University',
-        department: 'Institutional Academic Office',
-        facultyId: 'ROOT-ADMIN-01',
-        designation: 'Lead Ledger Administrator',
-        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-        verifiedStatus: 'Verified',
-        verificationSignals: {
-          emailVerified: true,
-          institutionalDomain: true,
-          idProofVerified: true,
-          nodeApproval: true
-        },
-        projectsCount: 128,
-        bio: 'System Administrator for ProjectVerse Federated Ledger, SAML SSO, and node verification.',
-        skills: ['Network Administration', 'Ledger Governance', 'SAML SSO', 'Node Consensus']
-      }
-    };
-
-    setCurrentProfile(fallbackProfiles[initialRole]);
+    setCurrentProfile(FALLBACK_PROFILES[initialRole]);
     setActiveRole(initialRole);
   }, [initialRole]);
 
@@ -278,6 +302,125 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     setReviewingProject(null);
     setApprovalToast(`Academic Verification and Cryptographic Passport Seal published for ${projectId}!`);
     setTimeout(() => setApprovalToast(null), 4000);
+  };
+
+  const handleSwitchRole = (r: UserRole) => {
+    setActiveRole(r);
+    setActiveTab('dashboard');
+    const profile = FALLBACK_PROFILES[r];
+    if (profile) {
+      setCurrentProfile(profile);
+      const token = r === 'FACULTY' ? 'pv_token_faculty_anil' : r === 'STUDENT' ? 'pv_token_student_suraj' : `pv_sess_${r.toLowerCase()}_01`;
+      const newSession = {
+        token,
+        user: profile,
+        expiresAt: Date.now() + 1000 * 60 * 60 * 24
+      };
+      try {
+        localStorage.setItem('pv_auth_session_v2', JSON.stringify(newSession));
+      } catch {
+        // ignore storage errors
+      }
+      syncSessionWithBackend();
+    }
+  };
+
+  const loadNotifications = async () => {
+    setIsLoadingNotifications(true);
+    try {
+      const res = await getStudentNotifications();
+      if (res.success && res.notifications) {
+        setNotifications(res.notifications);
+      }
+    } catch {
+      // ignore network errors
+    } finally {
+      setIsLoadingNotifications(false);
+    }
+  };
+
+  useEffect(() => {
+    loadNotifications();
+  }, [activeRole, activeTab]);
+
+  useEffect(() => {
+    if (reviewingProject) {
+      getProjectFeedbacks(reviewingProject.id).then((res) => {
+        if (res.success && res.feedbacks) {
+          setProjectFeedbacks(res.feedbacks);
+        }
+      });
+      setFacultyFeedbackText('');
+      setFeedbackError(null);
+      setFeedbackSuccess(null);
+    }
+  }, [reviewingProject]);
+
+  const handleSubmitFeedback = async () => {
+    if (!reviewingProject) return;
+
+    const trimmed = facultyFeedbackText.trim();
+    if (!trimmed) {
+      setFeedbackError('Feedback message cannot be empty.');
+      return;
+    }
+
+    if (trimmed.length > 2000) {
+      setFeedbackError('Feedback message cannot exceed 2000 characters.');
+      return;
+    }
+
+    setIsSubmittingFeedback(true);
+    setFeedbackError(null);
+    setFeedbackSuccess(null);
+
+    const res = await submitProjectFeedback(reviewingProject.id, trimmed);
+    setIsSubmittingFeedback(false);
+
+    if (!res.success) {
+      setFeedbackError(res.error || 'Failed to submit feedback. Please check authorization and try again.');
+      return;
+    }
+
+    setFeedbackSuccess('Feedback submitted successfully and student notified.');
+    setFacultyFeedbackText('');
+    if (res.feedback) {
+      setProjectFeedbacks((prev) => [res.feedback!, ...prev]);
+    }
+    setApprovalToast(`Feedback submitted for ${reviewingProject.title}`);
+    setTimeout(() => setApprovalToast(null), 4000);
+    loadNotifications();
+  };
+
+  const handleViewFeedback = async (notif: StudentNotification) => {
+    if (!notif.read) {
+      await markNotificationAsRead(notif.id);
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === notif.id ? { ...n, read: true } : n))
+      );
+    }
+
+    const matchedProject = SAMPLE_PROJECTS.find((p) => p.id === notif.projectId) || SAMPLE_PROJECTS[0];
+
+    setViewingFeedbackDetail({
+      notif: { ...notif, read: true },
+      project: matchedProject,
+      feedbackMessage: notif.feedbackMessage || notif.message,
+      facultyName: notif.facultyName || 'Dr. Anil Sharma'
+    });
+  };
+
+  const formatTimeAgo = (dateStr: string) => {
+    try {
+      const date = new Date(dateStr);
+      const diffSec = Math.floor((Date.now() - date.getTime()) / 1000);
+      if (diffSec < 60) return 'just now';
+      if (diffSec < 3600) return `${Math.floor(diffSec / 60)}m ago`;
+      if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}h ago`;
+      return `${Math.floor(diffSec / 86400)}d ago`;
+    } catch {
+      return dateStr;
+    }
   };
 
   const handleStudentDocumentSubmit = async () => {
@@ -378,8 +521,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 key={r}
                 id={`workspace-role-switch-${r.toLowerCase()}`}
                 onClick={() => {
-                  setActiveRole(r);
-                  setActiveTab('dashboard');
+                  handleSwitchRole(r);
                 }}
                 className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
                   activeRole === r
@@ -446,6 +588,13 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#737373]'}`} />
                   <span className="whitespace-nowrap">{tab.label}</span>
+                  {tab.id === 'notifications' && notifications.filter((n) => !n.read).length > 0 && (
+                    <span className={`ml-auto text-[10px] font-mono-code px-1.5 py-0.2 rounded-full font-semibold ${
+                      isActive ? 'bg-white text-black' : 'bg-amber-100 text-amber-900'
+                    }`}>
+                      {notifications.filter((n) => !n.read).length}
+                    </span>
+                  )}
                 </button>
               );
             })}
@@ -473,6 +622,45 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
             <div>
               {activeTab === 'dashboard' && (
                 <div className="space-y-6">
+                  {/* Faculty Feedback Notification Alert Banner */}
+                  {notifications.some((n) => n.type === 'FACULTY_FEEDBACK' && !n.read) && (
+                    <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+                      <div className="flex items-start sm:items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center text-amber-800 shrink-0">
+                          <Bell className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-sm font-semibold text-amber-950">New Faculty Feedback</h4>
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-200 text-amber-900">
+                              Action Recommended
+                            </span>
+                          </div>
+                          <p className="text-xs text-amber-800 mt-0.5">
+                            Your faculty has added feedback to your project.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                        <button
+                          id="student-banner-view-feedback-btn"
+                          onClick={() => {
+                            const unreadNotif = notifications.find((n) => n.type === 'FACULTY_FEEDBACK' && !n.read);
+                            if (unreadNotif) {
+                              handleViewFeedback(unreadNotif);
+                            } else {
+                              setActiveTab('notifications');
+                            }
+                          }}
+                          className="btn-primary-black px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>View Feedback</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Top Welcome Banner */}
                   <div className="bg-[#FBFBFA] rounded-2xl p-6 sm:p-8 border border-black/8">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -1117,22 +1305,88 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
               {/* Notifications Tab */}
               {activeTab === 'notifications' && (
-                <div className="space-y-3">
-                  <h2 className="font-display text-2xl text-[#111111] font-normal">Notifications</h2>
-                  <div className="bg-white rounded-2xl p-4 border border-black/8 flex items-center justify-between text-xs shadow-xs">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-semibold text-[#111111]">Faculty Review Completed</p>
-                      <p className="text-[#4A4A4A]">Dr. Anil Sharma signed your ROS 2 swarm milestone (9.6/10).</p>
+                      <h2 className="font-display text-2xl text-[#111111] font-normal">Notifications</h2>
+                      <p className="text-xs text-[#4A4A4A]">Real-time academic alerts, faculty reviews, and collaborative invitations.</p>
                     </div>
-                    <span className="text-[10px] text-[#737373] font-mono-code">2 hours ago</span>
+                    <button
+                      onClick={() => loadNotifications()}
+                      className="px-3 py-1.5 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] text-xs text-[#4A4A4A] font-medium flex items-center gap-1.5 cursor-pointer border border-black/8 transition-colors"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${isLoadingNotifications ? 'animate-spin' : ''}`} />
+                      <span>Refresh</span>
+                    </button>
                   </div>
-                  <div className="bg-white rounded-2xl p-4 border border-black/8 flex items-center justify-between text-xs shadow-xs">
-                    <div>
-                      <p className="font-semibold text-[#111111]">Teammate Proposal</p>
-                      <p className="text-[#4A4A4A]">Aarohi Sen from IIIT Hyderabad joined the Spiking Neural Net module.</p>
+
+                  {isLoadingNotifications ? (
+                    <div className="p-8 text-center bg-white rounded-2xl border border-black/8">
+                      <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                      <p className="text-xs text-[#737373]">Loading notifications...</p>
                     </div>
-                    <span className="text-[10px] text-[#737373] font-mono-code">1 day ago</span>
-                  </div>
+                  ) : notifications.length === 0 ? (
+                    <div className="bg-white rounded-2xl p-8 border border-black/8 text-center">
+                      <Bell className="w-8 h-8 text-[#737373] mx-auto mb-2 opacity-50" />
+                      <p className="text-xs text-[#4A4A4A]">No notifications at this time.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2.5">
+                      {notifications.map((notif) => (
+                        <div
+                          key={notif.id}
+                          id={`notification-item-${notif.id}`}
+                          className={`rounded-2xl p-4 border transition-all text-xs shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                            !notif.read
+                              ? 'bg-amber-50/75 border-amber-200/90'
+                              : 'bg-white border-black/8'
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div
+                              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                                !notif.read ? 'bg-amber-100 text-amber-800' : 'bg-[#F5F5F3] text-[#737373]'
+                              }`}
+                            >
+                              <Bell className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <p className="font-semibold text-[#111111]">{notif.title}</p>
+                                {!notif.read && (
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-200 text-amber-900 font-mono-code">
+                                    New
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-[#4A4A4A] mt-0.5">{notif.message}</p>
+                              {notif.projectTitle && (
+                                <p className="text-[11px] text-[#737373] mt-0.5">
+                                  Project: <span className="font-medium text-[#111111]">{notif.projectTitle}</span>
+                                </p>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-3 self-end sm:self-center shrink-0">
+                            <span className="text-[10px] text-[#737373] font-mono-code whitespace-nowrap">
+                              {formatTimeAgo(notif.createdAt)}
+                            </span>
+                            {notif.type === 'FACULTY_FEEDBACK' && (
+                              <button
+                                id={`view-feedback-btn-${notif.id}`}
+                                onClick={() => handleViewFeedback(notif)}
+                                className="px-3.5 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs shrink-0"
+                              >
+                                <Eye className="w-3.5 h-3.5" />
+                                <span>View Feedback</span>
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -1224,7 +1478,22 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                                 View Repo Telemetry
                               </button>
                               <button
-                                onClick={() => setReviewingProject(p)}
+                                id={`open-feedback-btn-${p.id}`}
+                                onClick={() => {
+                                  setReviewingProject(p);
+                                  setReviewModalTab('feedback');
+                                }}
+                                className="px-3 py-1.5 rounded-xl bg-white hover:bg-[#F5F5F3] border border-black/10 text-xs text-[#111111] font-medium flex items-center gap-1.5 cursor-pointer shadow-xs"
+                              >
+                                <MessageSquare className="w-3.5 h-3.5 text-[#111111]" />
+                                <span>Feedback</span>
+                              </button>
+                              <button
+                                id={`open-rubric-btn-${p.id}`}
+                                onClick={() => {
+                                  setReviewingProject(p);
+                                  setReviewModalTab('rubric');
+                                }}
                                 className="px-3.5 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-xs font-semibold text-white cursor-pointer shadow-xs"
                               >
                                 Evaluate Rubric
@@ -1244,9 +1513,49 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                   <h2 className="font-display text-2xl text-[#111111] font-normal">Advised Capstone Projects</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {SAMPLE_PROJECTS.map((p) => (
-                      <div key={p.id} className="bg-white rounded-2xl p-4 border border-black/8 shadow-xs">
-                        <h3 className="text-base font-semibold text-[#111111]">{p.title}</h3>
-                        <p className="text-xs text-[#4A4A4A] mt-1">{p.tagline}</p>
+                      <div key={p.id} className="bg-white rounded-2xl p-5 border border-black/8 shadow-xs flex flex-col justify-between">
+                        <div>
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <span className="text-[10px] font-mono-code text-[#737373] uppercase">{p.academicYear}</span>
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono-code">
+                              ADVISED NODE
+                            </span>
+                          </div>
+                          <h3 className="text-base font-semibold text-[#111111]">{p.title}</h3>
+                          <p className="text-xs text-[#4A4A4A] mt-1 line-clamp-2">{p.tagline}</p>
+                          <p className="text-[11px] text-[#737373] mt-2">
+                            Leads: {p.contributors.map((c) => c.name).join(', ')}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-black/6">
+                          <button
+                            onClick={() => onOpenProjectDetail(p)}
+                            className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/8 text-xs text-[#111111] font-medium cursor-pointer"
+                          >
+                            Details
+                          </button>
+                          <button
+                            id={`advised-feedback-btn-${p.id}`}
+                            onClick={() => {
+                              setReviewingProject(p);
+                              setReviewModalTab('feedback');
+                            }}
+                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-[#F5F5F3] border border-black/10 text-xs text-[#111111] font-medium flex items-center gap-1 cursor-pointer shadow-xs"
+                          >
+                            <MessageSquare className="w-3.5 h-3.5 text-[#111111]" />
+                            <span>Feedback</span>
+                          </button>
+                          <button
+                            id={`advised-rubric-btn-${p.id}`}
+                            onClick={() => {
+                              setReviewingProject(p);
+                              setReviewModalTab('rubric');
+                            }}
+                            className="px-3.5 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-xs font-semibold text-white cursor-pointer shadow-xs"
+                          >
+                            Review
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -1764,7 +2073,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
         </div>
       )}
 
-      {/* Faculty Evaluation Rubric Modal in Clean White Visual System */}
+      {/* Faculty Project Review Modal (Rubric & Feedback) in Clean White Visual System */}
       {reviewingProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm overflow-y-auto">
           <motion.div
@@ -1773,7 +2082,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
             className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-black/10 shadow-2xl text-[#111111] max-h-[90vh] overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-display text-2xl text-[#111111] font-normal">Faculty Rubric Evaluation</h3>
+              <h3 className="font-display text-2xl text-[#111111] font-normal">Faculty Project Review</h3>
               <button
                 onClick={() => setReviewingProject(null)}
                 className="w-7 h-7 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] border border-black/8 flex items-center justify-center text-[#4A4A4A] cursor-pointer"
@@ -1783,95 +2092,298 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
             </div>
             <p className="text-xs text-[#737373] mb-4">{reviewingProject.title}</p>
 
-            <div className="space-y-4 text-xs mb-6">
-              <div>
-                <div className="flex justify-between text-[#111111] mb-1 font-medium">
-                  <span>Technical Rigor & Code Architecture</span>
-                  <span className="font-mono-code font-bold">{rubricScores.technicalRigor}/10</span>
-                </div>
-                <input
-                  type="range"
-                  min="5"
-                  max="10"
-                  step="0.1"
-                  value={rubricScores.technicalRigor}
-                  onChange={(e) => setRubricScores({ ...rubricScores, technicalRigor: parseFloat(e.target.value) })}
-                  className="w-full accent-black cursor-pointer"
-                />
-              </div>
-
-              <div>
-                <div className="flex justify-between text-[#111111] mb-1 font-medium">
-                  <span>Novelty & Innovation</span>
-                  <span className="font-mono-code font-bold">{rubricScores.novelty}/10</span>
-                </div>
-                <input
-                  type="range"
-                  min="5"
-                  max="10"
-                  step="0.1"
-                  value={rubricScores.novelty}
-                  onChange={(e) => setRubricScores({ ...rubricScores, novelty: parseFloat(e.target.value) })}
-                  className="w-full accent-black cursor-pointer"
-                />
-              </div>
-
-              <div>
-                <div className="flex justify-between text-[#111111] mb-1 font-medium">
-                  <span>Documentation & Reproduction Potential</span>
-                  <span className="font-mono-code font-bold">{rubricScores.documentation}/10</span>
-                </div>
-                <input
-                  type="range"
-                  min="5"
-                  max="10"
-                  step="0.1"
-                  value={rubricScores.documentation}
-                  onChange={(e) => setRubricScores({ ...rubricScores, documentation: parseFloat(e.target.value) })}
-                  className="w-full accent-black cursor-pointer"
-                />
-              </div>
-
-              <div>
-                <div className="flex justify-between text-[#111111] mb-1 font-medium">
-                  <span>Continuity & Next-Batch Readiness</span>
-                  <span className="font-mono-code font-bold">{rubricScores.continuityPotential}/10</span>
-                </div>
-                <input
-                  type="range"
-                  min="5"
-                  max="10"
-                  step="0.1"
-                  value={rubricScores.continuityPotential}
-                  onChange={(e) => setRubricScores({ ...rubricScores, continuityPotential: parseFloat(e.target.value) })}
-                  className="w-full accent-black cursor-pointer"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[#111111] font-medium mb-1">Qualitative Endorsement</label>
-                <textarea
-                  rows={2}
-                  value={reviewFeedback}
-                  onChange={(e) => setReviewFeedback(e.target.value)}
-                  className="w-full p-2.5 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] text-xs focus:outline-none focus:border-black focus:bg-white"
-                />
-              </div>
+            {/* Modal Navigation Tabs: Rubric vs Feedback */}
+            <div className="flex items-center gap-1 bg-[#F7F7F5] p-1 rounded-xl border border-black/8 text-xs font-medium mb-5">
+              <button
+                type="button"
+                id="review-tab-rubric-btn"
+                onClick={() => setReviewModalTab('rubric')}
+                className={`flex-1 py-1.5 rounded-lg transition-all text-center cursor-pointer ${
+                  reviewModalTab === 'rubric'
+                    ? 'bg-[#111111] text-white shadow-xs font-semibold'
+                    : 'text-[#4A4A4A] hover:text-[#111111]'
+                }`}
+              >
+                Rubric Evaluation
+              </button>
+              <button
+                type="button"
+                id="review-tab-feedback-btn"
+                onClick={() => setReviewModalTab('feedback')}
+                className={`flex-1 py-1.5 rounded-lg transition-all text-center cursor-pointer flex items-center justify-center gap-1.5 ${
+                  reviewModalTab === 'feedback'
+                    ? 'bg-[#111111] text-white shadow-xs font-semibold'
+                    : 'text-[#4A4A4A] hover:text-[#111111]'
+                }`}
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Feedback</span>
+                {projectFeedbacks.length > 0 && (
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono-code ${
+                    reviewModalTab === 'feedback' ? 'bg-white/20 text-white' : 'bg-black/8 text-[#111111]'
+                  }`}>
+                    {projectFeedbacks.length}
+                  </span>
+                )}
+              </button>
             </div>
+
+            {reviewModalTab === 'feedback' ? (
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-xs font-semibold text-[#111111] mb-1">
+                    Feedback
+                  </label>
+                  <p className="text-[11px] text-[#737373] mb-2">
+                    Write practical improvement suggestions, corrections, and next steps for the student team.
+                  </p>
+                  <textarea
+                    id="faculty-feedback-input"
+                    rows={5}
+                    maxLength={2000}
+                    placeholder="Write your feedback..."
+                    value={facultyFeedbackText}
+                    onChange={(e) => {
+                      setFacultyFeedbackText(e.target.value);
+                      if (feedbackError) setFeedbackError(null);
+                    }}
+                    className="w-full p-3 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] text-xs placeholder:text-[#888888] focus:outline-none focus:border-black focus:bg-white resize-y"
+                  />
+                  <div className="flex items-center justify-between text-[11px] text-[#737373] mt-1">
+                    <span>Constructive academic guidance</span>
+                    <span className="font-mono-code">{facultyFeedbackText.length}/2000</span>
+                  </div>
+                </div>
+
+                {feedbackError && (
+                  <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 shrink-0" />
+                    <span>{feedbackError}</span>
+                  </div>
+                )}
+
+                {feedbackSuccess && (
+                  <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    <span>{feedbackSuccess}</span>
+                  </div>
+                )}
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    id="submit-feedback-btn"
+                    onClick={handleSubmitFeedback}
+                    disabled={isSubmittingFeedback || !facultyFeedbackText.trim()}
+                    className="btn-primary-black w-full py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs disabled:opacity-50"
+                  >
+                    {isSubmittingFeedback ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Submitting Feedback...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Submit Feedback</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {projectFeedbacks.length > 0 && (
+                  <div className="pt-4 border-t border-black/8 space-y-3">
+                    <h4 className="text-xs font-semibold text-[#111111] flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-[#737373]" />
+                      <span>Previous Feedback History ({projectFeedbacks.length})</span>
+                    </h4>
+                    <div className="space-y-2 max-h-44 overflow-y-auto pr-1">
+                      {projectFeedbacks.map((fb) => (
+                        <div
+                          key={fb.id}
+                          className="p-3 rounded-xl bg-[#FBFBFA] border border-black/8 text-xs space-y-1"
+                        >
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="font-semibold text-[#111111]">{fb.facultyName}</span>
+                            <span className="text-[#737373] font-mono-code">{formatTimeAgo(fb.createdAt)}</span>
+                          </div>
+                          <p className="text-[#4A4A4A] whitespace-pre-wrap">{fb.message}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-4 text-xs mb-6">
+                <div>
+                  <div className="flex justify-between text-[#111111] mb-1 font-medium">
+                    <span>Technical Rigor & Code Architecture</span>
+                    <span className="font-mono-code font-bold">{rubricScores.technicalRigor}/10</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5"
+                    max="10"
+                    step="0.1"
+                    value={rubricScores.technicalRigor}
+                    onChange={(e) => setRubricScores({ ...rubricScores, technicalRigor: parseFloat(e.target.value) })}
+                    className="w-full accent-black cursor-pointer"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-[#111111] mb-1 font-medium">
+                    <span>Novelty & Innovation</span>
+                    <span className="font-mono-code font-bold">{rubricScores.novelty}/10</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5"
+                    max="10"
+                    step="0.1"
+                    value={rubricScores.novelty}
+                    onChange={(e) => setRubricScores({ ...rubricScores, novelty: parseFloat(e.target.value) })}
+                    className="w-full accent-black cursor-pointer"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-[#111111] mb-1 font-medium">
+                    <span>Documentation & Reproduction Potential</span>
+                    <span className="font-mono-code font-bold">{rubricScores.documentation}/10</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5"
+                    max="10"
+                    step="0.1"
+                    value={rubricScores.documentation}
+                    onChange={(e) => setRubricScores({ ...rubricScores, documentation: parseFloat(e.target.value) })}
+                    className="w-full accent-black cursor-pointer"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-[#111111] mb-1 font-medium">
+                    <span>Continuity & Next-Batch Readiness</span>
+                    <span className="font-mono-code font-bold">{rubricScores.continuityPotential}/10</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5"
+                    max="10"
+                    step="0.1"
+                    value={rubricScores.continuityPotential}
+                    onChange={(e) => setRubricScores({ ...rubricScores, continuityPotential: parseFloat(e.target.value) })}
+                    className="w-full accent-black cursor-pointer"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[#111111] font-medium mb-1">Qualitative Endorsement</label>
+                  <textarea
+                    rows={2}
+                    value={reviewFeedback}
+                    onChange={(e) => setReviewFeedback(e.target.value)}
+                    className="w-full p-2.5 rounded-xl bg-[#F7F7F5] border border-black/10 text-[#111111] text-xs focus:outline-none focus:border-black focus:bg-white"
+                  />
+                </div>
+              </div>
+            )}
 
             <div className="flex items-center justify-end gap-3 pt-2 border-t border-black/8">
               <button
                 onClick={() => setReviewingProject(null)}
                 className="px-4 py-2 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] text-xs text-[#4A4A4A] font-medium cursor-pointer"
               >
-                Cancel
+                Close
               </button>
+              {reviewModalTab === 'rubric' && (
+                <button
+                  onClick={() => handleSignVerification(reviewingProject.id)}
+                  className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Publish Cryptographic Signature</span>
+                </button>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Student Viewing Feedback Detail Modal */}
+      {viewingFeedbackDetail && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm overflow-y-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-black/10 shadow-2xl text-[#111111] max-h-[90vh] overflow-y-auto"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-800">
+                  <MessageSquare className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-display text-xl text-[#111111] font-normal">Faculty Review Feedback</h3>
+                  <p className="text-[11px] text-[#737373] font-mono-code">
+                    {formatTimeAgo(viewingFeedbackDetail.notif.createdAt)}
+                  </p>
+                </div>
+              </div>
               <button
-                onClick={() => handleSignVerification(reviewingProject.id)}
-                className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                onClick={() => setViewingFeedbackDetail(null)}
+                className="w-7 h-7 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] border border-black/8 flex items-center justify-center text-[#4A4A4A] cursor-pointer"
               >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Publish Cryptographic Signature</span>
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {viewingFeedbackDetail.project && (
+              <div className="mb-4 p-3.5 rounded-2xl bg-[#FBFBFA] border border-black/8">
+                <span className="text-[10px] font-mono-code text-[#737373] uppercase tracking-wider">PROJECT</span>
+                <h4 className="text-sm font-semibold text-[#111111] mt-0.5">{viewingFeedbackDetail.project.title}</h4>
+                <p className="text-xs text-[#4A4A4A] mt-0.5 line-clamp-2">{viewingFeedbackDetail.project.tagline}</p>
+              </div>
+            )}
+
+            <div className="space-y-3 mb-6">
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-[#737373]">Reviewed by:</span>
+                <span className="font-semibold text-[#111111]">{viewingFeedbackDetail.facultyName}</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  Faculty Advisor
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#111111] mb-1.5">Feedback & Actionable Next Steps</label>
+                <div className="p-4 rounded-2xl bg-[#F7F7F5] border border-black/10 text-xs text-[#111111] whitespace-pre-wrap leading-relaxed">
+                  {viewingFeedbackDetail.feedbackMessage}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-black/8">
+              {viewingFeedbackDetail.project && (
+                <button
+                  onClick={() => {
+                    const p = viewingFeedbackDetail.project!;
+                    setViewingFeedbackDetail(null);
+                    onOpenProjectDetail(p);
+                  }}
+                  className="px-4 py-2 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] text-xs text-[#111111] font-medium cursor-pointer"
+                >
+                  Open Project Details
+                </button>
+              )}
+              <button
+                onClick={() => setViewingFeedbackDetail(null)}
+                className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold cursor-pointer shadow-xs"
+              >
+                Done
               </button>
             </div>
           </motion.div>
