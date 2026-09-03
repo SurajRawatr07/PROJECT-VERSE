@@ -40,6 +40,7 @@ export interface VerificationRequest {
   documentFileName: string;
   documentFileSize: string;
   documentUploadedAt: string;
+  documentId?: string;
   status: DocumentVerificationStatus;
   rejectionReason?: string;
   reviewedBy?: string;

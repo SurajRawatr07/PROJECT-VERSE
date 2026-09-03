@@ -402,7 +402,20 @@ export const StudentVerificationManager: React.FC<StudentVerificationManagerProp
 
               {/* Document Details */}
               <div className="p-4 rounded-2xl border border-black/10 bg-white space-y-2">
-                <h4 className="font-semibold text-[#111111]">Submitted Document Proof</h4>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-[#111111]">Submitted Document Proof</h4>
+                  {inspectingRequest.documentId && (
+                    <a
+                      href={`/api/documents/${encodeURIComponent(inspectingRequest.documentId)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#111111] hover:bg-black text-white text-[10px] font-medium transition-colors"
+                    >
+                      <Eye className="w-3 h-3" />
+                      <span>View File</span>
+                    </a>
+                  )}
+                </div>
                 <p className="text-[#737373] text-[11px]">Type: {inspectingRequest.documentType}</p>
                 <p className="text-[#737373] text-[11px]">File: {inspectingRequest.documentFileName} ({inspectingRequest.documentFileSize})</p>
                 

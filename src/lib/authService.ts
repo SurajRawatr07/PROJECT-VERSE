@@ -37,6 +37,7 @@ export interface UserProfile {
   documentType?: DocumentType;
   documentSize?: string;
   documentSubmittedAt?: string;
+  documentId?: string;
   rejectionReason?: string;
   reviewedBy?: string;
   reviewedAt?: string;
@@ -561,6 +562,7 @@ export interface RegisterUserParams {
   documentType?: DocumentType;
   documentFileName?: string;
   documentFileSize?: string;
+  documentId?: string;
 }
 
 /**
@@ -591,7 +593,8 @@ export function registerUser(params: RegisterUserParams): { success: boolean; se
     departmentToken,
     documentType,
     documentFileName,
-    documentFileSize
+    documentFileSize,
+    documentId
   } = params;
 
   // Disallow public admin registration
@@ -704,6 +707,7 @@ export function registerUser(params: RegisterUserParams): { success: boolean; se
     documentName: documentFileName,
     documentType: documentType,
     documentSize: documentFileSize,
+    documentId: documentId,
     documentSubmittedAt: isDocumentSupplied ? 'Just now' : undefined,
     verificationSignals,
     projectsCount: role === 'STUDENT' ? (studentType === 'ALUMNI' ? 3 : 1) : role === 'FACULTY' ? 6 : 18,
@@ -739,6 +743,7 @@ export function registerUser(params: RegisterUserParams): { success: boolean; se
       documentType,
       documentFileName,
       documentFileSize: documentFileSize || '2.1 MB',
+      documentId,
       documentUploadedAt: 'Just now',
       status: 'PENDING_REVIEW'
     };
@@ -771,6 +776,7 @@ export function submitVerificationDocument(
     documentType: DocumentType;
     documentFileName: string;
     documentFileSize: string;
+    documentId?: string;
   }
 ): { success: boolean; updatedProfile?: UserProfile; error?: string } {
   const users = loadUsers();
@@ -785,6 +791,7 @@ export function submitVerificationDocument(
   user.documentType = docData.documentType;
   user.documentName = docData.documentFileName;
   user.documentSize = docData.documentFileSize;
+  user.documentId = docData.documentId;
   user.documentSubmittedAt = 'Just now';
   user.rejectionReason = undefined;
   user.verifiedStatus = 'Verification Pending';
@@ -812,6 +819,7 @@ export function submitVerificationDocument(
     documentType: docData.documentType,
     documentFileName: docData.documentFileName,
     documentFileSize: docData.documentFileSize,
+    documentId: docData.documentId,
     documentUploadedAt: 'Just now',
     status: 'PENDING_REVIEW'
   };

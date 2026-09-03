@@ -1,13 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { 
   UploadCloud, 
-  FileText, 
-  CheckCircle2, 
   AlertCircle, 
   X, 
   ShieldCheck, 
   FileCheck2,
-  File,
   Loader2
 } from 'lucide-react';
 import { DocumentType } from '../../types';
@@ -26,30 +23,35 @@ interface DocumentUploadDropzoneProps {
     fileName: string;
     fileSize: string;
   };
+  isUploading?: boolean;
+  uploadProgress?: number;
+  externalError?: string | null;
 }
 
 export const DocumentUploadDropzone: React.FC<DocumentUploadDropzoneProps> = ({
   studentType = 'CURRENT_STUDENT',
   onFileSelected,
   onFileRemoved,
-  initialDocument
+  initialDocument,
+  isUploading: externalIsUploading,
+  uploadProgress: externalProgress,
+  externalError
 }) => {
   const [selectedDocType, setSelectedDocType] = useState<DocumentType>(
     initialDocument?.documentType || (studentType === 'ALUMNI' ? 'Degree Certificate / Marksheet' : 'Student ID Card')
   );
-  const [file, setFile] = useState<{ name: string; size: string } | null>(
+  const [file, setFile] = useState<{ name: string; size: string; rawFile?: File } | null>(
     initialDocument ? { name: initialDocument.fileName, size: initialDocument.fileSize } : null
   );
   const [isDragging, setIsDragging] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<number>(initialDocument ? 100 : 0);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [internalError, setInternalError] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+  const allowedMimeTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
   const disallowedExtensions = ['exe', 'js', 'zip', 'rar', 'bat', 'sh', 'apk', 'dmg'];
-  const maxSizeBytes = 10 * 1024 * 1024; // 10MB
+  const maxSizeBytes = 10 * 1024 * 1024; // 10MB strict limit
 
   const studentDocOptions: DocumentType[] = [
     'Student ID Card',
@@ -73,52 +75,51 @@ export const DocumentUploadDropzone: React.FC<DocumentUploadDropzoneProps> = ({
   };
 
   const processFile = (selectedFile: File) => {
-    setUploadError(null);
+    setInternalError(null);
+
+    // Validate non-empty file
+    if (!selectedFile || selectedFile.size <= 0) {
+      setInternalError('The selected file is empty. Please select a valid document.');
+      return;
+    }
 
     const ext = selectedFile.name.split('.').pop()?.toLowerCase() || '';
 
     // Check disallowed extensions explicitly
     if (disallowedExtensions.includes(ext)) {
-      setUploadError(`Executable and archive files (.${ext}) are strictly disallowed for security.`);
+      setInternalError(`Executable and archive files (.${ext}) are strictly disallowed for security.`);
       return;
     }
 
     // Check allowed extensions
     if (!allowedExtensions.includes(ext)) {
-      setUploadError(`Invalid file format. Please upload a PDF, JPG, JPEG, or PNG document.`);
+      setInternalError(`Invalid file format (.${ext || 'unknown'}). Please upload a PDF, JPG, JPEG, or PNG document.`);
       return;
     }
 
-    // Check size limit
+    // Validate MIME type if provided by browser
+    if (selectedFile.type && !allowedMimeTypes.includes(selectedFile.type.toLowerCase())) {
+      setInternalError(`Invalid file type (${selectedFile.type}). Only PDF, JPG, JPEG, and PNG are allowed.`);
+      return;
+    }
+
+    // Check size limit (10 MB max)
     if (selectedFile.size > maxSizeBytes) {
-      setUploadError(`File is too large (${formatFileSize(selectedFile.size)}). Maximum allowed size is 10 MB.`);
+      setInternalError(`File is too large (${formatFileSize(selectedFile.size)}). Maximum allowed size is 10 MB.`);
       return;
     }
-
-    // Simulate realistic upload progress
-    setIsUploading(true);
-    setUploadProgress(15);
 
     const formattedSize = formatFileSize(selectedFile.size);
     const fileName = selectedFile.name;
 
-    const interval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 95) {
-          clearInterval(interval);
-          setIsUploading(false);
-          setFile({ name: fileName, size: formattedSize });
-          onFileSelected({
-            documentType: selectedDocType,
-            fileName,
-            fileSize: formattedSize,
-            rawFile: selectedFile
-          });
-          return 100;
-        }
-        return prev + 25;
-      });
-    }, 90);
+    // Immediately update local file state and pass raw File object to parent
+    setFile({ name: fileName, size: formattedSize, rawFile: selectedFile });
+    onFileSelected({
+      documentType: selectedDocType,
+      fileName,
+      fileSize: formattedSize,
+      rawFile: selectedFile
+    });
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -153,8 +154,7 @@ export const DocumentUploadDropzone: React.FC<DocumentUploadDropzoneProps> = ({
 
   const handleRemoveFile = () => {
     setFile(null);
-    setUploadProgress(0);
-    setUploadError(null);
+    setInternalError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -162,6 +162,9 @@ export const DocumentUploadDropzone: React.FC<DocumentUploadDropzoneProps> = ({
       onFileRemoved();
     }
   };
+
+  const activeError = externalError || internalError;
+  const isUploading = Boolean(externalIsUploading);
 
   return (
     <div className="space-y-4">
@@ -172,6 +175,7 @@ export const DocumentUploadDropzone: React.FC<DocumentUploadDropzoneProps> = ({
         </label>
         <select
           value={selectedDocType}
+          disabled={isUploading}
           onChange={(e) => {
             const newType = e.target.value as DocumentType;
             setSelectedDocType(newType);
@@ -179,11 +183,12 @@ export const DocumentUploadDropzone: React.FC<DocumentUploadDropzoneProps> = ({
               onFileSelected({
                 documentType: newType,
                 fileName: file.name,
-                fileSize: file.size
+                fileSize: file.size,
+                rawFile: file.rawFile
               });
             }
           }}
-          className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F7F5] border border-black/10 text-xs text-[#111111] focus:outline-none focus:border-black focus:bg-white transition-all cursor-pointer font-medium"
+          className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F7F5] border border-black/10 text-xs text-[#111111] focus:outline-none focus:border-black focus:bg-white transition-all cursor-pointer font-medium disabled:opacity-60"
         >
           {docOptions.map((opt) => (
             <option key={opt} value={opt}>
@@ -235,12 +240,15 @@ export const DocumentUploadDropzone: React.FC<DocumentUploadDropzoneProps> = ({
         <div className="p-5 rounded-2xl bg-[#F7F7F5] border border-black/10 text-center space-y-3">
           <div className="flex items-center justify-center gap-2 text-xs font-medium text-[#111111]">
             <Loader2 className="w-4 h-4 animate-spin text-black" />
-            <span>Encrypting & staging document ({uploadProgress}%)...</span>
+            <span>
+              Uploading document to secure server
+              {typeof externalProgress === 'number' && externalProgress > 0 ? ` (${externalProgress}%)` : '...'}
+            </span>
           </div>
           <div className="w-full bg-black/10 h-1.5 rounded-full overflow-hidden">
             <div
               className="bg-[#111111] h-full transition-all duration-200"
-              style={{ width: `${uploadProgress}%` }}
+              style={{ width: `${typeof externalProgress === 'number' && externalProgress > 0 ? externalProgress : 100}%` }}
             />
           </div>
         </div>
@@ -276,10 +284,10 @@ export const DocumentUploadDropzone: React.FC<DocumentUploadDropzoneProps> = ({
       )}
 
       {/* Upload Error */}
-      {uploadError && (
+      {activeError && (
         <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 flex items-start gap-2">
           <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-          <span>{uploadError}</span>
+          <span>{activeError}</span>
         </div>
       )}
 

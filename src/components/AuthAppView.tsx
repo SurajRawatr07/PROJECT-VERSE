@@ -48,6 +48,7 @@ import { ProjectItem, ProjectDomain, DocumentType } from '../types';
 import { SAMPLE_PROJECTS, DOMAINS_LIST, SAMPLE_PEERS, SAMPLE_MENTORS } from '../data/mockData';
 import { ProjectVerseBrand } from './ProjectVerseBrand';
 import { getCurrentSession, resolveProfileWithPrivacy, UserProfile, submitVerificationDocument } from '../lib/authService';
+import { uploadAcademicDocument } from '../lib/documentService';
 import { StudentVerificationManager } from './verification/StudentVerificationManager';
 import { DocumentUploadDropzone } from './verification/DocumentUploadDropzone';
 
@@ -212,7 +213,14 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
   // Document upload modal state for Student
   const [isDocUploadModalOpen, setIsDocUploadModalOpen] = useState(false);
-  const [pendingUploadDoc, setPendingUploadDoc] = useState<{ documentType: DocumentType; fileName: string; fileSize: string } | null>(null);
+  const [pendingUploadDoc, setPendingUploadDoc] = useState<{ 
+    documentType: DocumentType; 
+    fileName: string; 
+    fileSize: string; 
+    rawFile?: File; 
+  } | null>(null);
+  const [isSubmittingDoc, setIsSubmittingDoc] = useState(false);
+  const [docUploadError, setDocUploadError] = useState<string | null>(null);
 
   // Role navigation tabs configuration
   const roleTabs: Record<UserRole, { id: string; label: string; icon: any }[]> = {
@@ -272,14 +280,45 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     setTimeout(() => setApprovalToast(null), 4000);
   };
 
-  const handleStudentDocumentSubmit = () => {
+  const handleStudentDocumentSubmit = async () => {
     if (!pendingUploadDoc) return;
+    setIsSubmittingDoc(true);
+    setDocUploadError(null);
+
     const session = getCurrentSession();
+    let storedDocId: string | undefined = undefined;
+
+    // Real multipart/form-data upload
+    if (pendingUploadDoc.rawFile) {
+      try {
+        const formData = new FormData();
+        formData.append('document', pendingUploadDoc.rawFile);
+        formData.append('documentType', pendingUploadDoc.documentType);
+        if (session?.user?.id) {
+          formData.append('userId', session.user.id);
+        }
+
+        const uploadRes = await uploadAcademicDocument(formData, session?.token);
+        if (!uploadRes.success) {
+          setIsSubmittingDoc(false);
+          setDocUploadError(uploadRes.error || 'Failed to upload document proof. Please check file and retry.');
+          return;
+        }
+
+        storedDocId = uploadRes.documentId;
+      } catch (err: any) {
+        setIsSubmittingDoc(false);
+        setDocUploadError(err?.message || 'Network error uploading document proof. Please check your connection.');
+        return;
+      }
+    }
+
     if (session) {
       const res = submitVerificationDocument(session.user.id, {
         documentType: pendingUploadDoc.documentType,
         documentFileName: pendingUploadDoc.fileName,
-        documentFileSize: pendingUploadDoc.fileSize
+        documentFileSize: pendingUploadDoc.fileSize,
+        documentId: storedDocId
       });
       if (res.success && res.updatedProfile) {
         setCurrentProfile(res.updatedProfile);
@@ -292,11 +331,15 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
         documentType: pendingUploadDoc.documentType,
         documentName: pendingUploadDoc.fileName,
         documentSize: pendingUploadDoc.fileSize,
+        documentId: storedDocId,
         documentSubmittedAt: 'Just now'
       });
     }
+
+    setIsSubmittingDoc(false);
     setIsDocUploadModalOpen(false);
     setPendingUploadDoc(null);
+    setDocUploadError(null);
     setApprovalToast('Academic document submitted to faculty and institutional review queue.');
     setTimeout(() => setApprovalToast(null), 4000);
   };
@@ -1682,27 +1725,39 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
             <DocumentUploadDropzone
               studentType={currentProfile?.studentType || 'CURRENT_STUDENT'}
-              onFileSelected={(data) => setPendingUploadDoc(data)}
-              onFileRemoved={() => setPendingUploadDoc(null)}
+              isUploading={isSubmittingDoc}
+              externalError={docUploadError}
+              onFileSelected={(data) => {
+                setDocUploadError(null);
+                setPendingUploadDoc(data);
+              }}
+              onFileRemoved={() => {
+                setPendingUploadDoc(null);
+                setDocUploadError(null);
+              }}
             />
 
             <div className="flex items-center justify-end gap-3 pt-4 border-t border-black/8 mt-4">
               <button
+                type="button"
+                disabled={isSubmittingDoc}
                 onClick={() => {
                   setIsDocUploadModalOpen(false);
                   setPendingUploadDoc(null);
+                  setDocUploadError(null);
                 }}
-                className="px-4 py-2 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] text-xs text-[#4A4A4A] font-medium cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] text-xs text-[#4A4A4A] font-medium cursor-pointer disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleStudentDocumentSubmit}
-                disabled={!pendingUploadDoc}
+                disabled={!pendingUploadDoc || isSubmittingDoc}
                 className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
               >
                 <UploadCloud className="w-3.5 h-3.5" />
-                <span>Submit for Verification</span>
+                <span>{isSubmittingDoc ? 'Uploading...' : 'Submit for Verification'}</span>
               </button>
             </div>
           </motion.div>

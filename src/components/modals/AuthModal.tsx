@@ -43,6 +43,7 @@ import {
   RegisterUserParams,
   submitVerificationDocument
 } from '../../lib/authService';
+import { uploadAcademicDocument } from '../../lib/documentService';
 import { StudentType, DocumentType } from '../../types';
 
 interface AuthModalProps {
@@ -109,6 +110,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     documentType: DocumentType;
     fileName: string;
     fileSize: string;
+    rawFile?: File;
   } | null>(null);
 
   // UI / Error state
@@ -376,9 +378,39 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   // Step 3: Finalize registration with or without document
-  const finalizeRegistration = (docData: { documentType: DocumentType; fileName: string; fileSize: string } | null) => {
+  const finalizeRegistration = async (docData: { 
+    documentType: DocumentType; 
+    fileName: string; 
+    fileSize: string; 
+    rawFile?: File; 
+  } | null) => {
     setIsAuthenticating(true);
     setErrorMessage(null);
+
+    let storedDocId: string | undefined = undefined;
+
+    // If a physical file was selected, upload via real multipart/form-data
+    if (docData && docData.rawFile) {
+      try {
+        const formData = new FormData();
+        formData.append('document', docData.rawFile);
+        formData.append('documentType', docData.documentType);
+
+        const uploadResult = await uploadAcademicDocument(formData);
+
+        if (!uploadResult.success) {
+          setIsAuthenticating(false);
+          setErrorMessage(uploadResult.error || 'Academic document upload failed. Please check file and retry.');
+          return;
+        }
+
+        storedDocId = uploadResult.documentId;
+      } catch (uploadErr: any) {
+        setIsAuthenticating(false);
+        setErrorMessage(uploadErr?.message || 'Network error uploading document proof. Please check your connection.');
+        return;
+      }
+    }
 
     const skillsArray = skills.split(',').map((s) => s.trim()).filter(Boolean);
 
@@ -405,21 +437,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       departmentToken: selectedRole === 'HOD' ? departmentToken : undefined,
       documentType: docData?.documentType,
       documentFileName: docData?.fileName,
-      documentFileSize: docData?.fileSize
+      documentFileSize: docData?.fileSize,
+      documentId: storedDocId
     };
 
-    setTimeout(() => {
-      const result = registerUser(registerPayload);
+    const result = registerUser(registerPayload);
 
-      if (!result.success) {
-        setIsAuthenticating(false);
-        setErrorMessage(result.error || 'Registration failed. Please review your details.');
-        return;
-      }
-
-      setRegStep('SUMMARY_SUCCESS');
+    if (!result.success) {
       setIsAuthenticating(false);
-    }, 750);
+      setErrorMessage(result.error || 'Registration failed. Please review your details.');
+      return;
+    }
+
+    setRegStep('SUMMARY_SUCCESS');
+    setIsAuthenticating(false);
   };
 
   return (
@@ -1295,15 +1326,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   {/* Dropzone Component */}
                   <DocumentUploadDropzone
                     studentType={studentType}
+                    isUploading={isAuthenticating}
+                    externalError={errorMessage}
                     onFileSelected={(data) => {
+                      setErrorMessage(null);
                       setUploadedDoc({
                         documentType: data.documentType,
                         fileName: data.fileName,
-                        fileSize: data.fileSize
+                        fileSize: data.fileSize,
+                        rawFile: data.rawFile
                       });
                     }}
                     onFileRemoved={() => {
                       setUploadedDoc(null);
+                      setErrorMessage(null);
                     }}
                   />
 
