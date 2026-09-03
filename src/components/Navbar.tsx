@@ -24,6 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenRegister
 }) => {
   const [isCompact, setIsCompact] = useState(false);
+  const [isModerateScroll, setIsModerateScroll] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
   const scrollUpAccumulator = useRef(0);
@@ -33,18 +34,26 @@ export const Navbar: React.FC<NavbarProps> = ({
       const currentScrollY = window.scrollY;
       const delta = currentScrollY - lastScrollY.current;
 
+      // 1. Moderate scroll detection (subtle height & padding reduction)
+      if (currentScrollY > 40) {
+        setIsModerateScroll(true);
+      } else {
+        setIsModerateScroll(false);
+      }
+
+      // 2. Compact mode detection (anchored in place, zero downward translation)
       if (currentScrollY <= 80) {
-        // At or near top, always show full navbar
+        // At or near top -> always expand full navbar
         setIsCompact(false);
         scrollUpAccumulator.current = 0;
-      } else if (delta > 4 && currentScrollY > 140) {
-        // Scrolling down past threshold -> collapse smoothly to compact logo
+      } else if (delta > 3 && currentScrollY > 150) {
+        // Scrolling down past threshold -> compact in place
         setIsCompact(true);
         scrollUpAccumulator.current = 0;
-      } else if (delta < -2) {
-        // Scrolling up -> accumulate upward scroll distance
+      } else if (delta < -3) {
+        // Scrolling up -> accumulate upward scroll distance to smoothly expand
         scrollUpAccumulator.current += Math.abs(delta);
-        if (scrollUpAccumulator.current > 70) {
+        if (scrollUpAccumulator.current > 50) {
           setIsCompact(false);
           scrollUpAccumulator.current = 0;
         }
@@ -70,130 +79,196 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleExpandNavbar = () => {
-    setIsCompact(false);
+  const handleToggleExpand = () => {
+    if (isCompact) {
+      setIsCompact(false);
+    }
   };
 
   return (
     <>
-      <header className="fixed top-5 sm:top-6 left-0 right-0 z-50 flex items-center justify-center px-4 pointer-events-none">
-        {/* COMPACT PILL / CIRCULAR BUTTON (When scrolled down) */}
-        <AnimatePresence mode="wait">
-          {isCompact ? (
-            <motion.button
-              key="compact-nav"
-              id="compact-navbar-btn"
-              initial={{ scale: 0.8, opacity: 0, y: -12 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: -8 }}
-              transition={{ type: 'spring', stiffness: 420, damping: 28 }}
-              onClick={handleExpandNavbar}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.94 }}
-              className="pointer-events-auto w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/92 backdrop-blur-[18px] border border-black/8 shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.12)] hover:border-black/15 text-[#111111] transition-colors cursor-pointer group"
-              aria-label="Expand ProjectVerse navigation"
-              title="Expand navigation"
+      {/* 
+        Fixed Top Anchor: Anchored strictly at top-4 sm:top-5 with ZERO vertical translation.
+        The navbar and logo stay at the same top anchor point throughout all scroll states.
+      */}
+      <header className="fixed top-3.5 sm:top-4 md:top-5 left-0 right-0 z-50 flex items-center justify-center px-4 pointer-events-none">
+        <motion.nav
+          id="main-navbar"
+          layout
+          onClick={handleToggleExpand}
+          transition={{
+            layout: { type: 'spring', stiffness: 380, damping: 32 },
+            opacity: { duration: 0.2 },
+            scale: { duration: 0.25 }
+          }}
+          className={`pointer-events-auto rounded-full bg-white/94 backdrop-blur-[20px] border border-black/8 shadow-[0_8px_32px_rgba(0,0,0,0.06)] flex items-center transition-[background-color,border-color,box-shadow] duration-200 ${
+            isCompact
+              ? 'md:w-[52px] md:h-[50px] md:p-0 md:justify-center w-full max-w-4xl h-[52px] px-3.5 justify-between cursor-pointer hover:border-black/15 hover:shadow-[0_12px_36px_rgba(0,0,0,0.10)]'
+              : isModerateScroll
+              ? 'w-full max-w-4xl lg:max-w-5xl h-[52px] sm:h-[54px] px-3.5 sm:px-4.5 justify-between'
+              : 'w-full max-w-4xl lg:max-w-5xl h-[54px] sm:h-[56px] px-4 sm:px-5 justify-between'
+          }`}
+          aria-label="Main Navigation"
+        >
+          {/* ========================================================================= */}
+          {/* LEFT: [ SYMBOL ] PROJECT VERSE (Wordmark fades smoothly in compact mode) */}
+          {/* ========================================================================= */}
+          <div className="flex items-center shrink-0">
+            <button
+              id="nav-logo-btn"
+              onClick={(e) => {
+                if (isCompact) {
+                  e.stopPropagation();
+                  setIsCompact(false);
+                } else {
+                  handleNavClick('home');
+                }
+              }}
+              className={`flex items-center text-left focus:outline-none group cursor-pointer shrink-0 py-1 px-1 rounded-full transition-transform duration-200 ${
+                isCompact ? 'justify-center mx-auto' : ''
+              }`}
+              aria-label="ProjectVerse Home"
+              title={isCompact ? 'Click to expand menu' : 'ProjectVerse Home'}
             >
-              <ProjectVerseLogo
-                size={26}
-                color="#111111"
-                className="transition-transform duration-300 group-hover:scale-105"
-              />
-            </motion.button>
-          ) : (
-            /* FULL EXPANDED NAVBAR */
-            <motion.nav
-              key="full-nav"
-              initial={{ scale: 0.95, opacity: 0, y: -10 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.92, opacity: 0, y: -10 }}
-              transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-              className="pointer-events-auto w-full max-w-4xl lg:max-w-5xl h-[54px] sm:h-[56px] flex items-center justify-between px-3.5 sm:px-5 rounded-full bg-white/92 backdrop-blur-[18px] border border-black/8 shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
-              aria-label="Main Navigation"
-            >
-              {/* LEFT: [ ProjectVerse Logo ]  PROJECT   VERSE */}
-              <button
-                id="nav-logo-btn"
-                onClick={() => handleNavClick('home')}
-                className="flex items-center text-left focus:outline-none group cursor-pointer shrink-0 py-1 px-1 rounded-full transition-transform duration-200"
-                aria-label="ProjectVerse Home"
-              >
-                <ProjectVerseBrand
-                  theme="light"
-                  interactive={true}
-                  className="hover:opacity-95"
+              {/* Distinctive Geometric Symbol (Never moves downward, centered in compact pill) */}
+              <div className="shrink-0 flex items-center justify-center">
+                <ProjectVerseLogo
+                  size={isCompact ? 27 : 28}
+                  color="#0F172A"
+                  accentColor="#2563EB"
+                  className="transition-transform duration-200 group-hover:scale-105"
                 />
-              </button>
-
-              {/* CENTER: Navigation Links (Home, About, How It Works) */}
-              <div className="hidden md:flex items-center gap-1">
-                {navItems.map((item) => {
-                  const isActive = currentPage === item.page;
-                  return (
-                    <button
-                      key={item.page}
-                      id={`nav-link-${item.page}`}
-                      onClick={() => handleNavClick(item.page)}
-                      className={`relative font-body text-[14px] font-medium tracking-[-0.015em] leading-none px-4 py-2 rounded-full cursor-pointer select-none transition-all duration-200 hover:-translate-y-[1px] ${
-                        isActive
-                          ? 'text-[#111111] bg-[#EBEBE7] font-semibold shadow-xs'
-                          : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1]'
-                      }`}
-                    >
-                      <span className="relative z-10">{item.label}</span>
-                    </button>
-                  );
-                })}
               </div>
 
-              {/* RIGHT: AccountIcon Login + Primary Get Started CTA */}
-              <div className="hidden md:flex items-center gap-2">
-                {/* Secondary AccountIcon Login Button */}
-                <button
-                  id="nav-login-btn"
-                  onClick={onOpenLogin}
-                  className="font-body text-[14px] font-medium tracking-[-0.015em] leading-none text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1] px-3.5 py-2 rounded-full inline-flex items-center gap-1.5 transition-all duration-200 cursor-pointer select-none hover:-translate-y-[1px]"
-                >
-                  <AccountIcon size={18} className="text-[#4A4A4A] group-hover:text-[#111111]" />
-                  <span>Login</span>
-                </button>
+              {/* PROJECT VERSE Wordmark (Smoothly collapsed on desktop in compact mode) */}
+              <motion.div
+                animate={{
+                  opacity: isCompact ? 0 : 1,
+                  width: isCompact ? 0 : 'auto',
+                  marginLeft: isCompact ? 0 : 11
+                }}
+                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                className={`overflow-hidden whitespace-nowrap flex items-baseline leading-none font-brand font-normal text-[#0F172A] text-[19px] sm:text-[21.5px] md:text-[23px] select-none ${
+                  isCompact ? 'md:hidden' : 'inline-flex'
+                }`}
+                style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "cv11"' }}
+              >
+                <span className="text-[0.90em] tracking-[0.03em] inline-block font-normal">
+                  PROJECT
+                </span>
+                <span className="inline-block w-[0.32em]" aria-hidden="true" />
+                <span className="text-[1.04em] tracking-[-0.012em] inline-block font-normal">
+                  VERSE
+                </span>
+              </motion.div>
+            </button>
+          </div>
 
-                {/* Primary Get Started CTA */}
+          {/* ========================================================================= */}
+          {/* CENTER: Navigation Links (Home, About, How It Works) */}
+          {/* ========================================================================= */}
+          <motion.div
+            animate={{
+              opacity: isCompact ? 0 : 1,
+              scale: isCompact ? 0.95 : 1
+            }}
+            transition={{ duration: 0.2 }}
+            className={`items-center gap-1 ${
+              isCompact ? 'hidden' : 'hidden md:flex'
+            }`}
+          >
+            {navItems.map((item) => {
+              const isActive = currentPage === item.page;
+              return (
                 <button
-                  id="nav-get-started-btn"
-                  onClick={onOpenRegister}
-                  className="btn-primary-black inline-flex items-center gap-1.5 px-4.5 py-2.5 cursor-pointer select-none"
+                  key={item.page}
+                  id={`nav-link-${item.page}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNavClick(item.page);
+                  }}
+                  className={`relative font-body text-[14px] font-semibold tracking-[-0.015em] leading-none px-4 py-2 rounded-full cursor-pointer select-none transition-all duration-200 hover:-translate-y-[1px] ${
+                    isActive
+                      ? 'text-[#111111] bg-[#EBEBE7] font-bold shadow-xs'
+                      : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1]'
+                  }`}
                 >
-                  <span>Get Started</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-white" />
+                  <span className="relative z-10">{item.label}</span>
                 </button>
-              </div>
+              );
+            })}
+          </motion.div>
 
-              {/* MOBILE MENU TOGGLE BUTTON */}
-              <div className="flex md:hidden items-center">
-                <button
-                  id="nav-mobile-toggle-btn"
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="w-8 h-8 rounded-full bg-[#F5F5F3] border border-black/8 flex items-center justify-center text-[#111111] hover:bg-[#ECECE9] focus:outline-none cursor-pointer"
-                  aria-label="Open menu"
-                  aria-expanded={mobileMenuOpen}
-                >
-                  {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-                </button>
-              </div>
-            </motion.nav>
-          )}
-        </AnimatePresence>
+          {/* ========================================================================= */}
+          {/* RIGHT: Login + Primary Get Started CTA */}
+          {/* ========================================================================= */}
+          <motion.div
+            animate={{
+              opacity: isCompact ? 0 : 1,
+              scale: isCompact ? 0.95 : 1
+            }}
+            transition={{ duration: 0.2 }}
+            className={`items-center gap-2 ${
+              isCompact ? 'hidden' : 'hidden md:flex'
+            }`}
+          >
+            {/* Secondary AccountIcon Login Button */}
+            <button
+              id="nav-login-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenLogin();
+              }}
+              className="font-body text-[14px] font-semibold tracking-[-0.015em] leading-none text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1] px-3.5 py-2 rounded-full inline-flex items-center gap-1.5 transition-all duration-200 cursor-pointer select-none hover:-translate-y-[1px]"
+            >
+              <AccountIcon size={18} className="text-[#4A4A4A] group-hover:text-[#111111]" />
+              <span>Login</span>
+            </button>
+
+            {/* Primary Get Started CTA Button */}
+            <button
+              id="nav-get-started-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenRegister();
+              }}
+              className="btn-primary-black inline-flex items-center gap-1.5 px-4.5 py-2.5 cursor-pointer select-none font-semibold text-[13.5px]"
+            >
+              <span>Get Started</span>
+              <ArrowRight className="w-3.5 h-3.5 text-white" />
+            </button>
+          </motion.div>
+
+          {/* ========================================================================= */}
+          {/* MOBILE: Menu Toggle Button (Keeps accessible on mobile devices) */}
+          {/* ========================================================================= */}
+          <div className="flex md:hidden items-center shrink-0">
+            <button
+              id="nav-mobile-toggle-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setMobileMenuOpen(!mobileMenuOpen);
+              }}
+              className="w-8 h-8 rounded-full bg-[#F5F5F3] border border-black/8 flex items-center justify-center text-[#111111] hover:bg-[#ECECE9] focus:outline-none cursor-pointer"
+              aria-label="Open menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
+          </div>
+        </motion.nav>
       </header>
 
+      {/* ========================================================================= */}
       {/* MOBILE DRAWER / OVERLAY */}
+      {/* ========================================================================= */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-40 bg-white/98 backdrop-blur-2xl md:hidden flex flex-col justify-between p-6 pt-24"
           >
             <div className="flex flex-col space-y-2">
@@ -203,7 +278,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   interactive={false}
                   textSizeClassName="text-[20px]"
                 />
-                <span className="text-[11px] font-mono-code text-[#737373] uppercase tracking-widest">
+                <span className="text-[11px] font-mono-code text-[#737373] uppercase tracking-widest font-medium">
                   Menu
                 </span>
               </div>
@@ -214,13 +289,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <motion.button
                     key={item.page}
                     id={`mobile-nav-link-${item.page}`}
-                    initial={{ x: -10, opacity: 0 }}
+                    initial={{ x: -8, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: idx * 0.04 }}
                     onClick={() => handleNavClick(item.page)}
-                    className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-[16px] font-medium tracking-[-0.015em] transition-all cursor-pointer ${
+                    className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-[16px] font-semibold tracking-[-0.015em] transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-[#EBEBE7] text-[#111111] font-semibold border border-black/8'
+                        ? 'bg-[#EBEBE7] text-[#111111] font-bold border border-black/8'
                         : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F7F7F5] border border-transparent'
                     }`}
                   >
@@ -238,7 +313,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenLogin();
                 }}
-                className="w-full py-3.5 px-4 rounded-xl bg-[#F7F7F5] border border-black/8 text-[#111111] text-[15px] font-medium hover:bg-[#ECECE9] text-center inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 px-4 rounded-xl bg-[#F7F7F5] border border-black/8 text-[#111111] text-[15px] font-semibold hover:bg-[#ECECE9] text-center inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <AccountIcon size={18} className="text-[#111111]" />
                 <span>Login</span>
@@ -249,7 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenRegister();
                 }}
-                className="w-full py-3.5 px-4 rounded-xl bg-[#111111] text-white text-[15px] font-medium flex items-center justify-center gap-2 shadow-md hover:bg-[#262626] active:scale-[0.98] transition-all cursor-pointer"
+                className="w-full py-3.5 px-4 rounded-xl bg-[#111111] text-white text-[15px] font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-[#262626] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>Get Started</span>
                 <ArrowRight className="w-4 h-4 text-white" />
@@ -261,3 +336,5 @@ export const Navbar: React.FC<NavbarProps> = ({
     </>
   );
 };
+
+export default Navbar;

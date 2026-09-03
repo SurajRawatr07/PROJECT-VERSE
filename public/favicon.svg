@@ -1,16 +1,21 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="7" fill="#111111"/>
-  <circle cx="16" cy="16" r="12.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 3" opacity="0.4"/>
-  <path d="M16 5.5L26.5 16L16 26.5L5.5 16L16 5.5Z" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M16 5.5V26.5M5.5 16H26.5" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-  <rect x="12.5" y="12.5" width="7" height="7" rx="1.5" fill="#FFFFFF"/>
-  <circle cx="16" cy="16" r="1.4" fill="#111111"/>
-  <circle cx="16" cy="5.5" r="2.4" fill="#FFFFFF"/>
-  <circle cx="16" cy="5.5" r="0.9" fill="#111111"/>
-  <circle cx="26.5" cy="16" r="2.4" fill="#FFFFFF"/>
-  <circle cx="26.5" cy="16" r="0.9" fill="#111111"/>
-  <circle cx="16" cy="26.5" r="2.4" fill="#FFFFFF"/>
-  <circle cx="16" cy="26.5" r="0.9" fill="#111111"/>
-  <circle cx="5.5" cy="16" r="2.4" fill="#FFFFFF"/>
-  <circle cx="5.5" cy="16" r="0.9" fill="#111111"/>
+  <rect width="32" height="32" rx="8" fill="#111827"/>
+  <!-- Top Bridge -->
+  <path d="M10 9C11.6 6.8 13.6 5.5 16 5.5C18.4 5.5 20.4 6.8 22 9" stroke="#3B82F6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Left Folio / P -->
+  <path d="M16 26.5C11.5 22.8 7 17.5 7 12.8C7 8.8 9.8 7 13.2 7.2C15 7.3 16 8.5 16 10.2V14" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Right Folio / V -->
+  <path d="M16 10.2C16 8.5 17 7.3 18.8 7.2C22.2 7 25 8.8 25 12.8C25 17.5 20.5 22.8 16 26.5" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Inner synergy rib -->
+  <path d="M11 16.5C12.8 17.8 14.5 18.8 16 19.5C17.5 18.8 19.2 17.8 21 16.5" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>
+  <!-- Central Diamond -->
+  <rect x="13.5" y="12" width="5" height="5" rx="1.2" transform="rotate(45 16 14.5)" fill="#FFFFFF"/>
+  <circle cx="16" cy="14.5" r="1" fill="#111827"/>
+  <!-- Nodes -->
+  <circle cx="9.5" cy="9.5" r="2" fill="#3B82F6"/>
+  <circle cx="9.5" cy="9.5" r="0.75" fill="#FFFFFF"/>
+  <circle cx="22.5" cy="9.5" r="2" fill="#3B82F6"/>
+  <circle cx="22.5" cy="9.5" r="0.75" fill="#FFFFFF"/>
+  <circle cx="16" cy="26.5" r="1.75" fill="#FFFFFF"/>
+  <circle cx="16" cy="26.5" r="0.6" fill="#111827"/>
 </svg>

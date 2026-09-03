@@ -2,7 +2,7 @@ import React from 'react';
 import { ProjectVerseLogo } from './ProjectVerseLogo';
 
 export interface ProjectVerseBrandProps {
-  /** Logo size in pixels. Default adapts responsively (24px mobile -> 28px desktop) */
+  /** Logo size in pixels. Default adapts responsively (24-25px mobile -> 28px desktop) */
   logoSize?: number;
   /** Custom class for the container */
   className?: string;
@@ -10,6 +10,8 @@ export interface ProjectVerseBrandProps {
   theme?: 'light' | 'dark';
   /** Whether to show only the logo, wordmark, or both */
   variant?: 'full' | 'logo-only' | 'wordmark-only';
+  /** Collapsed sidebar mode: centers the logo symbol cleanly without text clipping */
+  collapsed?: boolean;
   /** Custom text sizing class if needed */
   textSizeClassName?: string;
   /** Whether to apply interactive hover transitions */
@@ -20,12 +22,13 @@ export interface ProjectVerseBrandProps {
  * Premium PROJECT VERSE Brand Identity Component
  * 
  * Typographic & Visual Specifications:
- * - Font: Instrument Serif (weight 400)
- * - PROJECT: slightly smaller / refined letterform
- * - VERSE: slightly more visually dominant
- * - Spacing: Intentional gap between PROJECT and VERSE (PROJECT   VERSE)
- * - Logo: Minimal geometric symbol representing Project, Connection, Verification, Continuity
- * - Sizing: Logo 26–30px desktop / 24–27px mobile, Wordmark 21–24px desktop / 18–21px mobile
+ * - Wordmark Font: Instrument Serif (weight 400)
+ * - Brand Name: "PROJECT VERSE" (Strictly displayed as TWO WORDS)
+ * - "PROJECT": slightly smaller, subtle, refined letterform
+ * - "VERSE": slightly more visually dominant, elegant editorial presence
+ * - Symbol: Distinctive geometric academic ecosystem mark representing:
+ *   CAMPUS → STUDENT → PROJECT → COLLABORATION → KNOWLEDGE CONTINUITY
+ * - Sizing: Logo 26–30px desktop / 24–27px mobile; Wordmark 21–24px desktop / 18–21px mobile
  * - Anti-wrap: Strictly white-space: nowrap
  */
 export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
@@ -33,27 +36,35 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
   className = '',
   theme = 'light',
   variant = 'full',
+  collapsed = false,
   textSizeClassName = '',
   interactive = true,
 }) => {
   const isDark = theme === 'dark';
-  const textColor = isDark ? 'text-white' : 'text-[#111111]';
-  const logoColor = isDark ? '#FFFFFF' : '#111111';
+  const textColor = isDark ? 'text-white' : 'text-[#0F172A]';
+  const logoColor = isDark ? '#FFFFFF' : '#0F172A';
+  const accentColor = isDark ? '#60A5FA' : '#2563EB';
+
+  const showWordmark = !collapsed && variant !== 'logo-only';
+  const showLogo = variant !== 'wordmark-only';
 
   return (
     <div
-      className={`inline-flex items-center gap-2.5 sm:gap-3 select-none whitespace-nowrap align-middle group ${className}`}
+      className={`inline-flex items-center select-none whitespace-nowrap align-middle group ${
+        collapsed ? 'justify-center w-full' : 'gap-2.5 sm:gap-3'
+      } ${className}`}
     >
-      {/* 1. Custom Geometric ProjectVerse Symbol */}
-      {variant !== 'wordmark-only' && (
-        <div className="shrink-0 flex items-center justify-center">
+      {/* 1. Distinctive Geometric ProjectVerse Symbol */}
+      {showLogo && (
+        <div className={`shrink-0 flex items-center justify-center ${collapsed ? 'mx-auto' : ''}`}>
           {/* Responsive sizing: 25px on mobile, 28px on desktop if not explicitly passed */}
           <div className="block sm:hidden">
             <ProjectVerseLogo
               size={logoSize || 25}
               color={logoColor}
+              accentColor={accentColor}
               className={`transition-transform duration-200 ease-out ${
-                interactive ? 'group-hover:scale-[1.03]' : ''
+                interactive ? 'group-hover:scale-[1.04]' : ''
               }`}
             />
           </div>
@@ -61,37 +72,38 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
             <ProjectVerseLogo
               size={logoSize || 28}
               color={logoColor}
+              accentColor={accentColor}
               className={`transition-transform duration-200 ease-out ${
-                interactive ? 'group-hover:scale-[1.03]' : ''
+                interactive ? 'group-hover:scale-[1.04]' : ''
               }`}
             />
           </div>
         </div>
       )}
 
-      {/* 2. Editorial Wordmark: PROJECT   VERSE */}
-      {variant !== 'logo-only' && (
+      {/* 2. Editorial Wordmark: PROJECT VERSE (Strictly Two Words in Instrument Serif) */}
+      {showWordmark && (
         <div
-          className={`flex items-baseline leading-none font-display font-normal ${textColor} ${
-            textSizeClassName || 'text-[19px] sm:text-[22px] md:text-[23.5px]'
+          className={`flex items-baseline leading-none font-brand font-normal tracking-normal ${textColor} ${
+            textSizeClassName || 'text-[19.5px] sm:text-[22px] md:text-[23.5px]'
           } transition-[letter-spacing,opacity] duration-200 ease-out ${
             interactive ? 'group-hover:opacity-95' : ''
           }`}
           style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "cv11"' }}
         >
-          {/* PROJECT (Slightly smaller, refined, open tracking) */}
-          <span className="text-[0.91em] tracking-[0.035em] inline-block font-normal">
+          {/* PROJECT: slightly smaller and refined letterform */}
+          <span className="text-[0.90em] tracking-[0.03em] inline-block font-normal">
             PROJECT
           </span>
 
-          {/* Intentional Kerning & Word Gap */}
+          {/* Intentional space gap between PROJECT and VERSE */}
           <span
-            className="inline-block w-[0.34em]"
+            className="inline-block w-[0.32em]"
             aria-hidden="true"
           />
 
-          {/* VERSE (Slightly more visually dominant, elegant proportional presence) */}
-          <span className="text-[1.03em] tracking-[-0.015em] inline-block font-normal">
+          {/* VERSE: slightly stronger visual presence */}
+          <span className="text-[1.04em] tracking-[-0.012em] inline-block font-normal">
             VERSE
           </span>
         </div>
