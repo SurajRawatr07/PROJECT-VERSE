@@ -40,21 +40,10 @@ export default function App() {
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [isProofOfWorkOpen, setIsProofOfWorkOpen] = useState(false);
 
-  // Splash intro state (shows on initial visit, skippable)
-  const [showSplash, setShowSplash] = useState<boolean>(() => {
-    try {
-      return !sessionStorage.getItem('pv_splash_seen');
-    } catch {
-      return false;
-    }
-  });
+  // Splash intro state (shows when website opens, exactly 3 seconds)
+  const [showSplash, setShowSplash] = useState<boolean>(true);
 
   const handleSplashComplete = () => {
-    try {
-      sessionStorage.setItem('pv_splash_seen', 'true');
-    } catch {
-      // ignore
-    }
     setShowSplash(false);
   };
 
