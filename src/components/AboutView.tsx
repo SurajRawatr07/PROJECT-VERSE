@@ -156,29 +156,14 @@ export const AboutView: React.FC<AboutViewProps> = ({
           </div>
         </div>
 
-        {/* CLEAR Actions */}
-        <div className="card-white p-8 sm:p-10 text-center border border-black/8">
-          <h3 className="text-[22px] sm:text-[26px] font-bold text-[#111111] mb-2 uppercase tracking-tight">
-            Give Your Project a Future.
+        {/* Academic Mission Summary */}
+        <div className="card-white p-8 sm:p-10 text-center border border-black/8 bg-[#FBFBFA]">
+          <h3 className="text-[20px] sm:text-[22px] font-bold text-[#111111] mb-2 uppercase tracking-tight">
+            Preserving Institutional Knowledge
           </h3>
-          <p className="text-[14px] sm:text-[15px] text-[#4A4A4A] mb-6 max-w-md mx-auto tracking-wide">
-            Build verified academic work and pass it forward.
+          <p className="text-[14px] sm:text-[15px] text-[#4A4A4A] max-w-lg mx-auto tracking-wide leading-relaxed">
+            ProjectVerse transforms transient semester assignments into an enduring academic legacy for universities, researchers, and future student cohorts.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              onClick={onGetStarted}
-              className="btn-primary-black w-full sm:w-auto px-6 py-2.5 rounded-full inline-flex items-center justify-center gap-2 cursor-pointer text-[15px] font-medium shadow-xs tracking-wide"
-            >
-              <span>Get Started</span>
-              <ArrowRight className="w-4 h-4 text-white" />
-            </button>
-            <button
-              onClick={onExploreHowItWorks}
-              className="btn-secondary-white w-full sm:w-auto px-6 py-2.5 rounded-full inline-flex items-center justify-center gap-2 cursor-pointer text-[15px] font-medium shadow-xs hover:border-black/20 tracking-wide"
-            >
-              <span>How It Works</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>

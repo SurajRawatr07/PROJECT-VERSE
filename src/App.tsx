@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, PublicPage } from './components/Navbar';
 import { SplashIntro } from './components/SplashIntro';
 import { Hero } from './components/Hero';
-import { ProblemSection } from './components/ProblemSection';
-import { ApproachFlowSection } from './components/ApproachFlowSection';
+import { HowProjectVerseWorksSection } from './components/HowProjectVerseWorksSection';
 import { CoreInnovationsSection } from './components/CoreInnovationsSection';
-import { RolesSection } from './components/RolesSection';
+import { TrustSection } from './components/TrustSection';
+import { FAQSection } from './components/FAQSection';
 import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 
@@ -143,28 +143,31 @@ export default function App() {
       {/* Page Content Rendering */}
       {currentPage === 'home' && (
         <main>
-          {/* Hero Section (Section 1: #FFFFFF) */}
+          {/* Section 1: Hero */}
           <Hero
             onExploreClick={() => handleSelectPage('how-it-works')}
             onGetStartedClick={handleOpenRegister}
           />
 
-          {/* Section 2: The Problem (Section 2: #F7F7F5) */}
-          <ProblemSection />
+          {/* Section 2: Built Around Your Project & 6-Step How ProjectVerse Works */}
+          <HowProjectVerseWorksSection
+            onGetStartedClick={handleOpenRegister}
+            onExploreProjectsClick={() => handleSelectPage('how-it-works')}
+          />
 
-          {/* Section 3: What ProjectVerse Changes (Section 3: #FFFFFF) */}
-          <ApproachFlowSection />
-
-          {/* Section 4: Built Around Your Project (Section 4: #F7F7F5) */}
+          {/* Section 3: Core Features / Innovations */}
           <CoreInnovationsSection />
 
-          {/* Section 5: One Platform. Every Role. (Section 5: #FFFFFF) */}
-          <RolesSection onSelectRole={() => handleOpenRegister()} />
+          {/* Section 4: Trust & Verification */}
+          <TrustSection />
 
-          {/* Section 6: Final CTA (Section 6: #F7F7F5) */}
+          {/* Section 5: Frequently Asked Questions */}
+          <FAQSection />
+
+          {/* Section 6: Final Ready To Begin? CTA */}
           <CTASection
             onGetStartedClick={handleOpenRegister}
-            onHowItWorksClick={() => handleSelectPage('how-it-works')}
+            onExploreProjectsClick={() => handleSelectPage('how-it-works')}
           />
         </main>
       )}

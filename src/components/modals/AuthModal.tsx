@@ -521,8 +521,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   </span>
                 </div>
                 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
-                  {roleConfigs.map((item) => {
+                <div className={`grid ${mode === 'register' ? 'grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'} gap-1.5 text-xs`}>
+                  {roleConfigs
+                    .filter((item) => mode !== 'register' || item.role !== 'ADMIN')
+                    .map((item) => {
                     const isSelected = selectedRole === item.role;
                     const Icon = item.icon;
                     return (
