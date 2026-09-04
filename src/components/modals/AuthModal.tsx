@@ -377,7 +377,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
   };
 
-  // Step 3: Finalize registration with or without document
+  // Step 3: Finalize registration with or without document (Frontend-only MVP)
   const finalizeRegistration = async (docData: { 
     documentType: DocumentType; 
     fileName: string; 
@@ -387,29 +387,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setIsAuthenticating(true);
     setErrorMessage(null);
 
+    // Frontend-only MVP: Local document staging without network requests
     let storedDocId: string | undefined = undefined;
-
-    // If a physical file was selected, upload via real multipart/form-data
-    if (docData && docData.rawFile) {
-      try {
-        const formData = new FormData();
-        formData.append('document', docData.rawFile);
-        formData.append('documentType', docData.documentType);
-
-        const uploadResult = await uploadAcademicDocument(formData);
-
-        if (!uploadResult.success) {
-          setIsAuthenticating(false);
-          setErrorMessage(uploadResult.error || 'Academic document upload failed. Please check file and retry.');
-          return;
-        }
-
-        storedDocId = uploadResult.documentId;
-      } catch (uploadErr: any) {
-        setIsAuthenticating(false);
-        setErrorMessage(uploadErr?.message || 'Network error uploading document proof. Please check your connection.');
-        return;
-      }
+    if (docData && (docData.rawFile || docData.fileName)) {
+      storedDocId = `doc_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
     }
 
     const skillsArray = skills.split(',').map((s) => s.trim()).filter(Boolean);
@@ -1351,7 +1332,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       disabled={!uploadedDoc || isAuthenticating}
                       className="btn-primary-black w-full py-3 px-4 rounded-xl text-xs font-medium flex items-center justify-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
                     >
-                      <span>{isAuthenticating ? 'Submitting...' : 'Upload Document & Submit for Verification'}</span>
+                      <span>{isAuthenticating ? 'Processing...' : 'Submit Document for Verification'}</span>
                       <ArrowRight className="w-3.5 h-3.5 text-white" />
                     </button>
 

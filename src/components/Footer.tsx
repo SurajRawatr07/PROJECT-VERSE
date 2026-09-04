@@ -116,14 +116,26 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
           </div>
         </div>
 
-        {/* Bottom Bar: Built by TEAM TECH NOVA • 2026 */}
+        {/* Bottom Bar: Built by Suraj Rawat • 2026 */}
         <div className="pt-6 border-t border-black/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 text-[#4A4A4A]">
+          <div className="flex items-center gap-2 text-xs font-body">
             <span className="text-[#737373] font-normal text-[12px]">Built by</span>
-            <span className="text-[#111111] uppercase font-medium tracking-[0.08em] text-[12px]">
-              TEAM TECH NOVA
-            </span>
-            <span className="text-[#737373] text-[11px] font-mono-code">•</span>
+            <a
+              id="footer-creator-credit"
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center text-[#111111] font-semibold tracking-normal text-[12px] cursor-pointer transition-all duration-300 ease-out hover:tracking-wide hover:-translate-y-[1.5px] hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-black rounded-sm"
+              title="Suraj Rawat • Creator Profile"
+            >
+              <span>Suraj Rawat</span>
+              {/* Thin animated underline growing from left to right */}
+              <span 
+                className="absolute left-0 bottom-[-1.5px] w-0 h-[1px] bg-[#111111] transition-all duration-300 ease-out group-hover:w-full pointer-events-none" 
+                aria-hidden="true" 
+              />
+            </a>
+            <span className="text-[#8C8C8C] text-[10px] font-mono-code">•</span>
             <span className="text-[#737373] font-mono-code text-[11.5px]">2026</span>
           </div>
 

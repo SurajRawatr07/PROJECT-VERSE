@@ -497,32 +497,8 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     setDocUploadError(null);
 
     const session = getCurrentSession();
-    let storedDocId: string | undefined = undefined;
-
-    // Real multipart/form-data upload
-    if (pendingUploadDoc.rawFile) {
-      try {
-        const formData = new FormData();
-        formData.append('document', pendingUploadDoc.rawFile);
-        formData.append('documentType', pendingUploadDoc.documentType);
-        if (session?.user?.id) {
-          formData.append('userId', session.user.id);
-        }
-
-        const uploadRes = await uploadAcademicDocument(formData, session?.token);
-        if (!uploadRes.success) {
-          setIsSubmittingDoc(false);
-          setDocUploadError(uploadRes.error || 'Failed to upload document proof. Please check file and retry.');
-          return;
-        }
-
-        storedDocId = uploadRes.documentId;
-      } catch (err: any) {
-        setIsSubmittingDoc(false);
-        setDocUploadError(err?.message || 'Network error uploading document proof. Please check your connection.');
-        return;
-      }
-    }
+    // Frontend-only MVP: Local document staging without network requests
+    const storedDocId = `doc_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
 
     if (session) {
       const res = submitVerificationDocument(session.user.id, {
@@ -551,7 +527,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
     setIsDocUploadModalOpen(false);
     setPendingUploadDoc(null);
     setDocUploadError(null);
-    setApprovalToast('Academic document submitted to faculty and institutional review queue.');
+    setApprovalToast('Academic document ready and submitted for verification (Pending Review).');
     setTimeout(() => setApprovalToast(null), 4000);
   };
 
@@ -1901,12 +1877,11 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
             </div>
             
             <p className="text-xs text-[#4A4A4A] mb-4">
-              Upload your valid academic proof (Student ID card, Degree Certificate, Provisional Pass Certificate, or Official Enrollment Letter). All documents remain strictly private and encrypted.
+              Upload your valid academic document (Student ID card, Degree Certificate, Provisional Pass Certificate, or Official Enrollment Letter) for verification. Handled locally on client in this MVP.
             </p>
 
             <DocumentUploadDropzone
               studentType={currentProfile?.studentType || 'CURRENT_STUDENT'}
-              isUploading={isSubmittingDoc}
               externalError={docUploadError}
               onFileSelected={(data) => {
                 setDocUploadError(null);
@@ -1938,7 +1913,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
               >
                 <UploadCloud className="w-3.5 h-3.5" />
-                <span>{isSubmittingDoc ? 'Uploading...' : 'Submit for Verification'}</span>
+                <span>{isSubmittingDoc ? 'Submitting...' : 'Submit for Verification'}</span>
               </button>
             </div>
           </motion.div>
