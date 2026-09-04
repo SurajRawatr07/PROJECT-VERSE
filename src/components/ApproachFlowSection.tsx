@@ -5,57 +5,51 @@ import { Compass, Code2, ShieldCheck, Users2, FastForward } from 'lucide-react';
 export const ApproachFlowSection: React.FC = () => {
   const flowSteps = [
     { 
-      label: 'DISCOVER', 
-      desc: 'Find verified work by domain, stack, and institutional track.',
+      label: 'Discover', 
+      desc: 'Find verified projects across domains and institutions.',
       icon: Compass 
     },
     { 
-      label: 'BUILD', 
-      desc: 'Assemble teammates and advisors with matched skills.',
+      label: 'Build', 
+      desc: 'Assemble teammates and mentors with complementary skills.',
       icon: Code2 
     },
     { 
-      label: 'VERIFY', 
-      desc: 'Anchor credibility via GitHub activity and academic sign-off.',
+      label: 'Verify', 
+      desc: 'Connect repositories and academic evaluations.',
       icon: ShieldCheck 
     },
     { 
-      label: 'COLLABORATE', 
+      label: 'Collaborate', 
       desc: 'Work across batches, faculties, and partner campuses.',
       icon: Users2 
     },
     { 
-      label: 'CONTINUE', 
-      desc: 'Pass mature codebases forward for future student iterations.',
+      label: 'Continue', 
+      desc: 'Hand mature work forward to the next batch.',
       icon: FastForward 
     }
   ];
 
   return (
-    <section id="approach-flow" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#FFFFFF] border-t border-black/8 overflow-hidden font-serif">
+    <section id="approach-flow" className="relative w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#FFFFFF] border-t border-black/8 overflow-hidden font-serif">
       <div className="max-w-6xl mx-auto text-center">
-        {/* Eyebrow & Headline */}
-        <span className="text-[12px] uppercase tracking-widest text-[#737373] font-semibold">
-          Ecosystem Approach
-        </span>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#111111] font-bold tracking-tight mt-2">
-          A Continuous Academic Lifecycle
+        {/* Section Heading: 32–40px Desktop, 28–34px Tablet, 26–30px Mobile */}
+        <h2 className="text-[26px] sm:text-[30px] md:text-[36px] text-[#111111] font-bold tracking-tight uppercase mb-6 sm:mb-8">
+          From Idea to Impact.
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-[#4A4A4A] max-w-xl mx-auto leading-relaxed mb-10 sm:mb-14 tracking-wide">
-          Five cohesive stages designed to turn isolated submissions into lasting assets.
-        </p>
 
-        {/* Desktop Horizontal Flow Chain Badge */}
-        <div className="hidden lg:flex items-center justify-center gap-3 mb-10 py-2.5 px-6 rounded-full bg-[#F5F5F3] border border-black/8 w-max mx-auto text-xs font-bold text-[#111111] tracking-wider">
-          <span>DISCOVER</span>
+        {/* Horizontal Flow Indicator */}
+        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-10 sm:mb-12 py-2 px-5 sm:px-7 rounded-full bg-[#F5F5F3] border border-black/8 w-max mx-auto text-[13px] sm:text-[14px] font-semibold text-[#111111] tracking-wider uppercase">
+          <span>Discover</span>
           <span className="text-[#8C8C8C]">→</span>
-          <span>BUILD</span>
+          <span>Build</span>
           <span className="text-[#8C8C8C]">→</span>
-          <span>VERIFY</span>
+          <span>Verify</span>
           <span className="text-[#8C8C8C]">→</span>
-          <span>COLLABORATE</span>
+          <span>Collaborate</span>
           <span className="text-[#8C8C8C]">→</span>
-          <span>CONTINUE</span>
+          <span>Continue</span>
         </div>
 
         {/* 5 Step Cards */}
@@ -65,27 +59,22 @@ export const ApproachFlowSection: React.FC = () => {
             return (
               <motion.div
                 key={step.label}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                transition={{ duration: 0.25, delay: idx * 0.05 }}
                 className="card-white p-5 flex flex-col justify-between border border-black/8 hover:border-black/20 group transition-all duration-200"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-9 h-9 rounded-xl bg-[#F5F5F3] border border-black/6 flex items-center justify-center text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors duration-200">
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs text-[#737373] font-bold tracking-wider">
-                      0{idx + 1}
-                    </span>
+                  <div className="w-9 h-9 rounded-xl bg-[#F5F5F3] border border-black/6 flex items-center justify-center text-[#111111] mb-4 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-200">
+                    <Icon className="w-4 h-4" />
                   </div>
 
-                  <h3 className="text-xs font-bold tracking-wider text-[#111111] mb-2 uppercase">
+                  <h3 className="text-[18px] sm:text-[19px] md:text-[20px] font-bold text-[#111111] mb-2 tracking-wide">
                     {step.label}
                   </h3>
 
-                  <p className="text-xs sm:text-[13.5px] text-[#4A4A4A] leading-relaxed tracking-wide">
+                  <p className="text-[13px] sm:text-[14px] text-[#4A4A4A] leading-relaxed tracking-wide">
                     {step.desc}
                   </p>
                 </div>

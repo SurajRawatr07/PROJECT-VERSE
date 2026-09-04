@@ -155,7 +155,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 16 }}
           transition={{ duration: 0.2 }}
-          className="relative z-10 w-full max-w-5xl max-h-[92vh] flex flex-col bg-white rounded-3xl border border-black/10 shadow-2xl text-[#111111] overflow-hidden"
+          className="relative z-10 w-full max-w-5xl max-h-[92vh] flex flex-col bg-white rounded-3xl border border-black/10 shadow-2xl text-[#111111] overflow-hidden font-serif"
         >
           {/* Header Bar */}
           <div className="p-5 sm:p-7 pb-4 border-b border-black/8 bg-[#FFFFFF] shrink-0">
@@ -164,16 +164,16 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                 {/* Status Badges Header Row */}
                 <div className="flex flex-wrap items-center gap-2">
                   <ProjectStatusBadge status={project.status || 'APPROVED'} size="sm" />
-                  <span className="inline-flex items-center gap-1 text-[11px] font-mono-code px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  <span className="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
                     <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                     Institution Verified
                   </span>
-                  <span className="text-[11px] font-mono-code text-[#737373]">
+                  <span className="text-[11px] text-[#737373]">
                     Batch {project.academicYear}
                   </span>
                 </div>
 
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-[#111111] tracking-tight truncate">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-[#111111] tracking-tight truncate">
                   {project.title}
                 </h2>
                 <p className="text-xs sm:text-sm text-[#4A4A4A] line-clamp-2">
@@ -194,17 +194,28 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
             {/* Header Useful Actions */}
             <div className="mt-4 pt-3 border-t border-black/6 flex flex-wrap items-center justify-between gap-3">
               <div className="flex flex-wrap items-center gap-2">
+                <a
+                  href={project.passport?.githubRepo || 'https://github.com'}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <Code className="w-3.5 h-3.5" />
+                  <span>View Repository</span>
+                  <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                </a>
+
                 <button
                   onClick={() => onOpenPassport(project)}
                   className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/10 text-xs font-semibold text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <FileCheck2 className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>View Passport</span>
+                  <span>Passport</span>
                 </button>
 
                 <button
                   onClick={() => onOpenCollaborate(project)}
-                  className="px-3 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                  className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/10 text-xs font-semibold text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Users className="w-3.5 h-3.5" />
                   <span>Collaborate</span>

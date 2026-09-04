@@ -1,60 +1,45 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, HelpCircle } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface CTASectionProps {
   onGetStartedClick: () => void;
-  onHowItWorksClick: () => void;
+  onHowItWorksClick?: () => void;
 }
 
 export const CTASection: React.FC<CTASectionProps> = ({
   onGetStartedClick,
-  onHowItWorksClick
 }) => {
   return (
-    <section id="cta" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#F7F7F5] border-t border-black/8 overflow-hidden font-serif">
-      <div className="max-w-4xl mx-auto relative z-10 text-center">
+    <section id="cta" className="relative w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F7F7F5] border-t border-black/8 overflow-hidden font-serif">
+      <div className="max-w-3xl mx-auto relative z-10 text-center">
         {/* Banner Card */}
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="card-white p-8 sm:p-14 relative overflow-hidden"
+          transition={{ duration: 0.35 }}
+          className="card-white p-8 sm:p-12 md:p-14 relative overflow-hidden"
         >
-          {/* Eyebrow */}
-          <span className="text-[12px] uppercase tracking-widest text-[#737373] font-semibold">
-            Join the Network
-          </span>
-
-          {/* Heading */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#111111] font-bold tracking-tight max-w-xl mx-auto leading-tight mb-4 mt-2">
-            Build Something That Continues.
+          {/* Heading: 32–40px Desktop, 28–34px Tablet, 26–30px Mobile */}
+          <h2 className="text-[26px] sm:text-[30px] md:text-[36px] text-[#111111] font-bold tracking-tight max-w-xl mx-auto leading-tight uppercase mb-3">
+            Give Your Project a Future.
           </h2>
 
-          {/* Supporting Text */}
-          <p className="text-[#4A4A4A] text-sm sm:text-base max-w-lg mx-auto leading-relaxed mb-8 tracking-wide">
-            Discover verified work. Connect with the right team. Hand your project forward to the next batch.
+          {/* Subtitle */}
+          <p className="text-[15px] sm:text-[16px] md:text-[17px] text-[#4A4A4A] max-w-md mx-auto leading-relaxed mb-8 tracking-wide">
+            Build it. Prove it. Continue it.
           </p>
 
-          {/* Buttons: Get Started & How It Works */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4">
+          {/* Button: Get Started */}
+          <div className="flex items-center justify-center">
             <button
               id="cta-get-started-btn"
               onClick={onGetStartedClick}
-              className="btn-primary-black w-full sm:w-auto px-7 py-3 rounded-full flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base font-semibold shadow-xs font-serif tracking-wide"
+              className="btn-primary-black px-7 py-3 rounded-full flex items-center justify-center gap-2 cursor-pointer text-[15px] sm:text-[16px] font-medium shadow-xs font-serif tracking-wide"
             >
               <span>Get Started</span>
               <ArrowRight className="w-4 h-4 text-white" />
-            </button>
-
-            <button
-              id="cta-how-it-works-btn"
-              onClick={onHowItWorksClick}
-              className="btn-secondary-white w-full sm:w-auto px-7 py-3 rounded-full flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base font-semibold shadow-xs hover:border-black/20 font-serif tracking-wide"
-            >
-              <HelpCircle className="w-4 h-4 text-[#111111]" />
-              <span>How It Works</span>
             </button>
           </div>
         </motion.div>

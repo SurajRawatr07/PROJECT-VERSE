@@ -5,7 +5,7 @@ import { Hero } from './components/Hero';
 import { ProblemSection } from './components/ProblemSection';
 import { ApproachFlowSection } from './components/ApproachFlowSection';
 import { CoreInnovationsSection } from './components/CoreInnovationsSection';
-import { TrustSection } from './components/TrustSection';
+import { RolesSection } from './components/RolesSection';
 import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 
@@ -166,11 +166,11 @@ export default function App() {
           {/* Section 3: What ProjectVerse Changes (Section 3: #FFFFFF) */}
           <ApproachFlowSection />
 
-          {/* Section 4: Three Core Innovations (Section 4: #F7F7F5) */}
+          {/* Section 4: Built Around Your Project (Section 4: #F7F7F5) */}
           <CoreInnovationsSection />
 
-          {/* Section 5: Trust (Section 5: #FFFFFF) */}
-          <TrustSection />
+          {/* Section 5: One Platform. Every Role. (Section 5: #FFFFFF) */}
+          <RolesSection onSelectRole={() => handleOpenRegister()} />
 
           {/* Section 6: Final CTA (Section 6: #F7F7F5) */}
           <CTASection

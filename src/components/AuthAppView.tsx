@@ -777,26 +777,26 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                   </div>
 
                   {/* Summary Metric Counters */}
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Active Capstones</span>
-                      <p className="text-2xl font-bold text-[#111111] mt-1">2</p>
-                      <span className="text-[11px] text-emerald-700 font-medium">1 Verified • 1 Active</span>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 font-serif">
+                    <div className="card-white p-5 border border-black/8">
+                      <span className="text-xs font-bold text-[#737373] uppercase tracking-wider block">My Projects</span>
+                      <p className="text-[32px] font-bold text-[#111111] leading-none my-2">2</p>
+                      <span className="text-xs text-[#737373]">1 Verified • 1 Active</span>
                     </div>
-                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Verified Commits</span>
-                      <p className="text-2xl font-bold text-[#111111] mt-1">384</p>
-                      <span className="text-[11px] text-[#4A4A4A]">Synchronized via GitHub CI</span>
+                    <div className="card-white p-5 border border-black/8">
+                      <span className="text-xs font-bold text-[#737373] uppercase tracking-wider block">Continue a Project</span>
+                      <p className="text-[32px] font-bold text-[#111111] leading-none my-2">1</p>
+                      <span className="text-xs text-[#737373]">Cross-batch candidate</span>
                     </div>
-                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Lineage Generations</span>
-                      <p className="text-2xl font-bold text-[#111111] mt-1">3 Batches</p>
-                      <span className="text-[11px] text-[#737373]">Inherited from '24 cohort</span>
+                    <div className="card-white p-5 border border-black/8">
+                      <span className="text-xs font-bold text-[#737373] uppercase tracking-wider block">Teammate Requests</span>
+                      <p className="text-[32px] font-bold text-[#111111] leading-none my-2">3</p>
+                      <span className="text-xs text-[#737373]">Pending collaboration</span>
                     </div>
-                    <div className="bg-[#FBFBFA] rounded-2xl p-4 border border-black/8">
-                      <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Academic Rubric Score</span>
-                      <p className="text-2xl font-bold text-[#111111] mt-1">9.6 / 10</p>
-                      <span className="text-[11px] text-emerald-700 font-medium">Signed by Dr. Anil Sharma</span>
+                    <div className="card-white p-5 border border-black/8">
+                      <span className="text-xs font-bold text-[#737373] uppercase tracking-wider block">Mentor Feedback</span>
+                      <p className="text-[32px] font-bold text-[#111111] leading-none my-2">4</p>
+                      <span className="text-xs text-emerald-700 font-medium">Faculty notes received</span>
                     </div>
                   </div>
 

@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > 30) {
+      if (currentScrollY > 25) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -49,20 +49,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       {/* 
-        Fixed Top Anchor: Anchored strictly at top-3.5 sm:top-4 left-0 right-0 z-50.
+        Fixed Top Anchor: Anchored strictly at top-3 sm:top-4 left-0 right-0 z-50.
         ZERO downward or upward translation; the navbar and logo remain anchored.
       */}
-      <header className="fixed top-3 sm:top-4 left-0 right-0 z-50 flex items-center justify-center px-4 pointer-events-none">
+      <header className="fixed top-3 sm:top-4 left-0 right-0 z-50 flex items-center justify-center px-3 sm:px-4 pointer-events-none">
         <motion.nav
           id="main-navbar"
           layout
           transition={{
             layout: { type: 'spring', stiffness: 420, damping: 36 },
           }}
-          className={`pointer-events-auto rounded-full bg-white border border-black/8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex items-center transition-[padding,height,max-width,box-shadow] duration-200 ease-out ${
+          className={`pointer-events-auto rounded-full bg-white border border-black/8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex items-center transition-[padding,height,max-width,box-shadow] duration-200 ease-out ${
             isScrolled
-              ? 'w-full max-w-2xl lg:max-w-3xl h-[48px] px-3 sm:px-4 justify-between shadow-[0_6px_24px_rgba(0,0,0,0.07)]'
-              : 'w-full max-w-3xl lg:max-w-4xl h-[54px] px-4 sm:px-5 justify-between'
+              ? 'w-full max-w-3xl lg:max-w-4xl h-[56px] px-3.5 sm:px-5 justify-between shadow-[0_8px_30px_rgba(0,0,0,0.06)]'
+              : 'w-full max-w-4xl lg:max-w-5xl h-[64px] sm:h-[68px] px-4 sm:px-6 justify-between'
           }`}
           aria-label="Main Navigation"
         >
@@ -78,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               title="ProjectVerse"
             >
               <ProjectVerseLogo
-                size={isScrolled ? 25 : 27}
+                size={isScrolled ? 26 : 28}
                 color="#111111"
                 accentColor="#111111"
                 className="transition-transform duration-200 hover:scale-105"
@@ -89,11 +89,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* ========================================================================= */}
           {/* CENTER: Desktop Links ONLY [ Home, About, How It Works ] (NO MVP FLOW) */}
           {/* ========================================================================= */}
-          <div className="hidden md:flex items-center gap-1.5 font-serif">
+          <div className="hidden md:flex items-center gap-1.5 lg:gap-2 font-serif">
             <button
               id="nav-link-home"
               onClick={() => handleNavClick('home')}
-              className={`text-[14.5px] font-normal tracking-wide leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-150 ${
+              className={`text-[15px] lg:text-[16px] font-normal tracking-wide leading-none px-4 py-2 rounded-full cursor-pointer select-none transition-all duration-150 ${
                 currentPage === 'home'
                   ? 'text-[#111111] bg-[#EBEBE7] font-semibold shadow-xs'
                   : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1]'
@@ -105,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-link-about"
               onClick={() => handleNavClick('about')}
-              className={`text-[14.5px] font-normal tracking-wide leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-150 ${
+              className={`text-[15px] lg:text-[16px] font-normal tracking-wide leading-none px-4 py-2 rounded-full cursor-pointer select-none transition-all duration-150 ${
                 currentPage === 'about'
                   ? 'text-[#111111] bg-[#EBEBE7] font-semibold shadow-xs'
                   : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1]'
@@ -117,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-link-how-it-works"
               onClick={() => handleNavClick('how-it-works')}
-              className={`text-[14.5px] font-normal tracking-wide leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-150 ${
+              className={`text-[15px] lg:text-[16px] font-normal tracking-wide leading-none px-4 py-2 rounded-full cursor-pointer select-none transition-all duration-150 ${
                 currentPage === 'how-it-works'
                   ? 'text-[#111111] bg-[#EBEBE7] font-semibold shadow-xs'
                   : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1]'
@@ -130,11 +130,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* ========================================================================= */}
           {/* RIGHT: [ Login, Get Started ] */}
           {/* ========================================================================= */}
-          <div className="hidden md:flex items-center gap-2 font-serif">
+          <div className="hidden md:flex items-center gap-2.5 font-serif">
             <button
               id="nav-login-btn"
               onClick={onOpenLogin}
-              className="text-[14.5px] font-normal tracking-wide leading-none text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1] px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 transition-all duration-150 cursor-pointer select-none"
+              className="text-[15px] lg:text-[16px] font-normal tracking-wide leading-none text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F3F3F1] px-4 py-2 rounded-full inline-flex items-center gap-1.5 transition-all duration-150 cursor-pointer select-none"
             >
               <AccountIcon size={16} className="text-[#4A4A4A]" />
               <span>Login</span>
@@ -143,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-get-started-btn"
               onClick={onOpenRegister}
-              className="btn-primary-black inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full cursor-pointer select-none font-semibold text-[13.5px] tracking-wide shadow-xs hover:shadow-sm active:scale-95 transition-all duration-150"
+              className="btn-primary-black inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full cursor-pointer select-none font-semibold text-[15px] tracking-wide shadow-xs hover:shadow-sm active:scale-95 transition-all duration-150"
             >
               <span>Get Started</span>
               <ArrowRight className="w-3.5 h-3.5 text-white" />
@@ -169,7 +169,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </header>
 
       {/* ========================================================================= */}
-      {/* MOBILE DRAWER / OVERLAY: Only Home, About, How It Works, Login, Get Started */}
+      {/* MOBILE DRAWER: Only Home, About, How It Works, Login, Get Started */}
       {/* ========================================================================= */}
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -198,7 +198,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 id="mobile-nav-home"
                 onClick={() => handleNavClick('home')}
-                className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-[16px] tracking-wide transition-all cursor-pointer ${
+                className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-[15px] tracking-wide transition-all cursor-pointer ${
                   currentPage === 'home'
                     ? 'bg-[#EBEBE7] text-[#111111] font-bold border border-black/8'
                     : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F7F7F5]'
@@ -211,7 +211,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 id="mobile-nav-about"
                 onClick={() => handleNavClick('about')}
-                className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-[16px] tracking-wide transition-all cursor-pointer ${
+                className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-[15px] tracking-wide transition-all cursor-pointer ${
                   currentPage === 'about'
                     ? 'bg-[#EBEBE7] text-[#111111] font-bold border border-black/8'
                     : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F7F7F5]'
@@ -224,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 id="mobile-nav-how-it-works"
                 onClick={() => handleNavClick('how-it-works')}
-                className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-[16px] tracking-wide transition-all cursor-pointer ${
+                className={`flex items-center justify-between text-left py-3.5 px-4 rounded-xl text-[15px] tracking-wide transition-all cursor-pointer ${
                   currentPage === 'how-it-works'
                     ? 'bg-[#EBEBE7] text-[#111111] font-bold border border-black/8'
                     : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F7F7F5]'
@@ -242,7 +242,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenLogin();
                 }}
-                className="w-full py-3.5 px-4 rounded-xl bg-[#F7F7F5] border border-black/8 text-[#111111] text-[15px] font-semibold hover:bg-[#ECECE9] text-center inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-[#F7F7F5] border border-black/8 text-[#111111] text-[15px] font-medium hover:bg-[#ECECE9] text-center inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <AccountIcon size={18} className="text-[#111111]" />
                 <span>Login</span>
@@ -253,7 +253,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenRegister();
                 }}
-                className="w-full py-3.5 px-4 rounded-xl bg-[#111111] text-white text-[15px] font-semibold flex items-center justify-center gap-2 shadow-sm hover:bg-[#262626] active:scale-[0.98] transition-all cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-[#111111] text-white text-[15px] font-medium flex items-center justify-center gap-2 shadow-sm hover:bg-[#262626] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>Get Started</span>
                 <ArrowRight className="w-4 h-4 text-white" />

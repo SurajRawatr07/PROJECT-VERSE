@@ -5,19 +5,16 @@ import { SearchX, CopySlash, History } from 'lucide-react';
 export const ProblemSection: React.FC = () => {
   const problems = [
     {
-      num: '01',
       title: 'Hard to Discover',
-      desc: 'Valuable projects get buried after submission.',
+      desc: 'Good projects get buried after submission.',
       icon: SearchX
     },
     {
-      num: '02',
       title: 'Repeated Work',
-      desc: 'Students often rebuild what already exists.',
+      desc: 'Students often rebuild existing ideas.',
       icon: CopySlash
     },
     {
-      num: '03',
       title: 'No Continuity',
       desc: 'Projects rarely continue across batches.',
       icon: History
@@ -25,19 +22,13 @@ export const ProblemSection: React.FC = () => {
   ];
 
   return (
-    <section id="problem" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#F7F7F5] border-t border-black/8 font-serif">
+    <section id="problem" className="relative w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F7F7F5] border-t border-black/8 font-serif">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <span className="text-[12px] uppercase tracking-widest text-[#737373] font-semibold">
-            The Academic Challenge
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#111111] font-bold tracking-tight mt-2">
-            Projects End Too Soon.
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <h2 className="text-[26px] sm:text-[30px] md:text-[36px] text-[#111111] font-bold tracking-tight uppercase">
+            Why ProjectVerse?
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#4A4A4A] leading-relaxed tracking-wide">
-            Without an active ecosystem, valuable student work disappears the moment grades are submitted.
-          </p>
         </div>
 
         {/* 3 Concise Cards */}
@@ -47,27 +38,24 @@ export const ProblemSection: React.FC = () => {
             return (
               <motion.div
                 key={prob.title}
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: idx * 0.08 }}
+                transition={{ duration: 0.3, delay: idx * 0.06 }}
                 className="card-white p-6 sm:p-7 flex flex-col justify-between group hover:border-black/15 transition-all duration-200"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="text-xs text-[#737373] font-bold tracking-wider">
-                      {prob.num}
-                    </span>
-                    <div className="w-10 h-10 rounded-xl bg-[#F5F5F3] border border-black/6 flex items-center justify-center text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors duration-200">
-                      <Icon className="w-4 h-4" />
-                    </div>
+                  <div className="w-10 h-10 rounded-xl bg-[#F5F5F3] border border-black/6 flex items-center justify-center text-[#111111] mb-5 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-200">
+                    <Icon className="w-4 h-4" />
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-bold text-[#111111] mb-2 tracking-wide">
+                  {/* Card heading: 20–24px Desktop, 18–21px Mobile */}
+                  <h3 className="text-[19px] sm:text-[21px] md:text-[22px] font-bold text-[#111111] mb-2 tracking-wide">
                     {prob.title}
                   </h3>
 
-                  <p className="text-sm text-[#4A4A4A] leading-relaxed tracking-wide">
+                  {/* Body text: 16–18px Desktop, 14–16px Mobile */}
+                  <p className="text-[14px] sm:text-[15px] md:text-[16px] text-[#4A4A4A] leading-relaxed tracking-wide">
                     {prob.desc}
                   </p>
                 </div>

@@ -1,41 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
   ShieldCheck, 
   CheckCircle2, 
-  GitFork, 
-  Star, 
   ExternalLink, 
-  GraduationCap, 
-  Layers, 
-  Award,
-  QrCode,
-  FileCheck2,
-  Calendar,
-  Building2,
-  Terminal,
-  Clock
+  Building2, 
+  FileCheck2, 
+  Share2, 
+  GitFork, 
+  Check, 
+  ArrowDown, 
+  Users 
 } from 'lucide-react';
 import { ProjectItem } from '../../types';
-import { ProjectStatusBadge } from '../common/ProjectStatusBadge';
 
 interface ProjectPassportModalProps {
   project: ProjectItem | null;
   onClose: () => void;
+  onContinueProject?: (project: ProjectItem) => void;
 }
 
 export const ProjectPassportModal: React.FC<ProjectPassportModalProps> = ({
   project,
-  onClose
+  onClose,
+  onContinueProject
 }) => {
+  const [showLineage, setShowLineage] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   if (!project) return null;
 
   const passport = project.passport;
 
+  const handleShare = () => {
+    navigator.clipboard?.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const lineageNodes = [
+    {
+      batch: `Batch ${project.academicYear || '2024'}`,
+      phase: 'Original Base',
+      added: 'Foundation architecture, core data models, and baseline validation.',
+      status: 'Verified & Archived'
+    },
+    {
+      batch: 'Batch 2025',
+      phase: 'Feature Expansion',
+      added: 'Distributed pipeline, performance telemetry, and web dashboard.',
+      status: 'Verified & Active'
+    },
+    {
+      batch: 'Batch 2026',
+      phase: 'Performance & Scale',
+      added: 'Production deployment, edge optimizations, and institutional handover.',
+      status: 'Open for Continuity'
+    }
+  ];
+
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto font-serif">
+        {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -44,12 +72,13 @@ export const ProjectPassportModal: React.FC<ProjectPassportModalProps> = ({
           className="fixed inset-0 bg-black/50 backdrop-blur-sm"
         />
 
+        {/* Structured Identity Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 16 }}
+          initial={{ opacity: 0, scale: 0.97, y: 14 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 16 }}
+          exit={{ opacity: 0, scale: 0.97, y: 14 }}
           transition={{ duration: 0.2 }}
-          className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#FFFFFF] rounded-3xl border border-black/15 shadow-2xl p-6 sm:p-8 text-[#111111]"
+          className="relative z-10 w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-[#FFFFFF] rounded-3xl border border-black/15 shadow-2xl p-6 sm:p-8 text-[#111111]"
         >
           {/* Close button */}
           <button
@@ -60,169 +89,127 @@ export const ProjectPassportModal: React.FC<ProjectPassportModalProps> = ({
             <X className="w-4 h-4" />
           </button>
 
-          {/* Passport Header Banner */}
-          <div className="border-b border-black/10 pb-6 mb-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F7F7F5] border border-black/8 text-xs font-mono-code text-[#111111]">
+          {/* Official Passport Top Header */}
+          <div className="border-b border-black/10 pb-5 mb-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5F5F3] border border-black/8 text-[12px] text-[#111111] font-bold uppercase tracking-wider">
                 <FileCheck2 className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="font-semibold tracking-wider">PROJECT PASSPORT</span>
+                <span>Project Passport</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono-code text-[#737373]">ID:</span>
-                <span className="px-2.5 py-0.5 rounded-lg bg-[#111111] text-white text-xs font-mono-code font-bold">
-                  {passport.passportId}
+
+              <div className="flex items-center gap-1.5 text-xs">
+                <span className="text-[#737373]">Unique ID:</span>
+                <span className="px-2 py-0.5 rounded-md bg-[#111111] text-white text-[11px] font-bold tracking-wider">
+                  {passport.passportId || project.passportId || 'PV-2025-001'}
                 </span>
               </div>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-display font-semibold text-[#111111]">
+            {/* Project Name */}
+            <h2 className="text-[24px] sm:text-[28px] font-bold text-[#111111] leading-tight">
               {project.title}
             </h2>
-            <p className="text-xs sm:text-sm text-[#4A4A4A] mt-1.5 leading-relaxed">
+
+            {/* Short Description */}
+            <p className="text-[14px] text-[#4A4A4A] mt-2 leading-relaxed">
               {project.tagline || project.description}
             </p>
-
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              <ProjectStatusBadge status="APPROVED" size="sm" />
-              <span className="inline-flex items-center gap-1 text-xs font-mono-code px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                Institutional Verification Active
-              </span>
-              <span className="text-xs text-[#737373] font-mono-code">
-                Batch: {passport.academicYear || project.academicYear}
-              </span>
-            </div>
           </div>
 
-          {/* Verified Project Seals Section */}
-          <div className="bg-[#FBFBFA] p-4 sm:p-5 rounded-2xl border border-black/8 mb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span className="text-xs font-mono-code uppercase tracking-wider font-bold text-[#111111]">
-                VERIFIED PROJECT CERTIFICATION
+          {/* Identity Matrix Fields */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
+            {/* Batch & Academic Year */}
+            <div className="p-3.5 rounded-xl bg-[#FBFBFA] border border-black/8">
+              <span className="text-[11px] font-bold text-[#737373] uppercase tracking-wider block">
+                Batch & Academic Year
+              </span>
+              <span className="text-[14px] font-bold text-[#111111] mt-0.5 block">
+                Batch {project.academicYear || '2025–2026'}
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <div className="p-3 bg-white rounded-xl border border-black/8 flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-xs font-semibold text-[#111111]">Institution Verified</p>
-                  <p className="text-[11px] text-[#737373] mt-0.5">{project.institution}</p>
-                </div>
-              </div>
-
-              <div className="p-3 bg-white rounded-xl border border-black/8 flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-xs font-semibold text-[#111111]">Faculty Reviewed</p>
-                  <p className="text-[11px] text-[#737373] mt-0.5">
-                    {passport.facultyReviewer?.name || 'Dr. Anil Sharma'} (Score: {passport.facultyReviewer?.score || 9.6}/10)
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-3 bg-white rounded-xl border border-black/8 flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-xs font-semibold text-[#111111]">Project Verified</p>
-                  <p className="text-[11px] text-[#737373] mt-0.5">Cryptographic Seal Active</p>
-                </div>
-              </div>
+            {/* Institution */}
+            <div className="p-3.5 rounded-xl bg-[#FBFBFA] border border-black/8">
+              <span className="text-[11px] font-bold text-[#737373] uppercase tracking-wider block">
+                Institution
+              </span>
+              <span className="text-[14px] font-bold text-[#111111] mt-0.5 block truncate">
+                {project.institution}
+              </span>
             </div>
 
-            {passport.institutionalValidationCode && (
-              <div className="mt-3 pt-3 border-t border-black/6 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono-code text-[#737373]">
-                <span>Validation Hash: {passport.institutionalValidationCode}</span>
-                <span className="text-emerald-700 font-medium">Signature: {passport.facultyReviewer?.signatureHash?.slice(0, 18)}...</span>
-              </div>
-            )}
-          </div>
-
-          {/* Core Metadata Matrix */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="p-4 bg-white rounded-2xl border border-black/8 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-mono-code text-[#737373] uppercase pb-1 border-b border-black/6">
-                <Building2 className="w-3.5 h-3.5" />
-                <span>Academic Lineage</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div>
-                  <span className="text-[#737373] block text-[11px]">Institution</span>
-                  <span className="font-medium text-[#111111]">{project.institution}</span>
-                </div>
-                <div>
-                  <span className="text-[#737373] block text-[11px]">Department</span>
-                  <span className="font-medium text-[#111111]">{project.department}</span>
-                </div>
-                <div>
-                  <span className="text-[#737373] block text-[11px]">Academic Batch</span>
-                  <span className="font-medium text-[#111111]">{project.academicYear}</span>
-                </div>
-                <div>
-                  <span className="text-[#737373] block text-[11px]">Faculty Mentor</span>
-                  <span className="font-medium text-[#111111]">{passport.facultyReviewer?.name || 'Dr. Anil Sharma'}</span>
-                </div>
-              </div>
+            {/* Domain & Category */}
+            <div className="p-3.5 rounded-xl bg-[#FBFBFA] border border-black/8">
+              <span className="text-[11px] font-bold text-[#737373] uppercase tracking-wider block">
+                Domain & Category
+              </span>
+              <span className="text-[14px] font-bold text-[#111111] mt-0.5 block">
+                {project.domain}
+              </span>
             </div>
 
-            <div className="p-4 bg-white rounded-2xl border border-black/8 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-mono-code text-[#737373] uppercase pb-1 border-b border-black/6">
-                <Terminal className="w-3.5 h-3.5" />
-                <span>Technical Evidence</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div>
-                  <span className="text-[#737373] block text-[11px]">Total Commits</span>
-                  <span className="font-mono-code font-semibold text-[#111111]">{project.githubCommits}</span>
-                </div>
-                <div>
-                  <span className="text-[#737373] block text-[11px]">GitHub Stars</span>
-                  <span className="font-mono-code font-semibold text-[#111111]">{project.githubStars}</span>
-                </div>
-                <div>
-                  <span className="text-[#737373] block text-[11px]">Code Health</span>
-                  <span className="font-mono-code font-semibold text-emerald-600">{passport.codeHealthScore || 98}%</span>
-                </div>
-                <div>
-                  <span className="text-[#737373] block text-[11px]">Repository</span>
-                  <a 
-                    href={passport.githubRepo || '#'} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="font-mono-code text-blue-600 hover:underline inline-flex items-center gap-1 truncate max-w-[120px]"
-                  >
-                    <span>repo</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </a>
-                </div>
-              </div>
+            {/* Verification Status */}
+            <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200">
+              <span className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider block">
+                Verification Status
+              </span>
+              <span className="text-[14px] font-bold text-emerald-950 mt-0.5 inline-flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+                Verified by Faculty & Institution
+              </span>
             </div>
-          </div>
 
-          {/* Technologies */}
-          <div className="mb-6">
-            <h4 className="text-xs font-mono-code uppercase text-[#737373] mb-2">Technologies</h4>
-            <div className="flex flex-wrap gap-1.5">
-              {project.techStack.map(tech => (
-                <span key={tech} className="px-2.5 py-1 rounded-lg bg-[#F7F7F5] border border-black/8 text-xs font-mono-code text-[#111111]">
-                  {tech}
+            {/* GitHub Repository */}
+            <div className="p-3.5 rounded-xl bg-[#FBFBFA] border border-black/8 sm:col-span-2 flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold text-[#737373] uppercase tracking-wider block">
+                  GitHub Repository
                 </span>
-              ))}
+                <span className="text-[13.5px] text-[#111111] mt-0.5 block truncate">
+                  {passport.githubRepo || 'github.com/projectverse/core-repo'}
+                </span>
+              </div>
+              <a
+                href={passport.githubRepo || '#'}
+                target="_blank"
+                rel="noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-[#111111] text-white text-xs font-medium inline-flex items-center gap-1 hover:bg-black transition-colors"
+              >
+                <span>Open Repo</span>
+                <ExternalLink className="w-3 h-3 text-white" />
+              </a>
+            </div>
+
+            {/* Continuity Status */}
+            <div className="p-3.5 rounded-xl bg-[#F5F5F3] border border-black/8 sm:col-span-2 flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold text-[#737373] uppercase tracking-wider block">
+                  Continuity Status
+                </span>
+                <span className="text-[14px] font-bold text-[#111111] mt-0.5 block">
+                  Open for Next Batch Continuation
+                </span>
+                <span className="text-xs text-[#737373] block mt-0.5">
+                  Incoming students can build upon this validated baseline.
+                </span>
+              </div>
+              <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
+                CONTINUITY READY
+              </span>
             </div>
           </div>
 
           {/* Contributors */}
           <div className="mb-6">
-            <h4 className="text-xs font-mono-code uppercase text-[#737373] mb-2.5">
-              Verified Contributors ({project.contributors.length})
+            <h4 className="text-xs font-bold text-[#737373] uppercase tracking-wider mb-2">
+              Verified Contributors ({project.contributors?.length || 0})
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {project.contributors.map(c => (
-                <div key={c.name} className="flex items-center gap-2.5 p-2.5 bg-[#FBFBFA] rounded-xl border border-black/6">
+              {project.contributors?.map(c => (
+                <div key={c.name} className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FBFBFA] border border-black/6">
                   <img src={c.avatar} alt={c.name} className="w-7 h-7 rounded-full object-cover border border-black/10" />
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-[#111111] truncate">{c.name}</p>
+                    <p className="text-xs font-bold text-[#111111] truncate">{c.name}</p>
                     <p className="text-[11px] text-[#737373] truncate">{c.role} • {c.institution}</p>
                   </div>
                 </div>
@@ -230,17 +217,72 @@ export const ProjectPassportModal: React.FC<ProjectPassportModalProps> = ({
             </div>
           </div>
 
-          {/* Footer actions */}
-          <div className="pt-4 border-t border-black/10 flex flex-wrap items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2 text-[#737373] font-mono-code text-[11px]">
-              <Clock className="w-3.5 h-3.5" />
-              <span>Created: Sep 2025 • Seal Validated</span>
-            </div>
-            <button
-              onClick={onClose}
-              className="px-5 py-2 rounded-xl bg-[#111111] text-white font-medium hover:bg-black transition-colors cursor-pointer"
+          {/* Embedded Lineage Accordion/Section if Toggled */}
+          {showLineage && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="p-5 bg-[#FBFBFA] rounded-2xl border border-black/8 mb-6 space-y-4"
             >
-              Close Passport
+              <div className="flex items-center justify-between pb-2 border-b border-black/6">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
+                  Cross-Batch Timeline
+                </span>
+                <button
+                  onClick={() => setShowLineage(false)}
+                  className="text-xs text-[#737373] hover:text-[#111111]"
+                >
+                  Hide
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {lineageNodes.map((node, idx) => (
+                  <div key={node.batch} className="p-3 bg-white rounded-xl border border-black/6">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="font-bold text-[#111111]">{node.batch}</span>
+                      <span className="text-[#737373]">{node.phase}</span>
+                    </div>
+                    <p className="text-xs text-[#4A4A4A]">{node.added}</p>
+                    <span className="text-[10.5px] text-emerald-700 font-medium block mt-1">
+                      ✓ {node.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Action Buttons: Export/Share • View Lineage • Continue This Project */}
+          <div className="pt-4 border-t border-black/10 flex flex-wrap items-center justify-between gap-2.5">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleShare}
+                className="px-4 py-2 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE9] border border-black/8 text-xs font-medium text-[#111111] inline-flex items-center gap-1.5 cursor-pointer transition-colors"
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 text-[#111111]" />}
+                <span>{copied ? 'Link Copied' : 'Export / Share'}</span>
+              </button>
+
+              <button
+                onClick={() => setShowLineage(!showLineage)}
+                className="px-4 py-2 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE9] border border-black/8 text-xs font-medium text-[#111111] inline-flex items-center gap-1.5 cursor-pointer transition-colors"
+              >
+                <GitFork className="w-3.5 h-3.5 text-[#111111]" />
+                <span>{showLineage ? 'Hide Lineage' : 'View Lineage'}</span>
+              </button>
+            </div>
+
+            <button
+              onClick={() => {
+                if (onContinueProject) onContinueProject(project);
+                onClose();
+              }}
+              className="btn-primary-black px-5 py-2 rounded-xl text-xs font-medium inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              <span>Continue This Project</span>
+              <GitFork className="w-3.5 h-3.5 text-white" />
             </button>
           </div>
         </motion.div>
@@ -248,3 +290,5 @@ export const ProjectPassportModal: React.FC<ProjectPassportModalProps> = ({
     </AnimatePresence>
   );
 };
+
+export default ProjectPassportModal;
