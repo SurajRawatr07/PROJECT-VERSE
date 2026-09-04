@@ -1,60 +1,61 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=180&section=header&text=PROJECT%20VERSE&fontSize=55&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=SMART%20EDUCATION%20%E2%80%A2%20SIH%202026&descAlignY=60&descSize=18" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=170&section=header&text=PROJECT%20VERSE&fontSize=52&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=SMART%20EDUCATION%20%E2%80%A2%20SIH%202026&descAlignY=60&descSize=17" width="100%"/>
 
 <br/>
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=28&duration=2500&pause=800&color=7C3AED&center=true&vCenter=true&width=700&lines=%E2%9A%A0%EF%B8%8F+UNDER+DEVELOPMENT;%F0%9F%9A%80+PROJECT+VERSE;%F0%9F%8E%93+SMART+EDUCATION+ECOSYSTEM;%F0%9F%8F%86+SMART+INDIA+HACKATHON+2026" />
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=26&duration=2500&pause=800&color=7C3AED&center=true&vCenter=true&width=700&lines=%F0%9F%9A%A7+UNDER+DEVELOPMENT;%F0%9F%9A%80+PROJECT+VERSE;%F0%9F%8E%93+SMART+EDUCATION+ECOSYSTEM;%F0%9F%8F%86+SIH+2026" />
 
 <br/><br/>
 
 ### 🧠 Student Innovation • Smart Education • Continuous Learning
 
-**Built for Smart India Hackathon 2026**
+**IDEA → BUILD → VERIFY → COLLABORATE → EVOLVE**
 
 <br/>
 
-<img src="https://img.shields.io/badge/%E2%9A%A0%EF%B8%8F-UNDER%20DEVELOPMENT-7C3AED?style=for-the-badge&labelColor=0D1117"/>
-<img src="https://img.shields.io/badge/%F0%9F%9A%80-FRONTEND%20PROTOTYPE-00C896?style=for-the-badge&labelColor=0D1117"/>
-<img src="https://img.shields.io/badge/%F0%9F%8F%86-SIH%202026-FFB000?style=for-the-badge&labelColor=0D1117"/>
+<img src="https://img.shields.io/badge/STATUS-UNDER%20DEVELOPMENT-7C3AED?style=for-the-badge&labelColor=0D1117"/>
+<img src="https://img.shields.io/badge/TYPE-FRONTEND%20MVP-00C896?style=for-the-badge&labelColor=0D1117"/>
+<img src="https://img.shields.io/badge/EVENT-SIH%202026-FFB000?style=for-the-badge&labelColor=0D1117"/>
 
 </div>
 
 ---
 
-## 🚧 PROJECT STATUS
+## 🚧 Project Status
 
-> ### ⚡ UNDER DEVELOPMENT
+> **ProjectVerse is currently an early-stage frontend MVP developed for Smart India Hackathon 2026.**
 >
-> **ProjectVerse is currently a frontend-focused prototype / MVP.**
+> The platform is designed to make student projects **discoverable, verifiable, collaborative, and continuously reusable**.
 >
-> The project is being developed for **Smart India Hackathon (SIH) 2026** under the **Smart Education** theme.
->
-> Backend APIs, database integration, institutional verification, AI-powered services and other advanced modules are planned for upcoming development phases.
+> Backend, database, institutional verification, AI services, and advanced modules are planned for future phases.
 
 ---
 
-<div align="center">
+## 🚀 What is ProjectVerse?
 
-## 🚀 PROJECT VERSE
+**ProjectVerse** is a Smart Education platform where student projects can move beyond submission and become **long-term learning assets**.
 
-### **IDEA → BUILD → DISCOVER → VERIFY → COLLABORATE → CONTINUE → EVOLVE**
+Students can **build projects, showcase their work, discover existing solutions, collaborate with others, verify project authenticity, and continue improving previous work.**
 
-**A Smart Education ecosystem designed to transform student projects into discoverable, collaborative and continuously evolving learning assets.**
+### 🔄 Core Flow
 
-</div>
+**IDEA → BUILD → DISCOVER → VERIFY → COLLABORATE → CONTINUE → EVOLVE**
 
 ---
 
-## 🎯 SIH PROBLEM STATEMENT
+## 🎯 SIH Problem Statement
 
-| Detail | Information |
+| Field | Details |
 |---|---|
-| **Problem Statement ID** | `26207` |
-| **Organization** | AICTE |
-| **Department** | AICTE, MIC – Student Innovation |
-| **Category** | Software |
-| **Theme** | Smart Education |
+| 🆔 **Problem Statement** | `26207` |
+| 🏢 **Organization** | AICTE |
+| 📚 **Department** | AICTE, MIC – Student Innovation |
+| 💻 **Category** | Software |
+| 🎓 **Theme** | Smart Education |
 
 ---
 
+## 💡 Vision
+
+> **Turn student projects from one-time submissions into a connected ecosystem of knowledge, innovation, and continuous learning.**
