@@ -57,24 +57,24 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
       {/* 1. Distinctive Geometric ProjectVerse Symbol */}
       {showLogo && (
         <div className={`shrink-0 flex items-center justify-center ${collapsed ? 'mx-auto' : ''}`}>
-          {/* Responsive sizing: 25px on mobile, 28px on desktop if not explicitly passed */}
+          {/* Responsive sizing: 26px on mobile, 30px on desktop if not explicitly passed */}
           <div className="block sm:hidden">
             <ProjectVerseLogo
-              size={logoSize || 25}
+              size={logoSize || 26}
               color={logoColor}
               accentColor={accentColor}
-              className={`transition-transform duration-200 ease-out ${
-                interactive ? 'group-hover:scale-[1.04]' : ''
+              className={`transition-transform duration-220 ease-out ${
+                interactive ? 'group-hover:scale-[1.03]' : ''
               }`}
             />
           </div>
           <div className="hidden sm:block">
             <ProjectVerseLogo
-              size={logoSize || 28}
+              size={logoSize || 30}
               color={logoColor}
               accentColor={accentColor}
-              className={`transition-transform duration-200 ease-out ${
-                interactive ? 'group-hover:scale-[1.04]' : ''
+              className={`transition-transform duration-220 ease-out ${
+                interactive ? 'group-hover:scale-[1.03]' : ''
               }`}
             />
           </div>
@@ -84,15 +84,15 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
       {/* 2. Editorial Wordmark: PROJECT VERSE (Strictly Two Words in Instrument Serif) */}
       {showWordmark && (
         <div
-          className={`flex items-baseline leading-none font-brand font-normal tracking-normal ${textColor} ${
-            textSizeClassName || 'text-[19.5px] sm:text-[22px] md:text-[23.5px]'
-          } transition-[letter-spacing,opacity] duration-200 ease-out ${
-            interactive ? 'group-hover:opacity-95' : ''
+          className={`flex items-baseline leading-none font-brand ${textColor} ${
+            textSizeClassName || 'text-[19px] sm:text-[21px] md:text-[22px]'
+          } transition-[letter-spacing,opacity] duration-220 ease-out ${
+            interactive ? 'group-hover:opacity-90' : ''
           }`}
-          style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "cv11"' }}
+          style={{ fontFamily: "'Instrument Serif', Georgia, 'Times New Roman', serif" }}
         >
-          {/* PROJECT: slightly smaller and refined letterform */}
-          <span className="text-[0.90em] tracking-[0.03em] inline-block font-normal">
+          {/* PROJECT: slightly lighter, refined tracking */}
+          <span className="text-[0.92em] tracking-[0.025em] inline-block font-normal opacity-90">
             PROJECT
           </span>
 
@@ -103,7 +103,7 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
           />
 
           {/* VERSE: slightly stronger visual presence */}
-          <span className="text-[1.04em] tracking-[-0.012em] inline-block font-normal">
+          <span className="text-[1.02em] tracking-[0.012em] inline-block font-medium opacity-100">
             VERSE
           </span>
         </div>

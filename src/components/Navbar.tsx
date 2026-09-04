@@ -92,30 +92,39 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-label="PROJECT VERSE Home"
               title="PROJECT VERSE"
             >
-              {/* PV Compact Geometric Emblem */}
-              <div className="shrink-0 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-[1.03]">
-                <ProjectVerseLogo
-                  size={isScrolled ? 25 : 27}
-                  color="#111111"
-                  className="shrink-0 transition-transform duration-200"
-                />
+              {/* PV Compact Geometric Emblem (26px mobile / 28-30px desktop) */}
+              <div className="shrink-0 flex items-center justify-center transition-transform duration-220 ease-out group-hover:scale-[1.03]">
+                <div className="block sm:hidden">
+                  <ProjectVerseLogo
+                    size={26}
+                    color="#111111"
+                    className="shrink-0"
+                  />
+                </div>
+                <div className="hidden sm:block">
+                  <ProjectVerseLogo
+                    size={isScrolled ? 28 : 30}
+                    color="#111111"
+                    className="shrink-0 transition-all duration-200"
+                  />
+                </div>
               </div>
 
               {/* PROJECT VERSE Wordmark (Two Separate Words in Instrument Serif) */}
               <div
-                className="flex items-baseline whitespace-nowrap leading-none font-brand text-[#111111] transition-[opacity,letter-spacing] duration-200 group-hover:opacity-90"
+                className="flex items-baseline whitespace-nowrap leading-none font-brand text-[#111111] transition-[opacity,letter-spacing] duration-220 ease-out group-hover:opacity-90"
                 style={{ fontFamily: "'Instrument Serif', Georgia, 'Times New Roman', serif" }}
               >
-                {/* PROJECT: slightly smaller / lighter */}
-                <span className="text-[17px] sm:text-[18.5px] md:text-[20px] font-normal tracking-[0.03em] inline-block">
+                {/* PROJECT: slightly lighter, refined tracking */}
+                <span className="text-[17.5px] sm:text-[19px] md:text-[20.5px] font-normal tracking-[0.025em] inline-block opacity-90">
                   PROJECT
                 </span>
 
-                {/* Calibrated space between the two words */}
+                {/* Calibrated single space between PROJECT and VERSE */}
                 <span className="inline-block w-[0.32em]" aria-hidden="true" />
 
-                {/* VERSE: slightly stronger visual presence */}
-                <span className="text-[19px] sm:text-[20.5px] md:text-[22.5px] font-normal tracking-[-0.01em] inline-block">
+                {/* VERSE: slightly stronger visual presence, 100% opacity */}
+                <span className="text-[19px] sm:text-[20.5px] md:text-[22px] font-medium tracking-[0.012em] inline-block opacity-100">
                   VERSE
                 </span>
               </div>
@@ -237,14 +246,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Header inside drawer */}
               <div className="flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06]">
                 <div className="flex items-center gap-2">
-                  <ProjectVerseLogo size={23} color="#111111" />
+                  <ProjectVerseLogo size={24} color="#111111" />
                   <div
                     className="flex items-baseline leading-none font-brand text-[#111111]"
-                    style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                    style={{ fontFamily: "'Instrument Serif', Georgia, 'Times New Roman', serif" }}
                   >
-                    <span className="text-[16px] font-normal tracking-[0.03em]">PROJECT</span>
+                    <span className="text-[16.5px] font-normal tracking-[0.025em] opacity-90">PROJECT</span>
                     <span className="inline-block w-[0.3em]" aria-hidden="true" />
-                    <span className="text-[18px] font-normal tracking-[-0.01em]">VERSE</span>
+                    <span className="text-[18px] font-medium tracking-[0.012em] opacity-100">VERSE</span>
                   </div>
                 </div>
                 <button

@@ -31,7 +31,7 @@ export interface ProjectVerseLogoProps extends SVGProps<SVGSVGElement> {
  * - Monochrome purity (pure black/white)
  */
 export const ProjectVerseLogo: React.FC<ProjectVerseLogoProps> = ({
-  size = 28,
+  size = 30,
   color = '#111111',
   accentColor,
   className = '',
@@ -52,21 +52,21 @@ export const ProjectVerseLogo: React.FC<ProjectVerseLogoProps> = ({
     >
       {/* 
         FACET 1: The "P" (Project, Academic Foundation, Campus Pillar)
-        Vertical structural pillar with precision upper loop and counter.
+        Clear, bold vertical spine with precision upper loop and open counter.
       */}
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M5.5 5C5.5 4.44772 5.94772 4 6.5 4H16.8C20.666 4 23.8 7.13401 23.8 11C23.8 14.5109 21.2152 17.419 17.8288 17.9176C17.2917 17.9967 16.7454 18 16.2 18H9.5V26.5C9.5 27.0523 9.05228 27.5 8.5 27.5H6.5C5.94772 27.5 5.5 27.0523 5.5 26.5V5ZM9.5 8V14H16.2C17.8569 14 19.2 12.6569 19.2 11C19.2 9.34315 17.8569 8 16.2 8H9.5Z"
+        d="M3.5 4.5H11.8C13.9 4.5 15.4 6.2 15.4 9.5C15.4 12.8 13.9 14.5 11.8 14.5H7.0V27.5H3.5V4.5ZM7.0 7.8V11.2H10.8C11.7 11.2 12.4 10.6 12.4 9.5C12.4 8.4 11.7 7.8 10.8 7.8H7.0Z"
         fill={color}
       />
 
       {/* 
-        FACET 2: The "V" (Vision, Verification, Lineage & Continuity)
-        Sharp geometric chevron interlocking with the P through calibrated negative space.
+        FACET 2: The "V" (Verse, Verification, Lineage & Continuity)
+        Architectural, symmetrical geometric chevron with full cap-height arms and razor-sharp apex.
       */}
       <path
-        d="M13.2 19.4L18.4 27.4C18.65 27.78 19.15 27.78 19.4 27.4L27.1 10.4C27.35 9.85 26.95 9.2 26.35 9.2H22.5C22.15 9.2 21.85 9.4 21.7 9.7L18.9 17.8L16.4 14.5C16.25 14.25 15.95 14.1 15.65 14.1H13.2C12.75 14.1 12.5 14.6 12.75 15L13.2 15.8V19.4Z"
+        d="M16.2 4.5H19.8L22.6 22.8L25.4 4.5H29.0L23.2 27.5C22.9 27.9 22.3 27.9 22.0 27.5L16.2 4.5Z"
         fill={vColor}
       />
     </svg>
