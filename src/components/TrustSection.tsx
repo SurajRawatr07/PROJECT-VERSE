@@ -1,78 +1,87 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { GitBranch, UserCheck, ShieldCheck, ArrowDown, CheckCircle2 } from 'lucide-react';
+import { GitBranch, UserCheck, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const TrustSection: React.FC = () => {
   return (
-    <section id="trust" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#FFFFFF] border-t border-black/8">
+    <section id="trust" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#FFFFFF] border-t border-black/8 font-serif">
       <div className="max-w-4xl mx-auto text-center">
         {/* Section Heading */}
-        <span className="text-xs font-mono-code uppercase tracking-widest text-[#737373] font-semibold">
-          Verification Model
+        <span className="text-[12px] uppercase tracking-widest text-[#737373] font-semibold">
+          Trust & Verification
         </span>
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal mb-6 sm:mb-8 mt-2">
-          Built on Evidence. Not Just Claims.
+        <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#111111] font-bold tracking-tight mb-4 mt-2">
+          Evidence Over Assumptions
         </h2>
+        <p className="text-[#4A4A4A] text-sm sm:text-base max-w-lg mx-auto leading-relaxed mb-10 sm:mb-12 tracking-wide">
+          Every project is validated through automated technical metrics and institutional oversight.
+        </p>
 
-        {/* Verification Equation / Block */}
+        {/* Highly Visual Equation Container */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.45 }}
-          className="card-white p-6 sm:p-8 max-w-3xl mx-auto mb-8 border border-black/8"
+          transition={{ duration: 0.4 }}
+          className="card-white p-6 sm:p-10 max-w-3xl mx-auto border border-black/8"
         >
-          {/* Top 3 pillars */}
-          <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 sm:gap-2 items-center">
-            <div className="surface-soft rounded-xl p-3.5 flex items-center justify-center gap-2 border border-black/6">
-              <GitBranch className="w-4 h-4 text-[#111111]" />
-              <span className="font-mono-code text-xs sm:text-sm text-[#111111] font-medium">
+          {/* Equation Grid: Item + Item + Item = Result */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-3">
+            {/* 1. GitHub Evidence */}
+            <div className="w-full md:w-auto flex-1 surface-soft rounded-2xl p-4 flex flex-col items-center justify-center gap-2 border border-black/6">
+              <div className="w-10 h-10 rounded-xl bg-white border border-black/8 flex items-center justify-center text-[#111111] shadow-xs">
+                <GitBranch className="w-5 h-5" />
+              </div>
+              <span className="text-xs sm:text-sm text-[#111111] font-bold tracking-wide">
                 GitHub Evidence
               </span>
             </div>
 
-            <div className="flex justify-center text-[#737373] font-mono-code text-base font-bold">
+            {/* Plus Symbol */}
+            <div className="text-[#8C8C8C] text-lg font-bold select-none">
               +
             </div>
 
-            <div className="surface-soft rounded-xl p-3.5 flex items-center justify-center gap-2 border border-black/6">
-              <UserCheck className="w-4 h-4 text-[#111111]" />
-              <span className="font-mono-code text-xs sm:text-sm text-[#111111] font-medium">
+            {/* 2. Faculty Review */}
+            <div className="w-full md:w-auto flex-1 surface-soft rounded-2xl p-4 flex flex-col items-center justify-center gap-2 border border-black/6">
+              <div className="w-10 h-10 rounded-xl bg-white border border-black/8 flex items-center justify-center text-[#111111] shadow-xs">
+                <UserCheck className="w-5 h-5" />
+              </div>
+              <span className="text-xs sm:text-sm text-[#111111] font-bold tracking-wide">
                 Faculty Review
               </span>
             </div>
 
-            <div className="flex justify-center text-[#737373] font-mono-code text-base font-bold">
+            {/* Plus Symbol */}
+            <div className="text-[#8C8C8C] text-lg font-bold select-none">
               +
             </div>
 
-            <div className="surface-soft rounded-xl p-3.5 flex items-center justify-center gap-2 border border-black/6">
-              <ShieldCheck className="w-4 h-4 text-[#111111]" />
-              <span className="font-mono-code text-xs sm:text-sm text-[#111111] font-medium">
-                Institutional / HOD Validation
+            {/* 3. HOD Validation */}
+            <div className="w-full md:w-auto flex-1 surface-soft rounded-2xl p-4 flex flex-col items-center justify-center gap-2 border border-black/6">
+              <div className="w-10 h-10 rounded-xl bg-white border border-black/8 flex items-center justify-center text-[#111111] shadow-xs">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <span className="text-xs sm:text-sm text-[#111111] font-bold tracking-wide">
+                HOD Validation
               </span>
             </div>
           </div>
 
-          {/* Arrow down */}
-          <div className="my-5 flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full bg-[#F5F5F3] border border-black/8 flex items-center justify-center text-[#111111]">
-              <ArrowDown className="w-4 h-4" />
+          {/* Equals Sign & Verified Outcome */}
+          <div className="mt-6 pt-6 border-t border-black/8 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <span className="text-[#8C8C8C] text-lg font-bold select-none hidden sm:inline">
+              =
+            </span>
+            <div className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-[#111111] text-white text-xs sm:text-sm font-bold tracking-wider shadow-xs">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <span>VERIFIED PROJECT</span>
             </div>
           </div>
-
-          {/* Verified Project Result Badge */}
-          <div className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-[#F5F5F3] border border-black/10 text-[#111111] font-mono-code text-xs sm:text-sm font-semibold">
-            <CheckCircle2 className="w-4 h-4 text-[#111111]" />
-            <span>VERIFIED PROJECT</span>
-          </div>
         </motion.div>
-
-        {/* Supporting Line */}
-        <p className="font-body text-[#4A4A4A] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-          ProjectVerse combines technical evidence with academic review to create more credible project records.
-        </p>
       </div>
     </section>
   );
 };
+
+export default TrustSection;

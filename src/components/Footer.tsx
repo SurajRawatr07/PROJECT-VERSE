@@ -1,6 +1,6 @@
 import React from 'react';
 import { Github, Linkedin } from 'lucide-react';
-import { PublicPage, ProjectVerseLogo, ProjectVerseBrand } from './Navbar';
+import { PublicPage, ProjectVerseLogo } from './Navbar';
 
 const GITHUB_URL = 'https://github.com/SurajRawatr07';
 const LINKEDIN_URL = 'https://www.linkedin.com/in/suraj-rawat-30513b340/';
@@ -20,46 +20,46 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
   return (
     <footer 
       id="site-footer"
-      className="w-full bg-[#F7F7F5] border-t border-black/8 pt-12 pb-8 px-4 sm:px-8 text-[#4A4A4A] font-body"
+      className="w-full bg-[#F7F7F5] border-t border-black/8 pt-14 pb-9 px-4 sm:px-8 text-[#4A4A4A] font-serif"
       aria-label="Footer"
     >
-      <div className="max-w-5xl mx-auto space-y-8">
-        {/* Top section: Editorial Brand & Tagline */}
+      <div className="max-w-5xl mx-auto space-y-9">
+        {/* Top section: Distinct brand mark & editorial tagline */}
         <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-3 pb-6 border-b border-black/8">
-          <ProjectVerseBrand
-            theme="light"
-            logoSize={26}
-            textSizeClassName="text-[22px] sm:text-[24px]"
-            interactive={true}
-          />
-          <p className="font-display italic text-base sm:text-lg text-[#4A4A4A] tracking-tight">
+          <div className="flex items-center gap-2.5">
+            <ProjectVerseLogo size={24} color="#111111" />
+            <span className="font-serif font-bold text-lg sm:text-xl text-[#111111] tracking-wide">
+              ProjectVerse
+            </span>
+          </div>
+          <p className="italic text-sm sm:text-[15px] text-[#555555] tracking-wide">
             “Academic projects, built to continue.”
           </p>
         </div>
 
-        {/* Middle section: 3-column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-2">
-          {/* LEFT: Short description */}
-          <div className="md:col-span-6 space-y-2.5">
-            <h4 className="text-xs font-mono-code uppercase tracking-wider text-[#111111] font-semibold">
+        {/* Middle section: 3-column Layout with refined typography hierarchy */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-1">
+          {/* LEFT: Mission */}
+          <div className="md:col-span-6 space-y-2">
+            <h4 className="text-[11.5px] uppercase tracking-[0.08em] text-[#111111] font-bold">
               Mission
             </h4>
-            <p className="text-xs sm:text-sm text-[#4A4A4A] leading-relaxed max-w-md">
-              Discover, verify, collaborate and continue academic projects beyond a single batch.
+            <p className="text-[13px] text-[#555555] leading-relaxed max-w-md">
+              Discover, verify, collaborate, and continue academic research and codebases beyond a single batch.
             </p>
           </div>
 
           {/* CENTER: Navigation */}
-          <div className="md:col-span-3 space-y-2.5">
-            <h4 className="text-xs font-mono-code uppercase tracking-wider text-[#111111] font-semibold">
+          <div className="md:col-span-3 space-y-2">
+            <h4 className="text-[11.5px] uppercase tracking-[0.08em] text-[#111111] font-bold">
               Navigation
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm">
+            <ul className="space-y-1.5 text-[13px]">
               <li>
                 <button
                   id="footer-nav-home"
                   onClick={() => handleNav('home')}
-                  className="text-[#4A4A4A] hover:text-[#111111] transition-colors cursor-pointer text-left"
+                  className="text-[#555555] hover:text-[#111111] transition-colors cursor-pointer text-left tracking-wide"
                 >
                   Home
                 </button>
@@ -68,7 +68,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
                 <button
                   id="footer-nav-about"
                   onClick={() => handleNav('about')}
-                  className="text-[#4A4A4A] hover:text-[#111111] transition-colors cursor-pointer text-left"
+                  className="text-[#555555] hover:text-[#111111] transition-colors cursor-pointer text-left tracking-wide"
                 >
                   About
                 </button>
@@ -77,7 +77,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
                 <button
                   id="footer-nav-how-it-works"
                   onClick={() => handleNav('how-it-works')}
-                  className="text-[#4A4A4A] hover:text-[#111111] transition-colors cursor-pointer text-left"
+                  className="text-[#555555] hover:text-[#111111] transition-colors cursor-pointer text-left tracking-wide"
                 >
                   How It Works
                 </button>
@@ -86,18 +86,18 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
           </div>
 
           {/* RIGHT: Connect */}
-          <div className="md:col-span-3 space-y-2.5">
-            <h4 className="text-xs font-mono-code uppercase tracking-wider text-[#111111] font-semibold">
+          <div className="md:col-span-3 space-y-2">
+            <h4 className="text-[11.5px] uppercase tracking-[0.08em] text-[#111111] font-bold">
               Connect
             </h4>
-            <div className="flex items-center gap-3 pt-0.5">
+            <div className="flex items-center gap-2.5 pt-0.5">
               <a
                 id="footer-github-link"
                 href={GITHUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="p-2 rounded-lg text-[#111111] hover:text-[#4A4A4A] hover:bg-black/5 border border-black/8 hover:border-black/15 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+                className="p-2 rounded-lg text-[#111111] hover:text-[#000000] hover:bg-black/5 border border-black/8 hover:border-black/15 transition-all duration-200 focus:outline-none focus-visible:ring-1 focus-visible:ring-black"
               >
                 <Github className="w-4 h-4" />
               </a>
@@ -108,7 +108,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="p-2 rounded-lg text-[#111111] hover:text-[#4A4A4A] hover:bg-black/5 border border-black/8 hover:border-black/15 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+                className="p-2 rounded-lg text-[#111111] hover:text-[#000000] hover:bg-black/5 border border-black/8 hover:border-black/15 transition-all duration-200 focus:outline-none focus-visible:ring-1 focus-visible:ring-black"
               >
                 <Linkedin className="w-4 h-4" />
               </a>
@@ -118,28 +118,28 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
 
         {/* Bottom Bar: Built by Suraj Rawat • 2026 */}
         <div className="pt-6 border-t border-black/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 text-xs font-body">
-            <span className="text-[#737373] font-normal text-[12px]">Built by</span>
+          <div className="flex items-center gap-2 text-xs font-serif">
+            <span className="text-[#666666] font-normal text-[12.5px]">Built by</span>
             <a
               id="footer-creator-credit"
               href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center text-[#111111] font-semibold tracking-normal text-[12px] cursor-pointer transition-all duration-300 ease-out hover:tracking-wide hover:-translate-y-[1.5px] hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-black rounded-sm"
+              className="group relative inline-flex items-center font-bold text-[#111111] text-[13px] tracking-wide cursor-pointer transition-all duration-250 ease-out hover:-translate-y-[1.5px] hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-black rounded-xs"
               title="Suraj Rawat • Creator Profile"
             >
               <span>Suraj Rawat</span>
               {/* Thin animated underline growing from left to right */}
               <span 
-                className="absolute left-0 bottom-[-1.5px] w-0 h-[1px] bg-[#111111] transition-all duration-300 ease-out group-hover:w-full pointer-events-none" 
+                className="absolute left-0 bottom-[-1px] w-0 h-[1px] bg-[#111111] transition-all duration-250 ease-out group-hover:w-full pointer-events-none" 
                 aria-hidden="true" 
               />
             </a>
-            <span className="text-[#8C8C8C] text-[10px] font-mono-code">•</span>
-            <span className="text-[#737373] font-mono-code text-[11.5px]">2026</span>
+            <span className="text-[#8C8C8C] text-[10px]">•</span>
+            <span className="text-[#666666] text-[12px] tracking-wide">2026</span>
           </div>
 
-          <div className="text-[#737373] font-mono-code text-[11.5px]">
+          <div className="text-[#666666] text-[12px] tracking-wide">
             © 2026 ProjectVerse. All rights reserved.
           </div>
         </div>
@@ -147,3 +147,5 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
     </footer>
   );
 };
+
+export default Footer;

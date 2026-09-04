@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, PublicPage } from './components/Navbar';
+import { SplashIntro } from './components/SplashIntro';
 import { Hero } from './components/Hero';
 import { ProblemSection } from './components/ProblemSection';
 import { ApproachFlowSection } from './components/ApproachFlowSection';
@@ -38,6 +39,24 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [isProofOfWorkOpen, setIsProofOfWorkOpen] = useState(false);
+
+  // Splash intro state (shows on initial visit, skippable)
+  const [showSplash, setShowSplash] = useState<boolean>(() => {
+    try {
+      return !sessionStorage.getItem('pv_splash_seen');
+    } catch {
+      return false;
+    }
+  });
+
+  const handleSplashComplete = () => {
+    try {
+      sessionStorage.setItem('pv_splash_seen', 'true');
+    } catch {
+      // ignore
+    }
+    setShowSplash(false);
+  };
 
   // Check existing session on mount
   useEffect(() => {
@@ -121,6 +140,9 @@ export default function App() {
   // Public Website: Home, About, or How It Works
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#111111] font-body relative overflow-x-hidden">
+      {/* Brand Introduction Splash Sequence */}
+      {showSplash && <SplashIntro onComplete={handleSplashComplete} />}
+
       {/* Floating Navbar */}
       <Navbar
         currentPage={currentPage}
