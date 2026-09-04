@@ -8,9 +8,9 @@
 
 <br/><br/>
 
-### 🧠 Student Innovation • Smart Education • Continuous Learning
+### 🧠 𝐒𝐭𝐮𝐝𝐞𝐧𝐭 𝐈𝐧𝐧𝐨𝐯𝐚𝐭𝐢𝐨𝐧 • 𝐒𝐦𝐚𝐫𝐭 𝐄𝐝𝐮𝐜𝐚𝐭𝐢𝐨𝐧 • 𝐂𝐨𝐧𝐭𝐢𝐧𝐮𝐨𝐮𝐬 𝐋𝐞𝐚𝐫𝐧𝐢𝐧𝐠
 
-**IDEA → BUILD → VERIFY → COLLABORATE → EVOLVE**
+**𝐈𝐃𝐄𝐀 → 𝐁𝐔𝐈𝐋𝐃 → 𝐕𝐄𝐑𝐈𝐅𝐘 → 𝐂𝐎𝐋𝐋𝐀𝐁𝐎𝐑𝐀𝐓𝐄 → 𝐄𝐕𝐎𝐋𝐕𝐄**
 
 <br/>
 
@@ -22,40 +22,36 @@
 
 ---
 
-## 🚧 Project Status
+## 🚧 𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐒𝐓𝐀𝐓𝐔𝐒
 
-> **ProjectVerse is currently an early-stage frontend MVP developed for Smart India Hackathon 2026.**
+> ⚡ **𝐔𝐍𝐃𝐄𝐑 𝐃𝐄𝐕𝐄𝐋𝐎𝐏𝐌𝐄𝐍𝐓**
 >
-> The platform is designed to make student projects **discoverable, verifiable, collaborative, and continuously reusable**.
+> **𝐏𝐫𝐨𝐣𝐞𝐜𝐭𝐕𝐞𝐫𝐬𝐞** is currently an early-stage **𝐅𝐫𝐨𝐧𝐭𝐞𝐧𝐝 𝐌𝐕𝐏** developed for **𝐒𝐦𝐚𝐫𝐭 𝐈𝐧𝐝𝐢𝐚 𝐇𝐚𝐜𝐤𝐚𝐭𝐡𝐨𝐧 𝟐𝟎𝟐𝟔**.
 >
-> Backend, database, institutional verification, AI services, and advanced modules are planned for future phases.
+> The platform aims to make student projects **𝐃𝐢𝐬𝐜𝐨𝐯𝐞𝐫𝐚𝐛𝐥𝐞 • 𝐕𝐞𝐫𝐢𝐟𝐢𝐚𝐛𝐥𝐞 • 𝐂𝐨𝐥𝐥𝐚𝐛𝐨𝐫𝐚𝐭𝐢𝐯𝐞 • 𝐑𝐞𝐮𝐬𝐚𝐛𝐥𝐞**.
 
 ---
 
-## 🚀 What is ProjectVerse?
+## 🚀 𝐖𝐇𝐀𝐓 𝐈𝐒 𝐏𝐑𝐎𝐉𝐄𝐂𝐓𝐕𝐄𝐑𝐒𝐄?
 
-**ProjectVerse** is a Smart Education platform where student projects can move beyond submission and become **long-term learning assets**.
+**𝐏𝐫𝐨𝐣𝐞𝐜𝐭𝐕𝐞𝐫𝐬𝐞** is a **𝐒𝐦𝐚𝐫𝐭 𝐄𝐝𝐮𝐜𝐚𝐭𝐢𝐨𝐧 𝐄𝐜𝐨𝐬𝐲𝐬𝐭𝐞𝐦** that transforms student projects from one-time submissions into **𝐥𝐨𝐧𝐠-𝐭𝐞𝐫𝐦 𝐥𝐞𝐚𝐫𝐧𝐢𝐧𝐠 𝐚𝐬𝐬𝐞𝐭𝐬**.
 
-Students can **build projects, showcase their work, discover existing solutions, collaborate with others, verify project authenticity, and continue improving previous work.**
-
-### 🔄 Core Flow
-
-**IDEA → BUILD → DISCOVER → VERIFY → COLLABORATE → CONTINUE → EVOLVE**
+Students can **𝐁𝐮𝐢𝐥𝐝 → 𝐃𝐢𝐬𝐜𝐨𝐯𝐞𝐫 → 𝐕𝐞𝐫𝐢𝐟𝐲 → 𝐂𝐨𝐥𝐥𝐚𝐛𝐨𝐫𝐚𝐭𝐞 → 𝐂𝐨𝐧𝐭𝐢𝐧𝐮𝐞 → 𝐄𝐯𝐨𝐥𝐯𝐞**.
 
 ---
 
-## 🎯 SIH Problem Statement
+## 🎯 𝐒𝐈𝐇 𝐏𝐑𝐎𝐁𝐋𝐄𝐌 𝐒𝐓𝐀𝐓𝐄𝐌𝐄𝐍𝐓
 
-| Field | Details |
+| 𝐃𝐞𝐭𝐚𝐢𝐥 | 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧 |
 |---|---|
-| 🆔 **Problem Statement** | `26207` |
-| 🏢 **Organization** | AICTE |
-| 📚 **Department** | AICTE, MIC – Student Innovation |
-| 💻 **Category** | Software |
-| 🎓 **Theme** | Smart Education |
+| 🆔 **𝐏𝐫𝐨𝐛𝐥𝐞𝐦 𝐒𝐭𝐚𝐭𝐞𝐦𝐞𝐧𝐭 𝐈𝐃** | `26207` |
+| 🏢 **𝐎𝐫𝐠𝐚𝐧𝐢𝐳𝐚𝐭𝐢𝐨𝐧** | **𝐀𝐈𝐂𝐓𝐄** |
+| 📚 **𝐃𝐞𝐩𝐚𝐫𝐭𝐦𝐞𝐧𝐭** | **𝐀𝐈𝐂𝐓𝐄, 𝐌𝐈𝐂 – 𝐒𝐭𝐮𝐝𝐞𝐧𝐭 𝐈𝐧𝐧𝐨𝐯𝐚𝐭𝐢𝐨𝐧** |
+| 💻 **𝐂𝐚𝐭𝐞𝐠𝐨𝐫𝐲** | **𝐒𝐨𝐟𝐭𝐰𝐚𝐫𝐞** |
+| 🎓 **𝐓𝐡𝐞𝐦𝐞** | **𝐒𝐦𝐚𝐫𝐭 𝐄𝐝𝐮𝐜𝐚𝐭𝐢𝐨𝐧** |
 
 ---
 
-## 💡 Vision
+## 💡 𝐕𝐈𝐒𝐈𝐎𝐍
 
-> **Turn student projects from one-time submissions into a connected ecosystem of knowledge, innovation, and continuous learning.**
+> **𝐓𝐮𝐫𝐧 𝐬𝐭𝐮𝐝𝐞𝐧𝐭 𝐩𝐫𝐨𝐣𝐞𝐜𝐭𝐬 𝐟𝐫𝐨𝐦 𝐨𝐧𝐞-𝐭𝐢𝐦𝐞 𝐬𝐮𝐛𝐦𝐢𝐬𝐬𝐢𝐨𝐧𝐬 𝐢𝐧𝐭𝐨 𝐚 𝐜𝐨𝐧𝐧𝐞𝐜𝐭𝐞𝐝 𝐞𝐜𝐨𝐬𝐲𝐬𝐭𝐞𝐦 𝐨𝐟 𝐤𝐧𝐨𝐰𝐥𝐞𝐝𝐠𝐞, 𝐢𝐧𝐧𝐨𝐯𝐚𝐭𝐢𝐨𝐧 & 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐨𝐮𝐬 𝐥𝐞𝐚𝐫𝐧𝐢𝐧𝐠.**
