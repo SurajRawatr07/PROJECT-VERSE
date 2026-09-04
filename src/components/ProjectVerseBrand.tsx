@@ -89,7 +89,7 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
           } transition-[letter-spacing,opacity] duration-220 ease-out ${
             interactive ? 'group-hover:opacity-90' : ''
           }`}
-          style={{ fontFamily: "'Instrument Serif', Georgia, 'Times New Roman', serif" }}
+          style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
         >
           {/* PROJECT: slightly lighter, refined tracking */}
           <span className="text-[0.92em] tracking-[0.025em] inline-block font-normal opacity-90">

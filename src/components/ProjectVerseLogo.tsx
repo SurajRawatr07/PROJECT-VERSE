@@ -2,33 +2,26 @@ import React from 'react';
 import type { SVGProps } from 'react';
 
 export interface ProjectVerseLogoProps extends SVGProps<SVGSVGElement> {
-  /** Logo size in pixels. Defaults to 28 */
+  /** Logo size in pixels. Defaults to 30 */
   size?: number;
   /** Primary silhouette color. Defaults to '#111111' */
   color?: string;
-  /** Optional subtle accent color for the V blade. Defaults to primary color */
+  /** Optional subtle accent color for the V facet. Defaults to primary color */
   accentColor?: string;
   /** Custom CSS class */
   className?: string;
 }
 
 /**
- * ProjectVerse Official Geometric "PV" Emblem
+ * ProjectVerse Official Geometric "PV" Monogram
  * 
- * An iconic, minimalist academic-tech monogram integrating "P" and "V"
- * into a single compact geometric mark.
+ * An iconic, minimal, and intelligent academic-tech brand mark.
  * 
- * Concept & Meaning:
- * - "P" (Left Vertical Pillar & Knowledge Loop): Represents Projects, academic research, and campus foundation.
- * - "V" (Dynamic Right Chevron): Represents Vision, Verification, and forward Continuity across student cohorts.
- * - Integrated Geometry: The P loop seamlessly interlocks with the descending blade of the V,
- *   symbolizing projects that continue into the future rather than ending at semester submission.
- * 
- * Design Characteristics:
- * - Minimal, geometric, razor-sharp
- * - High contrast, 100% vector
- * - Flawless legibility from 16px (favicon) to 32px (navbar) and beyond
- * - Monochrome purity (pure black/white)
+ * Concept & Construction:
+ * - P forms the primary structural shape: full-height vertical foundation spine + upper academic loop
+ * - V is integrated into the lower/inner geometry beneath the loop
+ * - Negative space reveals the V chevron and separates the foundation pillar
+ * - Works flawlessly from 20px (favicon/mobile) to 32px (navbar) and beyond in pure monochrome
  */
 export const ProjectVerseLogo: React.FC<ProjectVerseLogoProps> = ({
   size = 30,
@@ -47,26 +40,27 @@ export const ProjectVerseLogo: React.FC<ProjectVerseLogoProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`shrink-0 select-none ${className}`}
-      aria-label="PROJECT VERSE PV Symbol"
+      aria-label="PROJECT VERSE Monogram"
       {...props}
     >
       {/* 
-        FACET 1: The "P" (Project, Academic Foundation, Campus Pillar)
-        Clear, bold vertical spine with precision upper loop and open counter.
+        FACET 1: The "P" (Project, Academic Foundation, Research Pillar)
+        Primary structural silhouette with vertical spine and precision upper loop with counter.
       */}
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M3.5 4.5H11.8C13.9 4.5 15.4 6.2 15.4 9.5C15.4 12.8 13.9 14.5 11.8 14.5H7.0V27.5H3.5V4.5ZM7.0 7.8V11.2H10.8C11.7 11.2 12.4 10.6 12.4 9.5C12.4 8.4 11.7 7.8 10.8 7.8H7.0Z"
+        d="M4.5 4.5H20.5C24.4 4.5 26.8 7.3 26.8 10.6C26.8 13.8 24.4 15.8 20.5 15.8H9.5V27.5H4.5V4.5ZM9.5 8.6V12.2H19.8C21.2 12.2 22.2 11.4 22.2 10.5C22.2 9.5 21.2 8.6 19.8 8.6H9.5Z"
         fill={color}
       />
 
       {/* 
-        FACET 2: The "V" (Verse, Verification, Lineage & Continuity)
-        Architectural, symmetrical geometric chevron with full cap-height arms and razor-sharp apex.
+        FACET 2: The "V" (Verse, Verification, Cross-Cohort Continuity)
+        Architectural geometric chevron integrated into the lower-right geometry beneath the P loop.
+        Calibrated negative space channel (2.5px) separates the V from the P foundation spine.
       */}
       <path
-        d="M16.2 4.5H19.8L22.6 22.8L25.4 4.5H29.0L23.2 27.5C22.9 27.9 22.3 27.9 22.0 27.5L16.2 4.5Z"
+        d="M12.0 16.8H15.4L18.5 23.2L21.6 16.8H25.0L18.5 27.5L12.0 16.8Z"
         fill={vColor}
       />
     </svg>
@@ -74,3 +68,4 @@ export const ProjectVerseLogo: React.FC<ProjectVerseLogoProps> = ({
 };
 
 export default ProjectVerseLogo;
+

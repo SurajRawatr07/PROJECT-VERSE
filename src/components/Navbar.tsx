@@ -113,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* PROJECT VERSE Wordmark (Two Separate Words in Instrument Serif) */}
               <div
                 className="flex items-baseline whitespace-nowrap leading-none font-brand text-[#111111] transition-[opacity,letter-spacing] duration-220 ease-out group-hover:opacity-90"
-                style={{ fontFamily: "'Instrument Serif', Georgia, 'Times New Roman', serif" }}
+                style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
               >
                 {/* PROJECT: slightly lighter, refined tracking */}
                 <span className="text-[17.5px] sm:text-[19px] md:text-[20.5px] font-normal tracking-[0.025em] inline-block opacity-90">
@@ -246,14 +246,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Header inside drawer */}
               <div className="flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06]">
                 <div className="flex items-center gap-2">
-                  <ProjectVerseLogo size={24} color="#111111" />
+                  <ProjectVerseLogo size={26} color="#111111" />
                   <div
                     className="flex items-baseline leading-none font-brand text-[#111111]"
-                    style={{ fontFamily: "'Instrument Serif', Georgia, 'Times New Roman', serif" }}
+                    style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
                   >
-                    <span className="text-[16.5px] font-normal tracking-[0.025em] opacity-90">PROJECT</span>
+                    <span className="text-[17.5px] font-normal tracking-[0.025em] opacity-90">PROJECT</span>
                     <span className="inline-block w-[0.3em]" aria-hidden="true" />
-                    <span className="text-[18px] font-medium tracking-[0.012em] opacity-100">VERSE</span>
+                    <span className="text-[19px] font-medium tracking-[0.012em] opacity-100">VERSE</span>
                   </div>
                 </div>
                 <button

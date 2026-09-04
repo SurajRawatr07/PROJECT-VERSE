@@ -1,7 +1,8 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="32" height="32" rx="8" fill="#111111"/>
-  <!-- Facet 1: P Foundation -->
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 4.5H11.8C13.9 4.5 15.4 6.2 15.4 9.5C15.4 12.8 13.9 14.5 11.8 14.5H7.0V27.5H3.5V4.5ZM7.0 7.8V11.2H10.8C11.7 11.2 12.4 10.6 12.4 9.5C12.4 8.4 11.7 7.8 10.8 7.8H7.0Z" fill="#FFFFFF"/>
-  <!-- Facet 2: V Continuity -->
-  <path d="M16.2 4.5H19.8L22.6 22.8L25.4 4.5H29.0L23.2 27.5C22.9 27.9 22.3 27.9 22.0 27.5L16.2 4.5Z" fill="#FFFFFF"/>
+  <!-- Facet 1: The P (Project, Academic Foundation) -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 5.5H19.5C23.0 5.5 25.2 8.0 25.2 10.8C25.2 13.6 23.0 15.4 19.5 15.4H10.0V26.5H5.5V5.5ZM10.0 9.2V11.8H18.8C20.0 11.8 20.8 11.4 20.8 10.5C20.8 9.6 20.0 9.2 18.8 9.2H10.0Z" fill="#FFFFFF"/>
+  <!-- Facet 2: The V (Verse, Verification Chevron) -->
+  <path d="M12.2 16.5H15.2L18.0 22.5L20.8 16.5H23.8L18.0 26.5L12.2 16.5Z" fill="#FFFFFF"/>
 </svg>
+
