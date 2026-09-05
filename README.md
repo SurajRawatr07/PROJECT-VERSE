@@ -8,11 +8,7 @@
 
 <br/>
 
-<img src="https://img.shields.io/badge/STATUS-UNDER%20DEVELOPMENT-7C3AED?style=for-the-badge&labelColor=0D1117"/>
-<img src="https://img.shields.io/badge/TYPE-FRONTEND%20MVP-00C896?style=for-the-badge&labelColor=0D1117"/>
-<img src="https://img.shields.io/badge/EVENT-SIH%202026-FFB000?style=for-the-badge&labelColor=0D1117"/>
 
-</div>
 
 ---
 
