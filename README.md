@@ -1,12 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=170&section=header&text=PROJECT%20VERSE&fontSize=52&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=SMART%20EDUCATION%20%E2%80%A2%20SIH%202026&descAlignY=60&descSize=17" width="100%"/>
 
-<br/>
-
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=26&duration=2500&pause=800&color=7C3AED&center=true&vCenter=true&width=700&lines=%F0%9F%9A%A7+UNDER+DEVELOPMENT;%F0%9F%9A%80+PROJECT+VERSE;%F0%9F%8E%93+SMART+EDUCATION+ECOSYSTEM;%F0%9F%8F%86 2026" />
-
-<br/><br/>
 
 ### 🧠 𝐒𝐭𝐮𝐝𝐞𝐧𝐭 𝐈𝐧𝐧𝐨𝐯𝐚𝐭𝐢𝐨𝐧 • 𝐒𝐦𝐚𝐫𝐭 𝐄𝐝𝐮𝐜𝐚𝐭𝐢𝐨𝐧 • 𝐂𝐨𝐧𝐭𝐢𝐧𝐮𝐨𝐮𝐬 𝐋𝐞𝐚𝐫𝐧𝐢𝐧𝐠
 
