@@ -4,7 +4,7 @@
 
 <br/>
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=26&duration=2500&pause=800&color=7C3AED&center=true&vCenter=true&width=700&lines=%F0%9F%9A%A7+UNDER+DEVELOPMENT;%F0%9F%9A%80+PROJECT+VERSE;%F0%9F%8E%93+SMART+EDUCATION+ECOSYSTEM;%F0%9F%8F%86+SIH+2026" />
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=26&duration=2500&pause=800&color=7C3AED&center=true&vCenter=true&width=700&lines=%F0%9F%9A%A7+UNDER+DEVELOPMENT;%F0%9F%9A%80+PROJECT+VERSE;%F0%9F%8E%93+SMART+EDUCATION+ECOSYSTEM;%F0%9F%8F%86 2026" />
 
 <br/><br/>
 
