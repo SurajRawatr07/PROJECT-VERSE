@@ -25,12 +25,15 @@ export interface ProjectVerseLogoProps extends SVGProps<SVGSVGElement> {
  */
 export const ProjectVerseLogo: React.FC<ProjectVerseLogoProps> = ({
   size = 30,
-  color = '#111111',
+  color,
   accentColor,
   className = '',
   ...props
 }) => {
-  const vColor = accentColor || color;
+  // If not explicitly overridden with a custom accent, default to currentColor to inherit theme text
+  const isDefaultDarkTone = !color || color === '#111111' || color === '#0F172A';
+  const resolvedColor = isDefaultDarkTone ? 'currentColor' : color;
+  const vColor = accentColor || resolvedColor;
 
   return (
     <svg
@@ -39,7 +42,7 @@ export const ProjectVerseLogo: React.FC<ProjectVerseLogoProps> = ({
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`shrink-0 select-none ${className}`}
+      className={`shrink-0 select-none text-[#111111] dark:text-[#F4F4F6] ${className}`}
       aria-label="PROJECT VERSE Monogram"
       {...props}
     >
@@ -51,7 +54,7 @@ export const ProjectVerseLogo: React.FC<ProjectVerseLogoProps> = ({
         fillRule="evenodd"
         clipRule="evenodd"
         d="M4.5 4.5H20.5C24.4 4.5 26.8 7.3 26.8 10.6C26.8 13.8 24.4 15.8 20.5 15.8H9.5V27.5H4.5V4.5ZM9.5 8.6V12.2H19.8C21.2 12.2 22.2 11.4 22.2 10.5C22.2 9.5 21.2 8.6 19.8 8.6H9.5Z"
-        fill={color}
+        fill={resolvedColor}
       />
 
       {/* 

@@ -126,7 +126,7 @@ export default function App() {
   // If user is inside the authenticated workspace
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#FFFFFF] text-[#111111] font-body relative overflow-x-hidden">
+      <div className="min-h-screen bg-white dark:bg-[#0E0E10] text-[#111111] dark:text-[#F4F4F6] font-body relative overflow-x-hidden transition-colors duration-200">
         <AuthAppView
           initialRole={currentRole}
           onLogout={handleLogout}
@@ -164,7 +164,7 @@ export default function App() {
 
   // Public Website: Home, About, or How It Works
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#111111] font-body relative overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#0E0E10] text-[#111111] dark:text-[#F4F4F6] font-body relative overflow-x-hidden transition-colors duration-200">
       {/* Brand Introduction Splash Sequence */}
       {showSplash && <SplashIntro onComplete={handleSplashComplete} />}
 

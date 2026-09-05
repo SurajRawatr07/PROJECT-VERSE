@@ -34,16 +34,20 @@ export interface ProjectVerseBrandProps {
 export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
   logoSize,
   className = '',
-  theme = 'light',
+  theme,
   variant = 'full',
   collapsed = false,
   textSizeClassName = '',
   interactive = true,
 }) => {
-  const isDark = theme === 'dark';
-  const textColor = isDark ? 'text-white' : 'text-[#0F172A]';
-  const logoColor = isDark ? '#FFFFFF' : '#0F172A';
-  const accentColor = isDark ? '#60A5FA' : '#2563EB';
+  const isDarkForced = theme === 'dark';
+  const textColor = isDarkForced
+    ? 'text-white'
+    : theme === 'light'
+    ? 'text-[#0F172A] dark:text-[#F4F4F6]'
+    : 'text-[#0F172A] dark:text-[#F4F4F6]';
+  const logoColor = isDarkForced ? '#FFFFFF' : undefined;
+  const accentColor = isDarkForced ? '#60A5FA' : '#2563EB';
 
   const showWordmark = !collapsed && variant !== 'logo-only';
   const showLogo = variant !== 'wordmark-only';
