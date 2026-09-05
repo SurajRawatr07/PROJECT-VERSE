@@ -50,7 +50,7 @@ export const CollaborationRequestsView: React.FC<CollaborationRequestsViewProps>
         <div>
           <div className="flex items-center gap-2">
             <Users className="w-5 h-5 text-indigo-600" />
-            <h2 className="text-xl sm:text-2xl font-display font-semibold text-[#111111]">
+            <h2 className="text-xl sm:text-2xl font-display font-bold text-[#111111]">
               Team Collaboration Hub
             </h2>
           </div>
@@ -65,7 +65,7 @@ export const CollaborationRequestsView: React.FC<CollaborationRequestsViewProps>
             onClick={() => setActiveTab('incoming')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'incoming'
-                ? 'bg-white text-[#111111] shadow-2xs font-semibold'
+                ? 'bg-white text-[#111111] shadow-2xs font-medium'
                 : 'text-[#737373] hover:text-[#111111]'
             }`}
           >
@@ -81,7 +81,7 @@ export const CollaborationRequestsView: React.FC<CollaborationRequestsViewProps>
             onClick={() => setActiveTab('outgoing')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'outgoing'
-                ? 'bg-white text-[#111111] shadow-2xs font-semibold'
+                ? 'bg-white text-[#111111] shadow-2xs font-medium'
                 : 'text-[#737373] hover:text-[#111111]'
             }`}
           >
@@ -99,7 +99,7 @@ export const CollaborationRequestsView: React.FC<CollaborationRequestsViewProps>
           incomingRequests.length === 0 ? (
             <div className="py-16 text-center bg-white rounded-2xl border border-black/8 p-8">
               <Users className="w-10 h-10 text-[#737373] mx-auto mb-2 opacity-40" />
-              <h3 className="text-sm font-semibold text-[#111111]">No Incoming Requests</h3>
+              <h3 className="text-sm font-bold text-[#111111]">No Incoming Requests</h3>
               <p className="text-xs text-[#737373] mt-1">When students apply to contribute to your capstone repo, requests will appear here.</p>
             </div>
           ) : (
@@ -126,7 +126,7 @@ export const CollaborationRequestsView: React.FC<CollaborationRequestsViewProps>
                       <h4 className="text-xs sm:text-sm font-bold text-[#111111]">
                         {req.studentName}
                       </h4>
-                      <span className="text-[11px] text-indigo-700 font-semibold px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200">
+                      <span className="text-[11px] text-indigo-700 font-medium px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200">
                         {req.roleInterest}
                       </span>
                       {req.studentInstitution && (
@@ -153,7 +153,7 @@ export const CollaborationRequestsView: React.FC<CollaborationRequestsViewProps>
                     <>
                       <button
                         onClick={() => handleUpdateStatus(req.id, 'ACCEPTED')}
-                        className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
+                        className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
                       >
                         <Check className="w-3.5 h-3.5" />
                         <span>Accept</span>
@@ -185,7 +185,7 @@ export const CollaborationRequestsView: React.FC<CollaborationRequestsViewProps>
           outgoingRequests.length === 0 ? (
             <div className="py-16 text-center bg-white rounded-2xl border border-black/8 p-8">
               <Send className="w-10 h-10 text-[#737373] mx-auto mb-2 opacity-40" />
-              <h3 className="text-sm font-semibold text-[#111111]">No Outgoing Requests</h3>
+              <h3 className="text-sm font-bold text-[#111111]">No Outgoing Requests</h3>
               <p className="text-xs text-[#737373] mt-1">You haven't requested to collaborate on any projects yet.</p>
             </div>
           ) : (

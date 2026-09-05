@@ -57,7 +57,7 @@ export const JoinProjectModal: React.FC<JoinProjectModalProps> = ({
 
           {!submitted ? (
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono-code text-[#737373] uppercase mb-1 font-semibold">
+              <div className="flex items-center gap-2 text-xs font-mono-code text-[#737373] uppercase mb-1 font-medium">
                 <Users className="w-3.5 h-3.5 text-[#111111]" />
                 <span>Inter-College Collaboration Request</span>
               </div>
@@ -150,7 +150,7 @@ export const JoinProjectModal: React.FC<JoinProjectModalProps> = ({
                   </button>
                   <button
                     type="submit"
-                    className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    className="btn-primary-black px-5 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs"
                   >
                     <span>Submit Proposal</span>
                     <ArrowRight className="w-3.5 h-3.5" />

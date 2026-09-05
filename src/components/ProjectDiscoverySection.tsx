@@ -83,7 +83,7 @@ export const ProjectDiscoverySection: React.FC<ProjectDiscoverySectionProps> = (
           <button
             id="discovery-submit-capstone-btn"
             onClick={onBuildProjectClick}
-            className="self-start md:self-end px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
+            className="self-start md:self-end px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-medium border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>Index Your Project</span>
             <ArrowRight className="w-4 h-4 text-indigo-300" />
@@ -141,7 +141,7 @@ export const ProjectDiscoverySection: React.FC<ProjectDiscoverySectionProps> = (
                 onClick={() => setSelectedDomain(domain)}
                 className={`whitespace-nowrap px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
                   selectedDomain === domain
-                    ? 'bg-white text-slate-950 font-semibold shadow-sm'
+                    ? 'bg-white text-slate-950 font-medium shadow-sm'
                     : 'bg-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/10 border border-white/5'
                 }`}
               >
@@ -247,7 +247,7 @@ export const ProjectDiscoverySection: React.FC<ProjectDiscoverySectionProps> = (
             </p>
             <button
               onClick={resetFilters}
-              className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-white text-xs font-semibold transition-all"
+              className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-white text-xs font-medium transition-all"
             >
               Clear Filter Criteria
             </button>

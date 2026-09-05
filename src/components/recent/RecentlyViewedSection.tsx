@@ -64,7 +64,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
               className="p-3 bg-[#FBFBFA] hover:bg-[#F5F5F3] rounded-xl border border-black/6 hover:border-black/15 transition-all cursor-pointer flex flex-col justify-between group"
             >
               <div>
-                <p className="text-xs font-semibold text-[#111111] group-hover:text-blue-600 truncate">
+                <p className="text-xs font-medium text-[#111111] group-hover:text-blue-600 truncate">
                   {r.title}
                 </p>
                 <p className="text-[10px] text-[#737373] font-mono-code truncate mt-0.5">

@@ -40,7 +40,7 @@ export const ApproachFlowSection: React.FC = () => {
         </h2>
 
         {/* Horizontal Flow Indicator */}
-        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-10 sm:mb-12 py-2 px-5 sm:px-7 rounded-full bg-[#F5F5F3] border border-black/8 w-max mx-auto text-[13px] sm:text-[14px] font-semibold text-[#111111] tracking-wider uppercase">
+        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-10 sm:mb-12 py-2 px-5 sm:px-7 rounded-full bg-[#F5F5F3] border border-black/8 w-max mx-auto text-[13px] sm:text-[14px] font-medium text-[#111111] tracking-wider uppercase">
           <span>Discover</span>
           <span className="text-[#8C8C8C]">→</span>
           <span>Build</span>

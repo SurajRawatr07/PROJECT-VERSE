@@ -81,7 +81,7 @@ export const AIMatchingSection: React.FC = () => {
                   onClick={() => toggleSkill(skill)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-mono-code flex items-center gap-1.5 transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-indigo-500 text-white font-semibold shadow-md shadow-indigo-500/20'
+                      ? 'bg-indigo-500 text-white font-medium shadow-md shadow-indigo-500/20'
                       : 'bg-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/10 border border-white/5'
                   }`}
                 >
@@ -98,7 +98,7 @@ export const AIMatchingSection: React.FC = () => {
           <button
             id="tab-rec-projects"
             onClick={() => setActiveTab('projects')}
-            className={`px-5 py-2 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer ${
+            className={`px-5 py-2 rounded-full text-xs sm:text-sm font-medium flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'projects'
                 ? 'bg-white text-slate-950 shadow-md'
                 : 'liquid-glass text-slate-400 hover:text-white border-white/10'
@@ -111,7 +111,7 @@ export const AIMatchingSection: React.FC = () => {
           <button
             id="tab-rec-teammates"
             onClick={() => setActiveTab('teammates')}
-            className={`px-5 py-2 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer ${
+            className={`px-5 py-2 rounded-full text-xs sm:text-sm font-medium flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'teammates'
                 ? 'bg-white text-slate-950 shadow-md'
                 : 'liquid-glass text-slate-400 hover:text-white border-white/10'
@@ -124,7 +124,7 @@ export const AIMatchingSection: React.FC = () => {
           <button
             id="tab-rec-mentors"
             onClick={() => setActiveTab('mentors')}
-            className={`px-5 py-2 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer ${
+            className={`px-5 py-2 rounded-full text-xs sm:text-sm font-medium flex items-center gap-2 transition-all cursor-pointer ${
               activeTab === 'mentors'
                 ? 'bg-white text-slate-950 shadow-md'
                 : 'liquid-glass text-slate-400 hover:text-white border-white/10'
@@ -204,7 +204,7 @@ export const AIMatchingSection: React.FC = () => {
 
                   <button
                     onClick={() => {}}
-                    className="w-full py-3 px-4 rounded-xl bg-white text-slate-950 font-semibold text-xs sm:text-sm shadow-md hover:bg-slate-100 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3 px-4 rounded-xl bg-white text-slate-950 font-medium text-xs sm:text-sm shadow-md hover:bg-slate-100 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Request Collaboration</span>
                     <ArrowRight className="w-4 h-4" />
@@ -240,7 +240,7 @@ export const AIMatchingSection: React.FC = () => {
                     </div>
 
                     <div className="p-2.5 rounded-lg bg-indigo-500/10 border border-indigo-400/20 mb-4">
-                      <span className="text-[11px] font-mono-code text-indigo-200 block font-semibold">Specialization:</span>
+                      <span className="text-[11px] font-mono-code text-indigo-200 block font-medium">Specialization:</span>
                       <span className="text-xs text-white block mt-0.5">{peer.role}</span>
                     </div>
 
@@ -254,8 +254,8 @@ export const AIMatchingSection: React.FC = () => {
                   </div>
 
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-xs font-mono-code text-emerald-400 font-semibold">{peer.matchScore}% Synergy</span>
-                    <button className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all">
+                    <span className="text-xs font-mono-code text-emerald-400 font-medium">{peer.matchScore}% Synergy</span>
+                    <button className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium transition-all">
                       Invite to Project
                     </button>
                   </div>
@@ -307,7 +307,7 @@ export const AIMatchingSection: React.FC = () => {
 
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
                     <span className="text-slate-400 font-mono-code">{mentor.verifiedProjectsCount} Capstones Mentored</span>
-                    <button className="px-3 py-1.5 rounded-lg bg-indigo-500 text-white font-semibold text-xs hover:bg-indigo-600 transition-all">
+                    <button className="px-3 py-1.5 rounded-lg bg-indigo-500 text-white font-medium text-xs hover:bg-indigo-600 transition-all">
                       Request Guidance
                     </button>
                   </div>

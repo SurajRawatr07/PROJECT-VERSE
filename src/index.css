@@ -1,10 +1,21 @@
 @import "tailwindcss";
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 @layer base {
   :root {
     --font-times: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
     --font-display: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
     --font-body: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
+
+    /* ProjectVerse Strict Typography Tokens: 400 / 500 / 700 */
+    --font-weight-heading: 700;
+    --font-weight-subheading: 500;
+    --font-weight-body: 400;
 
     /* Consistent Clean White Color System */
     --background: #FFFFFF;
@@ -21,6 +32,14 @@
     --primary-foreground: #FFFFFF;
   }
 
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   html {
     scroll-behavior: smooth;
     background-color: #FFFFFF;
@@ -34,11 +53,15 @@
     color: #111111;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    font-weight: var(--font-weight-body);
   }
 
   button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, label {
     font-family: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-heading);
   }
 }
 
@@ -122,7 +145,7 @@
 .nav-link-btn.active {
   color: #111111;
   background-color: #F3F3F1;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Primary Black CTA Button */

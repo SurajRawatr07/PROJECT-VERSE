@@ -47,7 +47,7 @@ export const ImpactSection: React.FC = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-20 gap-6">
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-widest text-indigo-400 font-body">
+            <span className="text-xs font-medium uppercase tracking-widest text-indigo-400 font-body">
               Measurable Academic Transformation
             </span>
             <h2 className="font-display text-3xl sm:text-5xl md:text-6xl text-white font-normal mt-3 leading-[1.1]">

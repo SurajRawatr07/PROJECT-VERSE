@@ -133,7 +133,7 @@ export const PersonasSection: React.FC<PersonasSectionProps> = ({ onSelectRole }
 
                 <button
                   onClick={() => onSelectRole(p.title)}
-                  className="w-full py-2.5 px-4 rounded-xl liquid-glass text-xs font-semibold text-white hover:bg-white/10 border-white/15 transition-all flex items-center justify-center gap-1.5 group-hover:border-indigo-400/40 cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-xl liquid-glass text-xs font-medium text-white hover:bg-white/10 border-white/15 transition-all flex items-center justify-center gap-1.5 group-hover:border-indigo-400/40 cursor-pointer"
                 >
                   <span>{p.cta}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 transition-transform" />

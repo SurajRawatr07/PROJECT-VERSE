@@ -57,7 +57,7 @@ export const ProofOfWorkModal: React.FC<ProofOfWorkModalProps> = ({
                 <Award className="w-6 h-6" />
               </div>
               <div>
-                <span className="text-[10px] font-mono-code uppercase tracking-wider text-[#737373] font-semibold">
+                <span className="text-[10px] font-mono-code uppercase tracking-wider text-[#737373] font-medium">
                   Official Academic Proof of Work Transcript
                 </span>
                 <h3 className="text-xl font-bold text-[#111111] font-body">
@@ -67,7 +67,7 @@ export const ProofOfWorkModal: React.FC<ProofOfWorkModalProps> = ({
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono-code text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1 font-semibold">
+              <span className="text-xs font-mono-code text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1 font-medium">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 VERIFIED CREDENTIAL
               </span>
@@ -78,25 +78,25 @@ export const ProofOfWorkModal: React.FC<ProofOfWorkModalProps> = ({
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 p-4 rounded-2xl bg-[#FBFBFA] border border-black/8 font-mono-code text-xs">
             <div>
               <span className="text-[10px] text-[#737373] block uppercase">Institution</span>
-              <span className="text-[#111111] font-semibold block mt-0.5">Graphic Era Hill University</span>
+              <span className="text-[#111111] font-medium block mt-0.5">Graphic Era Hill University</span>
             </div>
             <div>
               <span className="text-[10px] text-[#737373] block uppercase">Degree & Batch</span>
-              <span className="text-[#111111] font-semibold block mt-0.5">B.Tech CSE '26</span>
+              <span className="text-[#111111] font-medium block mt-0.5">B.Tech CSE '26</span>
             </div>
             <div>
               <span className="text-[10px] text-[#737373] block uppercase">Total Commits</span>
-              <span className="text-emerald-700 font-semibold block mt-0.5">384 Commits</span>
+              <span className="text-emerald-700 font-medium block mt-0.5">384 Commits</span>
             </div>
             <div>
               <span className="text-[10px] text-[#737373] block uppercase">Faculty Score</span>
-              <span className="text-[#111111] font-semibold block mt-0.5">9.6 / 10.0</span>
+              <span className="text-[#111111] font-medium block mt-0.5">9.6 / 10.0</span>
             </div>
           </div>
 
           {/* Verified Projects List */}
           <div className="space-y-4 mb-6">
-            <h4 className="text-xs font-mono-code uppercase tracking-wider text-[#737373] font-semibold">
+            <h4 className="text-xs font-mono-code uppercase tracking-wider text-[#737373] font-bold">
               Verified Academic Projects & Contributions:
             </h4>
 
@@ -104,9 +104,9 @@ export const ProofOfWorkModal: React.FC<ProofOfWorkModalProps> = ({
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-[10px] font-mono-code text-[#737373]">PV-2025-GEHU-CS089</span>
-                  <h5 className="text-sm font-semibold text-[#111111]">AeroSync: Edge-Neuromorphic Drone Swarm Guidance</h5>
+                  <h5 className="text-sm font-bold text-[#111111]">AeroSync: Edge-Neuromorphic Drone Swarm Guidance</h5>
                 </div>
-                <span className="text-xs font-mono-code text-emerald-700 font-semibold">Lead Contributor</span>
+                <span className="text-xs font-mono-code text-emerald-700 font-medium">Lead Contributor</span>
               </div>
               <p className="text-xs text-[#4A4A4A]">
                 Authored sub-millisecond visual SLAM module. Verified by Dr. Anil Sharma (Graphic Era Hill University).

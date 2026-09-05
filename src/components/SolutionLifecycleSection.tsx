@@ -89,7 +89,7 @@ export const SolutionLifecycleSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <span className="text-xs font-semibold uppercase tracking-widest text-indigo-400 font-body">
+          <span className="text-xs font-medium uppercase tracking-widest text-indigo-400 font-body">
             The ProjectVerse Architecture
           </span>
           <h2 className="font-display text-3xl sm:text-5xl md:text-6xl text-white font-normal mt-3 leading-[1.1]">
@@ -200,7 +200,7 @@ export const SolutionLifecycleSection: React.FC = () => {
                     <span className="text-slate-400">Autonomous Lineage Engine</span>
                     <button 
                       onClick={() => setActiveStep((prev) => (prev + 1) % steps.length)}
-                      className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-semibold"
+                      className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-medium"
                     >
                       Next Step <ArrowRight className="w-3 h-3" />
                     </button>

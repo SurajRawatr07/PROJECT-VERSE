@@ -27,7 +27,7 @@ export const ProjectPassportSection: React.FC = () => {
   return (
     <section id="passport" className="relative w-full py-24 sm:py-32 px-4 sm:px-6 bg-[#040714] border-t border-white/5 overflow-hidden">
       {/* Subtle background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[300px] sm:h-[600px] bg-indigo-600/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
@@ -89,7 +89,7 @@ export const ProjectPassportSection: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-body">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-body">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 VERIFIED ACADEMIC PASSPORT
               </span>
@@ -115,15 +115,15 @@ export const ProjectPassportSection: React.FC = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
                 <div className="p-3 rounded-xl bg-white/5 border border-white/10">
                   <span className="text-[10px] font-mono-code text-slate-400 block uppercase">Institution</span>
-                  <span className="text-xs font-semibold text-white block mt-1 truncate">{passport.institution}</span>
+                  <span className="text-xs font-medium text-white block mt-1 truncate">{passport.institution}</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white/5 border border-white/10">
                   <span className="text-[10px] font-mono-code text-slate-400 block uppercase">Academic Cycle</span>
-                  <span className="text-xs font-semibold text-white block mt-1">{passport.academicYear}</span>
+                  <span className="text-xs font-medium text-white block mt-1">{passport.academicYear}</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white/5 border border-white/10 col-span-2 sm:col-span-1">
                   <span className="text-[10px] font-mono-code text-slate-400 block uppercase">Batch Lineage</span>
-                  <span className="text-xs font-semibold text-indigo-300 block mt-1">{passport.currentBatch}</span>
+                  <span className="text-xs font-medium text-indigo-300 block mt-1">{passport.currentBatch}</span>
                 </div>
               </div>
 
@@ -148,7 +148,7 @@ export const ProjectPassportSection: React.FC = () => {
               {/* Technical Evidence Card */}
               <div className="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-3 font-mono-code text-xs">
                 <div className="flex items-center justify-between text-slate-400 border-b border-white/10 pb-2">
-                  <span className="flex items-center gap-1.5 text-white font-semibold">
+                  <span className="flex items-center gap-1.5 text-white font-medium">
                     <GitBranch className="w-4 h-4 text-indigo-400" />
                     Technical Evidence
                   </span>
@@ -169,15 +169,15 @@ export const ProjectPassportSection: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-[11px] text-slate-400 flex items-center justify-between pt-1">
-                  <span>Repo: {passport.githubRepo}</span>
-                  <span className="text-indigo-400">Branch: main</span>
+                  <span className="truncate">Repo: {passport.githubRepo}</span>
+                  <span className="text-indigo-400 shrink-0">Branch: main</span>
                 </div>
               </div>
 
               {/* Academic Review Rubric */}
               <div className="p-5 rounded-2xl bg-indigo-950/20 border border-indigo-500/20 space-y-3">
                 <div className="flex items-center justify-between text-slate-300 border-b border-white/10 pb-2">
-                  <span className="flex items-center gap-1.5 text-white text-xs font-semibold">
+                  <span className="flex items-center gap-1.5 text-white text-xs font-medium">
                     <GraduationCap className="w-4 h-4 text-indigo-400" />
                     Faculty Review & Scoring
                   </span>

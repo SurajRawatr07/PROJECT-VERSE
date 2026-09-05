@@ -35,26 +35,20 @@ export const Hero: React.FC<HeroProps> = ({
           </span>
         </motion.div>
 
-        {/* Hero Heading: Controlled 48–54px Desktop (max 56px), 40–44px Tablet, 32–36px Mobile */}
-        <motion.h1
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        {/* Hero Heading: Paints immediately for optimal LCP */}
+        <h1
           className="font-serif text-[32px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] text-[#111111] font-bold tracking-tight leading-[0.98] sm:leading-[1.02] md:leading-[1.04] max-w-xl sm:max-w-2xl uppercase"
         >
           YOUR PROJECT<br />
           SHOULD GO FURTHER.
-        </motion.h1>
+        </h1>
 
-        {/* Supporting Text: 16–17px Desktop, 14–15px Mobile, max-width 520–600px */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+        {/* Supporting Text: Paints immediately */}
+        <p
           className="mt-5 sm:mt-6 text-[14.5px] sm:text-[15.5px] md:text-[16.5px] lg:text-[17px] text-[#4A4A4A] max-w-[560px] leading-relaxed tracking-wide"
         >
           Discover projects, collaborate with the right people, get verified, and keep your work moving forward.
-        </motion.p>
+        </p>
 
         {/* Buttons: [Explore Projects] [Get Started] */}
         <motion.div

@@ -157,7 +157,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             {/* PROJECTS */}
             {searchResults.projects.length > 0 && (
               <div>
-                <div className="flex items-center gap-2 px-2 pb-1.5 text-[11px] font-mono-code uppercase text-[#737373] tracking-wider font-semibold">
+                <div className="flex items-center gap-2 px-2 pb-1.5 text-[11px] font-mono-code uppercase text-[#737373] tracking-wider font-medium">
                   <FolderGit2 className="w-3.5 h-3.5" />
                   <span>Projects</span>
                 </div>
@@ -173,7 +173,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                     >
                       <div className="min-w-0 pr-2">
                         <div className="flex items-center gap-2">
-                          <p className="text-xs sm:text-sm font-semibold text-[#111111] truncate group-hover:text-blue-600">
+                          <p className="text-xs sm:text-sm font-medium text-[#111111] truncate group-hover:text-blue-600">
                             {p.title}
                           </p>
                           <span className="text-[10px] font-mono-code px-1.5 py-0.2 rounded bg-neutral-100 text-neutral-600 shrink-0">
@@ -192,7 +192,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             {/* PEOPLE */}
             {searchResults.people.length > 0 && (
               <div>
-                <div className="flex items-center gap-2 px-2 pb-1.5 text-[11px] font-mono-code uppercase text-[#737373] tracking-wider font-semibold">
+                <div className="flex items-center gap-2 px-2 pb-1.5 text-[11px] font-mono-code uppercase text-[#737373] tracking-wider font-medium">
                   <Users className="w-3.5 h-3.5" />
                   <span>Students & Faculty</span>
                 </div>
@@ -208,7 +208,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                         className="w-8 h-8 rounded-full object-cover border border-black/10 shrink-0"
                       />
                       <div className="min-w-0">
-                        <p className="text-xs font-semibold text-[#111111] truncate">{person.name}</p>
+                        <p className="text-xs font-medium text-[#111111] truncate">{person.name}</p>
                         <p className="text-[10px] text-[#737373] truncate">
                           {person.role || person.title || 'Researcher'} • {person.institution}
                         </p>
@@ -222,7 +222,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             {/* TECHNOLOGIES */}
             {searchResults.technologies.length > 0 && (
               <div>
-                <div className="flex items-center gap-2 px-2 pb-1.5 text-[11px] font-mono-code uppercase text-[#737373] tracking-wider font-semibold">
+                <div className="flex items-center gap-2 px-2 pb-1.5 text-[11px] font-mono-code uppercase text-[#737373] tracking-wider font-medium">
                   <Cpu className="w-3.5 h-3.5" />
                   <span>Technologies</span>
                 </div>
@@ -246,7 +246,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             {/* INSTITUTIONS */}
             {searchResults.institutions.length > 0 && (
               <div>
-                <div className="flex items-center gap-2 px-2 pb-1.5 text-[11px] font-mono-code uppercase text-[#737373] tracking-wider font-semibold">
+                <div className="flex items-center gap-2 px-2 pb-1.5 text-[11px] font-mono-code uppercase text-[#737373] tracking-wider font-medium">
                   <Building2 className="w-3.5 h-3.5" />
                   <span>Institutions</span>
                 </div>

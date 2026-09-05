@@ -69,23 +69,17 @@ export const AboutView: React.FC<AboutViewProps> = ({
             </span>
           </motion.div>
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.1 }}
+          <h1 
             className="text-[32px] sm:text-[38px] md:text-[44px] text-[#111111] font-bold tracking-tight uppercase"
           >
             About ProjectVerse
-          </motion.h1>
+          </h1>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.18 }}
+          <p 
             className="mt-4 text-[15px] sm:text-[16px] md:text-[17px] text-[#4A4A4A] leading-relaxed tracking-wide"
           >
             A connected academic technology platform where student projects continue across batches.
-          </motion.p>
+          </p>
         </div>
 
         {/* 4 Core Pillars */}

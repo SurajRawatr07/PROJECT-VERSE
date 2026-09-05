@@ -87,7 +87,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
       <div className="bg-[#FBFBFA] rounded-2xl p-6 sm:p-8 border border-black/8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-200/80 text-[11px] font-mono-code text-indigo-800 font-semibold mb-2">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-200/80 text-[11px] font-mono-code text-indigo-800 font-medium mb-2">
               <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
               <span>GRAPH-POWERED SEMANTIC MATCHING</span>
             </div>
@@ -113,7 +113,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <SlidersHorizontal className="w-4 h-4 text-[#737373]" />
-            <h3 className="text-xs font-mono-code uppercase font-semibold text-[#111111]">
+            <h3 className="text-xs font-mono-code uppercase font-bold text-[#111111]">
               Target Technical Competencies (Toggle to Re-Weight Model)
             </h3>
           </div>
@@ -122,7 +122,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
             <select
               value={minMatchThreshold}
               onChange={(e) => setMinMatchThreshold(Number(e.target.value))}
-              className="px-2 py-1 rounded-lg bg-[#F7F7F5] border border-black/10 text-[#111111] font-semibold text-xs"
+              className="px-2 py-1 rounded-lg bg-[#F7F7F5] border border-black/10 text-[#111111] font-medium text-xs"
             >
               <option value={70}>70% and above</option>
               <option value={80}>80% and above</option>
@@ -140,7 +140,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
                 onClick={() => toggleSkill(skill)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-mono-code transition-all cursor-pointer flex items-center gap-1.5 ${
                   isSelected
-                    ? 'bg-[#111111] text-white font-semibold shadow-xs'
+                    ? 'bg-[#111111] text-white font-medium shadow-xs'
                     : 'bg-[#F7F7F5] text-[#4A4A4A] hover:bg-[#EBEBE8] border border-black/5'
                 }`}
               >
@@ -156,7 +156,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
       <div className="flex border-b border-black/8 gap-2 sm:gap-6">
         <button
           onClick={() => setActiveTab('teammates')}
-          className={`pb-3 text-xs sm:text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+          className={`pb-3 text-xs sm:text-sm font-medium flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'teammates'
               ? 'border-[#111111] text-[#111111]'
               : 'border-transparent text-[#737373] hover:text-[#111111]'
@@ -167,7 +167,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
         </button>
         <button
           onClick={() => setActiveTab('projects')}
-          className={`pb-3 text-xs sm:text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+          className={`pb-3 text-xs sm:text-sm font-medium flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'projects'
               ? 'border-[#111111] text-[#111111]'
               : 'border-transparent text-[#737373] hover:text-[#111111]'
@@ -178,7 +178,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
         </button>
         <button
           onClick={() => setActiveTab('mentors')}
-          className={`pb-3 text-xs sm:text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+          className={`pb-3 text-xs sm:text-sm font-medium flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'mentors'
               ? 'border-[#111111] text-[#111111]'
               : 'border-transparent text-[#737373] hover:text-[#111111]'
@@ -222,7 +222,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
 
                   {/* Synergy Explanation */}
                   <div className="p-3 rounded-xl bg-[#FBFBFA] border border-black/6 mb-3 text-xs text-[#4A4A4A]">
-                    <div className="flex items-center gap-1.5 text-indigo-900 font-semibold text-[11px] mb-1">
+                    <div className="flex items-center gap-1.5 text-indigo-900 font-medium text-[11px] mb-1">
                       <Brain className="w-3.5 h-3.5 text-indigo-600" />
                       <span>Match Reasoning</span>
                     </div>
@@ -238,7 +238,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
                         key={s}
                         className={`text-[10px] font-mono-code px-2 py-0.5 rounded-md ${
                           selectedSkills.includes(s)
-                            ? 'bg-indigo-50 border border-indigo-200 text-indigo-900 font-semibold'
+                            ? 'bg-indigo-50 border border-indigo-200 text-indigo-900 font-medium'
                             : 'bg-[#F7F7F5] border border-black/5 text-[#4A4A4A]'
                         }`}
                       >
@@ -255,7 +255,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
                   <button
                     onClick={() => handleInvite(peer.name)}
                     disabled={hasInvited}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
                       hasInvited
                         ? 'bg-emerald-100 text-emerald-800 cursor-default'
                         : 'bg-[#111111] hover:bg-black text-white shadow-xs'
@@ -290,7 +290,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-mono-code text-[#737373] uppercase font-semibold">
+                  <span className="text-[10px] font-mono-code text-[#737373] uppercase font-medium">
                     {proj.domain}
                   </span>
                   <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
@@ -369,7 +369,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
                   </div>
 
                   <div className="p-3 rounded-xl bg-[#FBFBFA] border border-black/6 mb-3 text-xs text-[#4A4A4A]">
-                    <span className="text-[10px] font-mono-code text-emerald-700 font-semibold block mb-0.5">
+                    <span className="text-[10px] font-mono-code text-emerald-700 font-medium block mb-0.5">
                       {mentor.verifiedProjectsCount} Verified Capstones Guided
                     </span>
                     <p className="leading-relaxed">
@@ -394,7 +394,7 @@ export const AIMatchingDashboard: React.FC<AIMatchingDashboardProps> = ({
                   <button
                     onClick={() => handleMentorRequest(mentor.name)}
                     disabled={hasRequested}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
                       hasRequested
                         ? 'bg-emerald-100 text-emerald-800 cursor-default'
                         : 'bg-[#111111] hover:bg-black text-white shadow-xs'

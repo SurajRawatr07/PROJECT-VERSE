@@ -85,7 +85,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
         {/* Header */}
         <div className="p-3.5 sm:p-4 border-b border-black/8 flex items-center justify-between bg-[#FBFBFA]">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-[#111111]">Notifications</span>
+            <span className="text-xs font-medium text-[#111111]">Notifications</span>
             {unreadCount > 0 && (
               <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono-code font-bold bg-[#111111] text-white">
                 {unreadCount} new
@@ -146,7 +146,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
                         onViewNotificationDetail(notif);
                         onClose();
                       }}
-                      className="text-[11px] font-semibold text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 cursor-pointer"
+                      className="text-[11px] font-medium text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 cursor-pointer"
                     >
                       <span>{notif.type === 'FACULTY_FEEDBACK' ? 'View Feedback' : notif.type === 'COLLABORATION_REQUEST' ? 'Review Request' : 'View Details'}</span>
                       <ArrowRight className="w-2.5 h-2.5" />

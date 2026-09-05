@@ -74,7 +74,7 @@ export const ProjectLineageSection: React.FC<ProjectLineageSectionProps> = ({
               onClick={() => setSelectedProjectIndex(idx)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-serif transition-all cursor-pointer ${
                 selectedProjectIndex === idx
-                  ? 'bg-[#111111] text-white font-semibold shadow-xs'
+                  ? 'bg-[#111111] text-white font-medium shadow-xs'
                   : 'bg-[#F7F7F5] border border-black/8 text-[#4A4A4A] hover:text-[#111111] hover:bg-[#ECECE9]'
               }`}
             >
@@ -99,7 +99,7 @@ export const ProjectLineageSection: React.FC<ProjectLineageSectionProps> = ({
 
           <button
             onClick={() => onContinueProjectClick(currentProject.title)}
-            className="btn-primary-black px-5 py-2 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 cursor-pointer shadow-xs shrink-0"
+            className="btn-primary-black px-5 py-2 rounded-full text-xs font-medium inline-flex items-center gap-1.5 cursor-pointer shadow-xs shrink-0"
           >
             <GitFork className="w-3.5 h-3.5 text-white" />
             <span>Continue This Project</span>

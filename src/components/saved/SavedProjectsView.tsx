@@ -36,7 +36,7 @@ export const SavedProjectsView: React.FC<SavedProjectsViewProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <Heart className="w-5 h-5 text-rose-600 fill-rose-600" />
-            <h2 className="text-xl sm:text-2xl font-display font-semibold text-[#111111]">
+            <h2 className="text-xl sm:text-2xl font-display font-bold text-[#111111]">
               Saved & Bookmarked Projects
             </h2>
             <span className="px-2 py-0.5 rounded-full text-xs font-mono-code font-bold bg-[#F7F7F5] border border-black/10 text-[#111111]">
@@ -52,7 +52,7 @@ export const SavedProjectsView: React.FC<SavedProjectsViewProps> = ({
       {savedProjects.length === 0 ? (
         <div className="py-16 text-center bg-white rounded-2xl border border-black/8 p-8">
           <Heart className="w-10 h-10 text-[#737373] mx-auto mb-3 opacity-40" />
-          <h3 className="text-sm font-semibold text-[#111111]">No Saved Projects Yet</h3>
+          <h3 className="text-sm font-bold text-[#111111]">No Saved Projects Yet</h3>
           <p className="text-xs text-[#737373] mt-1 max-w-sm mx-auto">
             Click the heart / save button on any project card in Discovery or AI Matching to bookmark it here.
           </p>
@@ -77,7 +77,7 @@ export const SavedProjectsView: React.FC<SavedProjectsViewProps> = ({
                   </button>
                 </div>
 
-                <h3 className="text-base font-display font-semibold text-[#111111] group-hover:text-blue-600 transition-colors line-clamp-1">
+                <h3 className="text-base font-display font-bold text-[#111111] group-hover:text-blue-600 transition-colors line-clamp-1">
                   {project.title}
                 </h3>
                 <p className="text-xs text-[#737373] font-mono-code mt-0.5 truncate">
@@ -105,7 +105,7 @@ export const SavedProjectsView: React.FC<SavedProjectsViewProps> = ({
                     e.stopPropagation();
                     onOpenPassport(project);
                   }}
-                  className="px-2.5 py-1 rounded-lg bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/8 text-[11px] font-semibold text-[#111111] flex items-center gap-1"
+                  className="px-2.5 py-1 rounded-lg bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/8 text-[11px] font-medium text-[#111111] flex items-center gap-1"
                 >
                   <FileCheck2 className="w-3 h-3 text-emerald-700" />
                   <span>Passport</span>

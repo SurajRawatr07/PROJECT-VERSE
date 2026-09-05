@@ -31,7 +31,7 @@ export const FullLifecycleSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <span className="text-xs font-semibold uppercase tracking-widest text-indigo-400 font-body">
+          <span className="text-xs font-medium uppercase tracking-widest text-indigo-400 font-body">
             Systematic Methodology
           </span>
           <h2 className="font-display text-3xl sm:text-5xl md:text-6xl text-white font-normal mt-3 leading-[1.1]">

@@ -66,7 +66,7 @@ export const NotificationCenterView: React.FC<NotificationCenterViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 sm:p-6 bg-white rounded-2xl border border-black/8 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-xl sm:text-2xl font-display font-semibold text-[#111111]">
+            <h2 className="text-xl sm:text-2xl font-display font-bold text-[#111111]">
               Student Notification Center
             </h2>
             {unreadCount > 0 && (
@@ -84,7 +84,7 @@ export const NotificationCenterView: React.FC<NotificationCenterViewProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={onMarkAllAsRead}
-              className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE9] border border-black/10 text-xs font-semibold text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE9] border border-black/10 text-xs font-medium text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <CheckCheck className="w-3.5 h-3.5" />
               <span>Mark All as Read</span>
@@ -107,7 +107,7 @@ export const NotificationCenterView: React.FC<NotificationCenterViewProps> = ({
               onClick={() => setFilterType(tab.id)}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
                 filterType === tab.id
-                  ? 'bg-[#111111] text-white font-semibold'
+                  ? 'bg-[#111111] text-white font-medium'
                   : 'bg-[#F7F7F5] text-[#4A4A4A] hover:text-[#111111]'
               }`}
             >
@@ -132,7 +132,7 @@ export const NotificationCenterView: React.FC<NotificationCenterViewProps> = ({
         {filtered.length === 0 ? (
           <div className="py-16 text-center bg-white rounded-2xl border border-black/8 p-8">
             <Bell className="w-10 h-10 text-[#737373] mx-auto mb-3 opacity-40" />
-            <h3 className="text-sm font-semibold text-[#111111]">No Notifications</h3>
+            <h3 className="text-sm font-bold text-[#111111]">No Notifications</h3>
             <p className="text-xs text-[#737373] mt-1 max-w-sm mx-auto">
               {onlyUnread
                 ? "You have marked all notifications as read."
@@ -156,7 +156,7 @@ export const NotificationCenterView: React.FC<NotificationCenterViewProps> = ({
 
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <h4 className={`text-xs sm:text-sm ${!notif.read ? 'font-bold text-[#111111]' : 'font-semibold text-[#333333]'}`}>
+                    <h4 className={`text-xs sm:text-sm ${!notif.read ? 'font-bold text-[#111111]' : 'font-bold text-[#333333]'}`}>
                       {notif.title}
                     </h4>
                     {!notif.read && (
@@ -186,7 +186,7 @@ export const NotificationCenterView: React.FC<NotificationCenterViewProps> = ({
               <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
                 <button
                   onClick={() => onSelectNotification(notif)}
-                  className="px-3 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-semibold cursor-pointer transition-colors"
+                  className="px-3 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-medium cursor-pointer transition-colors"
                 >
                   View Details
                 </button>

@@ -80,23 +80,17 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = () => {
             </span>
           </motion.div>
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.1 }}
+          <h1 
             className="text-[32px] sm:text-[38px] md:text-[44px] text-[#111111] font-bold tracking-tight uppercase"
           >
             How ProjectVerse Works
-          </motion.h1>
+          </h1>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.18 }}
+          <p 
             className="mt-4 text-[15px] sm:text-[16px] md:text-[17px] text-[#4A4A4A] leading-relaxed tracking-wide"
           >
             A connected six-stage academic journey from student onboarding to continuous multi-batch project evolution.
-          </motion.p>
+          </p>
         </div>
 
         {/* 6 Clean Steps in Sequential Flow */}

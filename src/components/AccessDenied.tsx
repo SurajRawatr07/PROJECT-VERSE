@@ -33,7 +33,7 @@ export const AccessDenied: React.FC<AccessDeniedProps> = ({
       <button
         id="btn-access-denied-dashboard"
         onClick={onGoToDashboard}
-        className="btn-primary-black px-6 py-2.5 rounded-xl text-xs font-semibold inline-flex items-center gap-2 cursor-pointer shadow-xs"
+        className="btn-primary-black px-6 py-2.5 rounded-xl text-xs font-medium inline-flex items-center gap-2 cursor-pointer shadow-xs"
       >
         <ArrowLeft className="w-3.5 h-3.5" />
         <span>Go to Dashboard</span>

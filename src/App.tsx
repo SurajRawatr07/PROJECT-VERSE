@@ -12,6 +12,7 @@ import { Footer } from './components/Footer';
 // Dedicated Separate Pages
 import { AboutView } from './components/AboutView';
 import { HowItWorksView } from './components/HowItWorksView';
+import { FAQView } from './components/FAQView';
 
 // Authenticated Application
 import { AuthAppView, UserRole } from './components/AuthAppView';
@@ -26,9 +27,19 @@ import { ProofOfWorkModal } from './components/modals/ProofOfWorkModal';
 
 import { ProjectItem } from './types';
 
+const getInitialPage = (): PublicPage => {
+  if (typeof window !== 'undefined') {
+    const path = window.location.pathname.toLowerCase();
+    if (path === '/faq' || path.startsWith('/faq')) return 'faq';
+    if (path === '/about' || path.startsWith('/about')) return 'about';
+    if (path === '/how-it-works' || path.startsWith('/how-it-works')) return 'how-it-works';
+  }
+  return 'home';
+};
+
 export default function App() {
-  // Navigation View State: public pages ('home' | 'about' | 'how-it-works') or authenticated workspace
-  const [currentPage, setCurrentPage] = useState<PublicPage>('home');
+  // Navigation View State: public pages ('home' | 'about' | 'how-it-works' | 'faq') or authenticated workspace
+  const [currentPage, setCurrentPage] = useState<PublicPage>(getInitialPage);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [currentRole, setCurrentRole] = useState<UserRole>('STUDENT');
 
@@ -56,6 +67,25 @@ export default function App() {
     }
   }, []);
 
+  // Listen to browser navigation (back / forward buttons)
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.toLowerCase();
+      if (path === '/faq' || path.startsWith('/faq')) {
+        setCurrentPage('faq');
+      } else if (path === '/about' || path.startsWith('/about')) {
+        setCurrentPage('about');
+      } else if (path === '/how-it-works' || path.startsWith('/how-it-works')) {
+        setCurrentPage('how-it-works');
+      } else {
+        setCurrentPage('home');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Authentication Handlers
   const handleOpenLogin = () => {
     setAuthMode('login');
@@ -78,12 +108,19 @@ export default function App() {
     clearSession();
     setIsAuthenticated(false);
     setCurrentPage('home');
+    if (window.location.pathname !== '/') {
+      window.history.pushState(null, '', '/');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSelectPage = (page: PublicPage) => {
     setCurrentPage(page);
     setIsAuthenticated(false);
+    const newPath = page === 'home' ? '/' : `/${page}`;
+    if (window.location.pathname !== newPath) {
+      window.history.pushState(null, '', newPath);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -181,6 +218,13 @@ export default function App() {
 
       {currentPage === 'how-it-works' && (
         <HowItWorksView
+          onGetStarted={handleOpenRegister}
+          onExploreProjects={() => handleSelectPage('home')}
+        />
+      )}
+
+      {currentPage === 'faq' && (
+        <FAQView
           onGetStarted={handleOpenRegister}
           onExploreProjects={() => handleSelectPage('home')}
         />

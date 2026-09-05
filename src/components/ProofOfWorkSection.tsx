@@ -74,7 +74,7 @@ export const ProofOfWorkSection: React.FC<ProofOfWorkSectionProps> = ({
                   <h3 className="text-xl sm:text-2xl font-bold text-white font-body">
                     Devansh Kulkarni
                   </h3>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                     <ShieldCheck className="w-3 h-3" />
                     Verified Contributor
                   </span>
@@ -88,7 +88,7 @@ export const ProofOfWorkSection: React.FC<ProofOfWorkSectionProps> = ({
             <button
               id="btn-view-proof-of-work-transcript"
               onClick={onViewProofOfWorkModal}
-              className="px-5 py-2.5 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-semibold text-xs sm:text-sm transition-all shadow-md flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-white text-slate-950 hover:bg-slate-100 font-medium text-xs sm:text-sm transition-all shadow-md flex items-center gap-2 self-start sm:self-auto cursor-pointer"
             >
               <span>View Full Proof of Work</span>
               <ArrowRight className="w-4 h-4" />
@@ -162,7 +162,7 @@ export const ProofOfWorkSection: React.FC<ProofOfWorkSectionProps> = ({
             </span>
             <button
               onClick={onViewProofOfWorkModal}
-              className="text-white hover:underline font-semibold shrink-0 cursor-pointer"
+              className="text-white hover:underline font-medium shrink-0 cursor-pointer"
             >
               Inspect Cryptographic Credentials →
             </button>

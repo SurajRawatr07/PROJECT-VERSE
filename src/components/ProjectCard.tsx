@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'motion/react';
 import { 
   GitBranch, 
@@ -9,11 +9,12 @@ import {
   ExternalLink, 
   Layers, 
   Clock, 
-  CheckCircle2,
-  Hourglass,
-  Sparkles
+  CheckCircle2, 
+  Hourglass, 
+  Sparkles 
 } from 'lucide-react';
 import { ProjectItem } from '../types';
+import { prefetchProjectData } from '../lib/prefetchService';
 
 interface ProjectCardProps {
   project: ProjectItem;
@@ -21,7 +22,7 @@ interface ProjectCardProps {
   onJoinProject: (project: ProjectItem) => void;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({
+export const ProjectCard: React.FC<ProjectCardProps> = memo(({
   project,
   onViewProject,
   onJoinProject
@@ -30,21 +31,21 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     switch (status) {
       case 'Verified':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
             <CheckCircle2 className="w-3 h-3" />
             <span>Verified</span>
           </span>
         );
       case 'Seeking Next Batch':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-amber-500/15 text-amber-300 border border-amber-500/30">
             <Hourglass className="w-3 h-3" />
             <span>Seeking Batch '26</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
             <Sparkles className="w-3 h-3" />
             <span>Active</span>
           </span>
@@ -59,6 +60,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       viewport={{ once: true, margin: '-40px' }}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
+      onMouseEnter={() => prefetchProjectData(project.id)}
+      onFocus={() => prefetchProjectData(project.id)}
       className="liquid-glass rounded-2xl p-6 sm:p-7 flex flex-col justify-between border border-white/10 hover:border-indigo-400/40 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 group"
     >
       <div>
@@ -145,14 +148,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             <button
               id={`card-view-${project.id}`}
               onClick={() => onViewProject(project)}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-200 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all cursor-pointer"
             >
               View Passport
             </button>
             <button
               id={`card-join-${project.id}`}
               onClick={() => onJoinProject(project)}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-950 bg-white hover:bg-slate-200 transition-all cursor-pointer inline-flex items-center gap-1 shadow-sm"
+              className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-950 bg-white hover:bg-slate-200 transition-all cursor-pointer inline-flex items-center gap-1 shadow-sm"
             >
               <span>Join</span>
               <ArrowUpRight className="w-3 h-3" />
@@ -162,4 +165,4 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
     </motion.div>
   );
-};
+});

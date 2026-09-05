@@ -4,8 +4,9 @@ import { Menu, X, ArrowRight } from 'lucide-react';
 import { ProjectVerseLogo } from './ProjectVerseLogo';
 import { ProjectVerseBrand } from './ProjectVerseBrand';
 import { AccountIcon } from './icons/AccountIcon';
+import { prefetchView } from '../lib/prefetchService';
 
-export type PublicPage = 'home' | 'about' | 'how-it-works';
+export type PublicPage = 'home' | 'about' | 'how-it-works' | 'faq';
 
 // Re-export ProjectVerseLogo & ProjectVerseBrand for seamless application-wide access
 export { ProjectVerseLogo, ProjectVerseBrand };
@@ -138,6 +139,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-link-home"
               onClick={() => handleNavClick('home')}
+              onMouseEnter={() => prefetchView('home')}
+              onFocus={() => prefetchView('home')}
               className={`text-[13.5px] lg:text-[14px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-180 ${
                 currentPage === 'home'
                   ? 'text-[#111111] bg-[#EBEBE8] font-medium shadow-2xs'
@@ -150,6 +153,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-link-about"
               onClick={() => handleNavClick('about')}
+              onMouseEnter={() => prefetchView('about')}
+              onFocus={() => prefetchView('about')}
               className={`text-[13.5px] lg:text-[14px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-180 ${
                 currentPage === 'about'
                   ? 'text-[#111111] bg-[#EBEBE8] font-medium shadow-2xs'
@@ -162,6 +167,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-link-how-it-works"
               onClick={() => handleNavClick('how-it-works')}
+              onMouseEnter={() => prefetchView('how-it-works')}
+              onFocus={() => prefetchView('how-it-works')}
               className={`text-[13.5px] lg:text-[14px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-180 ${
                 currentPage === 'how-it-works'
                   ? 'text-[#111111] bg-[#EBEBE8] font-medium shadow-2xs'
@@ -169,6 +176,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               How It Works
+            </button>
+
+            <button
+              id="nav-link-faq"
+              onClick={() => handleNavClick('faq')}
+              onMouseEnter={() => prefetchView('faq')}
+              onFocus={() => prefetchView('faq')}
+              className={`text-[13.5px] lg:text-[14px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-180 ${
+                currentPage === 'faq'
+                  ? 'text-[#111111] bg-[#EBEBE8] font-medium shadow-2xs'
+                  : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F4F4F2]'
+              }`}
+            >
+              FAQ
             </button>
           </div>
 
@@ -303,6 +324,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }`}
                 >
                   <span>How It Works</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
+                </button>
+
+                <button
+                  id="mobile-nav-faq"
+                  onClick={() => handleNavClick('faq')}
+                  className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                    currentPage === 'faq'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
+                  }`}
+                >
+                  <span>FAQ</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
                 </button>
               </div>

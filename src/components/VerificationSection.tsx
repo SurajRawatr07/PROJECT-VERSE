@@ -216,7 +216,7 @@ export const VerificationSection: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setActiveTier((prev) => (prev + 1) % tiers.length)}
-                    className="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1"
+                    className="text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1"
                   >
                     Next Stage <ArrowRight className="w-3 h-3" />
                   </button>

@@ -96,7 +96,7 @@ export const CollaborationRequestModal: React.FC<CollaborationRequestModalProps>
               </div>
               <h3 className="text-lg font-bold text-[#111111]">Collaboration Request Sent!</h3>
               <p className="text-xs text-[#4A4A4A] max-w-sm mx-auto">
-                Your proposal has been delivered to the maintainers of <span className="font-semibold">{project.title}</span>. You will receive a notification when they review your request.
+                Your proposal has been delivered to the maintainers of <span className="font-bold">{project.title}</span>. You will receive a notification when they review your request.
               </p>
             </div>
           ) : (
@@ -110,11 +110,11 @@ export const CollaborationRequestModal: React.FC<CollaborationRequestModalProps>
                 </span>
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-display font-semibold text-[#111111] mb-1">
+              <h2 className="text-xl sm:text-2xl font-display font-bold text-[#111111] mb-1">
                 Collaborate on Project
               </h2>
               <p className="text-xs text-[#737373] mb-5">
-                Apply to contribute to <span className="font-semibold text-[#111111]">{project.title}</span> ({project.institution}).
+                Apply to contribute to <span className="font-bold text-[#111111]">{project.title}</span> ({project.institution}).
               </p>
 
               {error && (
@@ -126,7 +126,7 @@ export const CollaborationRequestModal: React.FC<CollaborationRequestModalProps>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#111111] mb-1.5">
+                  <label className="block text-xs font-medium text-[#111111] mb-1.5">
                     Proposed Role / Focus Area
                   </label>
                   <select
@@ -143,7 +143,7 @@ export const CollaborationRequestModal: React.FC<CollaborationRequestModalProps>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#111111] mb-1.5">
+                  <label className="block text-xs font-medium text-[#111111] mb-1.5">
                     Message to Maintainers
                   </label>
                   <textarea
@@ -169,7 +169,7 @@ export const CollaborationRequestModal: React.FC<CollaborationRequestModalProps>
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                    className="px-5 py-2 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Send Request</span>

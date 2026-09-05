@@ -547,7 +547,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
             <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">
               Active Portal:
             </span>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#111111] text-white">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#111111] text-white">
               {activeRole}
             </span>
             <span className="text-xs text-[#737373]">•</span>
@@ -648,7 +648,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
           <div className="mb-3 px-3 py-2 rounded-xl bg-white border border-black/8 flex items-center justify-between">
             <div>
               <p className="text-[10px] font-mono-code text-[#737373] uppercase">Identity Role</p>
-              <p className="text-xs font-semibold text-[#111111]">{activeRole} Workspace</p>
+              <p className="text-xs font-medium text-[#111111]">{activeRole} Workspace</p>
             </div>
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           </div>
@@ -664,14 +664,14 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all shrink-0 cursor-pointer ${
                     isActive
-                      ? 'bg-[#111111] text-white shadow-xs font-semibold'
+                      ? 'bg-[#111111] text-white shadow-xs font-medium'
                       : 'text-[#4A4A4A] hover:text-[#111111] hover:bg-[#F0F0EE] border border-transparent'
                   }`}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#737373]'}`} />
                   <span className="whitespace-nowrap">{tab.label}</span>
                   {tab.id === 'notifications' && notifications.filter((n) => !n.read).length > 0 && (
-                    <span className={`ml-auto text-[10px] font-mono-code px-1.5 py-0.2 rounded-full font-semibold ${
+                    <span className={`ml-auto text-[10px] font-mono-code px-1.5 py-0.2 rounded-full font-medium ${
                       isActive ? 'bg-white text-black' : 'bg-amber-100 text-amber-900'
                     }`}>
                       {notifications.filter((n) => !n.read).length}
@@ -713,8 +713,8 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <h4 className="text-sm font-semibold text-amber-950">New Faculty Feedback</h4>
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-200 text-amber-900">
+                            <h4 className="text-sm font-bold text-amber-950">New Faculty Feedback</h4>
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-200 text-amber-900">
                               Action Recommended
                             </span>
                           </div>
@@ -734,7 +734,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                               setActiveTab('notifications');
                             }
                           }}
-                          className="btn-primary-black px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                          className="btn-primary-black px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>View Feedback</span>
@@ -747,7 +747,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                   <div className="bg-[#FBFBFA] rounded-2xl p-6 sm:p-8 border border-black/8">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div>
-                        <span className="text-[11px] font-mono-code text-[#737373] uppercase tracking-wider font-semibold">
+                        <span className="text-[11px] font-mono-code text-[#737373] uppercase tracking-wider font-medium">
                           Academic Cohort 2025–2026 • Graphic Era Hill University Node
                         </span>
                         <h1 className="font-display text-2xl sm:text-3xl text-[#111111] mt-1 font-normal">
@@ -809,10 +809,10 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                   {/* Active Project Highlight */}
                   <div className="bg-white rounded-2xl p-6 border border-black/8 shadow-xs">
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-base font-semibold text-[#111111]">Current Active Capstone</h2>
+                      <h2 className="text-base font-bold text-[#111111]">Current Active Capstone</h2>
                       <button
                         onClick={() => handleOpenProjectModal(SAMPLE_PROJECTS[0])}
-                        className="text-xs text-[#111111] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
+                        className="text-xs text-[#111111] hover:underline font-medium flex items-center gap-1 cursor-pointer"
                       >
                         Inspect Passport & Lineage <ArrowRight className="w-3 h-3" />
                       </button>
@@ -822,12 +822,12 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="text-[11px] font-mono-code text-emerald-700 font-semibold">
+                            <span className="text-[11px] font-mono-code text-emerald-700 font-medium">
                               PV-2025-GEHU-CS089 • VERIFIED
                             </span>
                             <span className="text-[10px] px-2 py-0.5 rounded bg-black/5 text-[#4A4A4A]">Batch '25 – '26</span>
                           </div>
-                          <h3 className="text-base font-semibold text-[#111111] mt-1">{SAMPLE_PROJECTS[0].title}</h3>
+                          <h3 className="text-base font-bold text-[#111111] mt-1">{SAMPLE_PROJECTS[0].title}</h3>
                           <p className="text-xs text-[#4A4A4A] mt-0.5">{SAMPLE_PROJECTS[0].tagline}</p>
                         </div>
                         <div className="flex items-center gap-3 text-xs text-[#4A4A4A] font-mono-code shrink-0">
@@ -886,8 +886,8 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                       <div key={p.id} className="bg-white rounded-2xl p-6 border border-black/8 shadow-xs">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                           <div>
-                            <span className="text-[10px] font-mono-code text-[#737373] uppercase font-semibold">{p.passportId}</span>
-                            <h3 className="text-lg font-semibold text-[#111111]">{p.title}</h3>
+                            <span className="text-[10px] font-mono-code text-[#737373] uppercase font-medium">{p.passportId}</span>
+                            <h3 className="text-lg font-bold text-[#111111]">{p.title}</h3>
                             <p className="text-xs text-[#4A4A4A]">{p.tagline}</p>
                           </div>
                           <div className="flex items-center gap-2">
@@ -907,10 +907,10 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono-code text-[#737373] pt-3 border-t border-black/8">
-                          <div>GitHub Stars: <span className="text-[#111111] font-semibold">{p.githubStars}</span></div>
-                          <div>Commits: <span className="text-[#111111] font-semibold">{p.githubCommits}</span></div>
-                          <div>Batches: <span className="text-[#111111] font-semibold">{p.lineageBatchesCount}</span></div>
-                          <div>Status: <span className="text-emerald-700 font-semibold">{p.status}</span></div>
+                          <div>GitHub Stars: <span className="text-[#111111] font-medium">{p.githubStars}</span></div>
+                          <div>Commits: <span className="text-[#111111] font-medium">{p.githubCommits}</span></div>
+                          <div>Batches: <span className="text-[#111111] font-medium">{p.lineageBatchesCount}</span></div>
+                          <div>Status: <span className="text-emerald-700 font-medium">{p.status}</span></div>
                         </div>
                       </div>
                     ))}
@@ -937,7 +937,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                       <div key={idx} className="bg-white rounded-2xl p-5 border border-black/8 flex items-start gap-4 shadow-xs">
                         <img src={m.avatar} alt={m.name} className="w-12 h-12 rounded-xl object-cover border border-black/10" />
                         <div>
-                          <h3 className="text-base font-semibold text-[#111111]">{m.name}</h3>
+                          <h3 className="text-base font-bold text-[#111111]">{m.name}</h3>
                           <p className="text-xs text-[#4A4A4A]">{m.title}</p>
                           <p className="text-xs text-[#737373] font-mono-code mt-0.5">{m.institution}</p>
                           <div className="flex flex-wrap gap-1 mt-2">
@@ -977,7 +977,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                     </div>
                     <button
                       onClick={() => onOpenProjectDetail(SAMPLE_PROJECTS[0])}
-                      className="px-4 py-2 rounded-xl bg-[#111111] text-white text-xs font-semibold cursor-pointer"
+                      className="px-4 py-2 rounded-xl bg-[#111111] text-white text-xs font-medium cursor-pointer"
                     >
                       Open Full Screen Passport
                     </button>
@@ -985,10 +985,10 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                   <div className="bg-white rounded-2xl p-6 border border-black/8 shadow-xs">
                     <div className="flex items-center justify-between pb-4 border-b border-black/8 text-xs font-mono-code">
                       <span>PASSPORT_ID: {SAMPLE_PROJECTS[0].passportId}</span>
-                      <span className="text-emerald-700 font-semibold">STATUS: VERIFIED</span>
+                      <span className="text-emerald-700 font-medium">STATUS: VERIFIED</span>
                     </div>
                     <div className="py-4 space-y-2">
-                      <h3 className="text-lg font-semibold text-[#111111]">{SAMPLE_PROJECTS[0].title}</h3>
+                      <h3 className="text-lg font-bold text-[#111111]">{SAMPLE_PROJECTS[0].title}</h3>
                       <p className="text-xs text-[#4A4A4A]">{SAMPLE_PROJECTS[0].description}</p>
                     </div>
                   </div>
@@ -1004,8 +1004,8 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                     {SAMPLE_PROJECTS[0].lineage.map((batch, idx) => (
                       <div key={idx} className="bg-white rounded-2xl p-4 border border-black/8 shadow-xs">
                         <div className="flex items-center justify-between text-xs font-mono-code mb-1">
-                          <span className="text-[#111111] font-semibold">{batch.batchName}</span>
-                          <span className={batch.activeStatus === 'Current' ? 'text-emerald-700 font-semibold' : 'text-[#737373]'}>
+                          <span className="text-[#111111] font-medium">{batch.batchName}</span>
+                          <span className={batch.activeStatus === 'Current' ? 'text-emerald-700 font-medium' : 'text-[#737373]'}>
                             {batch.activeStatus}
                           </span>
                         </div>
@@ -1023,7 +1023,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                   <p className="text-xs text-[#4A4A4A]">Your tamper-proof portfolio backed by institutional endorsements and git commits.</p>
                   <div className="bg-white rounded-2xl p-8 border border-black/8 text-center space-y-4 shadow-xs">
                     <Award className="w-12 h-12 text-[#111111] mx-auto" />
-                    <h3 className="text-lg font-semibold text-[#111111]">Suraj Rawat • Graphic Era Hill University</h3>
+                    <h3 className="text-lg font-bold text-[#111111]">Suraj Rawat • Graphic Era Hill University</h3>
                     <p className="text-xs text-[#4A4A4A] max-w-md mx-auto">
                       384 Verified Commits • Sub-millisecond SLAM & Drone Guidance • Faculty Endorsed by Dr. Anil Sharma
                     </p>
@@ -1049,7 +1049,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                   <div className="p-4 rounded-2xl bg-[#F7F7F5] border border-black/8 flex items-start gap-3 text-xs">
                     <Lock className="w-4 h-4 text-[#111111] shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-semibold text-[#111111]">Profile Privacy & Access Control Active</span>
+                      <span className="font-medium text-[#111111]">Profile Privacy & Access Control Active</span>
                       <p className="text-[#4A4A4A] mt-0.5">
                         This profile is protected under ProjectVerse RBAC. Only authorized institutional reviewers and verified peers may view your portfolio details. Sensitive credentials remain cryptographically masked.
                       </p>
@@ -1062,7 +1062,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                       <div className="flex items-start gap-2.5">
                         <Clock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                         <div>
-                          <h4 className="font-semibold text-amber-950">Verification Review in Progress</h4>
+                          <h4 className="font-bold text-amber-950">Verification Review in Progress</h4>
                           <p className="text-amber-800/90 mt-0.5">
                             Your academic credentials and document proofs are in the faculty review queue. You can continue building projects in sandbox mode while verification completes.
                           </p>
@@ -1082,7 +1082,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                       <div className="flex items-start gap-2.5">
                         <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                         <div>
-                          <h4 className="font-semibold text-red-950">Verification Action Required</h4>
+                          <h4 className="font-bold text-red-950">Verification Action Required</h4>
                           <p className="text-red-800/90 mt-0.5">
                             {currentProfile?.rejectionReason 
                               ? `Document Review Note: "${currentProfile.rejectionReason}"`
@@ -1119,11 +1119,11 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                           }`}>
                             {currentProfile?.verifiedStatus || 'Verified'} Identity
                           </span>
-                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-semibold">
+                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-medium">
                             ROLE: {currentProfile?.role || 'STUDENT'}
                           </span>
                           {currentProfile?.studentType && (
-                            <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-[#111111] text-white font-semibold">
+                            <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-[#111111] text-white font-medium">
                               {currentProfile.studentType === 'ALUMNI' ? 'ALUMNI / PASS-OUT' : 'CURRENT STUDENT'}
                             </span>
                           )}
@@ -1167,21 +1167,21 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
                     {/* Multi-Signal Verification Pipeline Status */}
                     <div className="bg-[#FAFAFA] rounded-xl p-4 border border-black/6">
-                      <span className="text-[10.5px] font-mono-code uppercase font-semibold text-[#737373] block mb-2.5">
+                      <span className="text-[10.5px] font-mono-code uppercase font-medium text-[#737373] block mb-2.5">
                         Multi-Signal Identity Verification Architecture
                       </span>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Email Verified</span>
+                            <span className="font-medium text-[#111111] block">Email Verified</span>
                             <span className="text-[10px] text-[#737373]">OTP Confirmed ✓</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Edu Domain</span>
+                            <span className="font-medium text-[#111111] block">Edu Domain</span>
                             <span className="text-[10px] text-[#737373]">.ac.in / .edu node</span>
                           </div>
                         </div>
@@ -1196,7 +1196,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                             <div className="w-3.5 h-3.5 rounded-full border border-dashed border-[#737373]" />
                           )}
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">ID Document</span>
+                            <span className="font-medium text-[#111111] block">ID Document</span>
                             <span className="text-[10px] text-[#737373]">
                               {currentProfile?.documentStatus === 'VERIFIED'
                                 ? 'Hash Verified ✓'
@@ -1211,7 +1211,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Ledger Node</span>
+                            <span className="font-medium text-[#111111] block">Ledger Node</span>
                             <span className="text-[10px] text-[#737373]">Consensus sealed</span>
                           </div>
                         </div>
@@ -1221,14 +1221,14 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                     {/* Bio & Skills */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h4 className="text-xs font-mono-code uppercase font-semibold text-[#737373] mb-2">Research Focus</h4>
+                        <h4 className="text-xs font-mono-code uppercase font-bold text-[#737373] mb-2">Research Focus</h4>
                         <p className="text-xs text-[#4A4A4A] leading-relaxed">
                           {currentProfile?.bio || 'Undergraduate researcher focusing on autonomous systems, edge AI, and verifiable academic project architectures.'}
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="text-xs font-mono-code uppercase font-semibold text-[#737373] mb-2">Verified Skillsets</h4>
+                        <h4 className="text-xs font-mono-code uppercase font-bold text-[#737373] mb-2">Verified Skillsets</h4>
                         <div className="flex flex-wrap gap-1.5">
                           {(currentProfile?.skills || ['React', 'TypeScript', 'Node.js', 'PyTorch', 'ROS 2', 'PostgreSQL']).map((skill) => (
                             <span key={skill} className="text-xs font-mono-code px-2.5 py-1 rounded-lg bg-[#F7F7F5] border border-black/8 text-[#111111]">
@@ -1290,7 +1290,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               {activeTab === 'dashboard' && (
                 <div className="space-y-6">
                   <div className="bg-[#FBFBFA] rounded-2xl p-6 sm:p-8 border border-black/8">
-                    <span className="text-[11px] font-mono-code text-[#737373] uppercase font-semibold">Faculty Portal</span>
+                    <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Faculty Portal</span>
                     <h1 className="font-display text-2xl sm:text-3xl text-[#111111] mt-1 font-normal">
                       Welcome, Dr. Anil Sharma
                     </h1>
@@ -1355,14 +1355,14 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div>
                               <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-mono-code text-[#737373] uppercase font-semibold">{p.passportId}</span>
+                                <span className="text-[10px] font-mono-code text-[#737373] uppercase font-medium">{p.passportId}</span>
                                 <span className={`text-[10px] font-mono-code px-2 py-0.5 rounded-full font-medium ${
                                   isVerified ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200'
                                 }`}>
                                   {isVerified ? 'VERIFIED' : 'PENDING REVIEW'}
                                 </span>
                               </div>
-                              <h3 className="text-base font-semibold text-[#111111] mt-1">{p.title}</h3>
+                              <h3 className="text-base font-bold text-[#111111] mt-1">{p.title}</h3>
                               <p className="text-xs text-[#4A4A4A]">{p.institution} • Leads: {p.contributors.map(c => c.name).join(', ')}</p>
                             </div>
 
@@ -1390,7 +1390,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                                   setReviewingProject(p);
                                   setReviewModalTab('rubric');
                                 }}
-                                className="px-3.5 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-xs font-semibold text-white cursor-pointer shadow-xs"
+                                className="px-3.5 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-xs font-medium text-white cursor-pointer shadow-xs"
                               >
                                 Evaluate Rubric
                               </button>
@@ -1413,11 +1413,11 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                         <div>
                           <div className="flex items-center justify-between gap-2 mb-1">
                             <span className="text-[10px] font-mono-code text-[#737373] uppercase">{p.academicYear}</span>
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono-code">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono-code">
                               ADVISED NODE
                             </span>
                           </div>
-                          <h3 className="text-base font-semibold text-[#111111]">{p.title}</h3>
+                          <h3 className="text-base font-bold text-[#111111]">{p.title}</h3>
                           <p className="text-xs text-[#4A4A4A] mt-1 line-clamp-2">{p.tagline}</p>
                           <p className="text-[11px] text-[#737373] mt-2">
                             Leads: {p.contributors.map((c) => c.name).join(', ')}
@@ -1447,7 +1447,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                               setReviewingProject(p);
                               setReviewModalTab('rubric');
                             }}
-                            className="px-3.5 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-xs font-semibold text-white cursor-pointer shadow-xs"
+                            className="px-3.5 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-xs font-medium text-white cursor-pointer shadow-xs"
                           >
                             Review
                           </button>
@@ -1465,7 +1465,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                     {SAMPLE_PROJECTS[0].contributors.map((c, i) => (
                       <div key={i} className="bg-white rounded-2xl p-4 border border-black/8 text-center shadow-xs">
                         <img src={c.avatar} alt={c.name} className="w-12 h-12 rounded-full mx-auto object-cover mb-2 border border-black/10" />
-                        <h4 className="text-sm font-semibold text-[#111111]">{c.name}</h4>
+                        <h4 className="text-sm font-bold text-[#111111]">{c.name}</h4>
                         <p className="text-xs text-[#737373]">{c.role}</p>
                       </div>
                     ))}
@@ -1511,7 +1511,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                           <span className="text-[11px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
                             {currentProfile?.verifiedStatus || 'Verified'} Faculty
                           </span>
-                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-semibold">
+                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-medium">
                             ROLE: FACULTY
                           </span>
                         </div>
@@ -1534,35 +1534,35 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
                     {/* Multi-Signal Verification Pipeline Status */}
                     <div className="bg-[#FAFAFA] rounded-xl p-4 border border-black/6">
-                      <span className="text-[10.5px] font-mono-code uppercase font-semibold text-[#737373] block mb-2.5">
+                      <span className="text-[10.5px] font-mono-code uppercase font-medium text-[#737373] block mb-2.5">
                         Institutional Multi-Signal Verification Status
                       </span>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Faculty Email</span>
+                            <span className="font-medium text-[#111111] block">Faculty Email</span>
                             <span className="text-[10px] text-[#737373]">Domain verified</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Employee ID</span>
+                            <span className="font-medium text-[#111111] block">Employee ID</span>
                             <span className="text-[10px] text-[#737373]">Payroll matched</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Signing Key</span>
+                            <span className="font-medium text-[#111111] block">Signing Key</span>
                             <span className="text-[10px] text-[#737373]">ECDSA active</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">HOD Approval</span>
+                            <span className="font-medium text-[#111111] block">HOD Approval</span>
                             <span className="text-[10px] text-[#737373]">Consensus sealed</span>
                           </div>
                         </div>
@@ -1571,7 +1571,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h4 className="text-xs font-mono-code uppercase font-semibold text-[#737373] mb-2">Research Specializations</h4>
+                        <h4 className="text-xs font-mono-code uppercase font-bold text-[#737373] mb-2">Research Specializations</h4>
                         <div className="flex flex-wrap gap-1.5">
                           {(currentProfile?.researchAreas || currentProfile?.skills || ['AI/ML', 'Edge Computing', 'Computer Vision']).map((area) => (
                             <span key={area} className="text-xs font-mono-code px-2.5 py-1 rounded-lg bg-[#F7F7F5] border border-black/8 text-[#111111]">
@@ -1582,7 +1582,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                       </div>
 
                       <div>
-                        <h4 className="text-xs font-mono-code uppercase font-semibold text-[#737373] mb-2">Advisory Metrics</h4>
+                        <h4 className="text-xs font-mono-code uppercase font-bold text-[#737373] mb-2">Advisory Metrics</h4>
                         <div className="grid grid-cols-2 gap-3">
                           <div className="p-3 rounded-xl bg-[#FBFBFA] border border-black/8">
                             <span className="text-[10px] font-mono-code text-[#737373] uppercase">Advised Projects</span>
@@ -1603,7 +1603,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 <div className="space-y-3">
                   <h2 className="font-display text-2xl text-[#111111] font-normal">Faculty Notifications</h2>
                   <div className="bg-white rounded-2xl p-4 border border-black/8 text-xs shadow-xs">
-                    <p className="text-[#111111] font-semibold">New Capstone Milestone Submitted</p>
+                    <p className="text-[#111111] font-medium">New Capstone Milestone Submitted</p>
                     <p className="text-[#4A4A4A]">AeroSync submitted ROS 2 Humble migration for final verification.</p>
                   </div>
                 </div>
@@ -1617,7 +1617,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
           {activeRole === 'HOD' && (
             <div className="space-y-6">
               <div className="bg-[#FBFBFA] rounded-2xl p-6 sm:p-8 border border-black/8">
-                <span className="text-[11px] font-mono-code text-[#737373] uppercase font-semibold">Head of Department Portal</span>
+                <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Head of Department Portal</span>
                 <h1 className="font-display text-2xl sm:text-3xl text-[#111111] mt-1 font-normal">
                   Welcome, Dr. Rajesh Kumar
                 </h1>
@@ -1670,7 +1670,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                           <span className="text-[11px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
                             {currentProfile?.verifiedStatus || 'Verified'} HOD Authority
                           </span>
-                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-semibold">
+                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-medium">
                             ROLE: HOD
                           </span>
                         </div>
@@ -1687,35 +1687,35 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
                     {/* Multi-Signal Verification Pipeline Status */}
                     <div className="bg-[#FAFAFA] rounded-xl p-4 border border-black/6">
-                      <span className="text-[10.5px] font-mono-code uppercase font-semibold text-[#737373] block mb-2.5">
+                      <span className="text-[10.5px] font-mono-code uppercase font-medium text-[#737373] block mb-2.5">
                         Departmental Governance & Multi-Signal Authority Status
                       </span>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Institutional Domain</span>
+                            <span className="font-medium text-[#111111] block">Institutional Domain</span>
                             <span className="text-[10px] text-[#737373]">.ac.in node</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Dept Token</span>
+                            <span className="font-medium text-[#111111] block">Dept Token</span>
                             <span className="text-[10px] text-[#737373]">Consensus matched</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Accreditation Key</span>
+                            <span className="font-medium text-[#111111] block">Accreditation Key</span>
                             <span className="text-[10px] text-[#737373]">NAAC/ABET Level</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Ledger Root Sign</span>
+                            <span className="font-medium text-[#111111] block">Ledger Root Sign</span>
                             <span className="text-[10px] text-[#737373]">Master seal active</span>
                           </div>
                         </div>
@@ -1750,7 +1750,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
           {activeRole === 'ADMIN' && (
             <div className="space-y-6">
               <div className="bg-[#FBFBFA] rounded-2xl p-6 sm:p-8 border border-black/8">
-                <span className="text-[11px] font-mono-code text-[#737373] uppercase font-semibold">Network Administration</span>
+                <span className="text-[11px] font-mono-code text-[#737373] uppercase font-medium">Network Administration</span>
                 <h1 className="font-display text-2xl sm:text-3xl text-[#111111] mt-1 font-normal">
                   ProjectVerse National Node Ledger
                 </h1>
@@ -1779,7 +1779,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                           <span className="text-[11px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
                             {currentProfile?.verifiedStatus || 'Verified'} Root Authority
                           </span>
-                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-semibold">
+                          <span className="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-black/5 text-[#111111] font-medium">
                             ROLE: ADMIN
                           </span>
                         </div>
@@ -1796,35 +1796,35 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
                     {/* Multi-Signal Verification Pipeline Status */}
                     <div className="bg-[#FAFAFA] rounded-xl p-4 border border-black/6">
-                      <span className="text-[10.5px] font-mono-code uppercase font-semibold text-[#737373] block mb-2.5">
+                      <span className="text-[10.5px] font-mono-code uppercase font-medium text-[#737373] block mb-2.5">
                         Root Security & Node Telemetry Status
                       </span>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">SAML SSO</span>
+                            <span className="font-medium text-[#111111] block">SAML SSO</span>
                             <span className="text-[10px] text-[#737373]">128 Unis sync</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Consensus Node</span>
+                            <span className="font-medium text-[#111111] block">Consensus Node</span>
                             <span className="text-[10px] text-[#737373]">0 cryptographic faults</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">Audit Pipeline</span>
+                            <span className="font-medium text-[#111111] block">Audit Pipeline</span>
                             <span className="text-[10px] text-[#737373]">Immutable stream</span>
                           </div>
                         </div>
                         <div className="bg-white p-2.5 rounded-lg border border-black/5 flex items-center gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <div className="text-[11px] leading-tight">
-                            <span className="font-semibold text-[#111111] block">RBAC Enforcement</span>
+                            <span className="font-medium text-[#111111] block">RBAC Enforcement</span>
                             <span className="text-[10px] text-[#737373]">Zero breach detected</span>
                           </div>
                         </div>
@@ -1910,7 +1910,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 type="button"
                 onClick={handleStudentDocumentSubmit}
                 disabled={!pendingUploadDoc || isSubmittingDoc}
-                className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
+                className="btn-primary-black px-5 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-50"
               >
                 <UploadCloud className="w-3.5 h-3.5" />
                 <span>{isSubmittingDoc ? 'Submitting...' : 'Submit for Verification'}</span>
@@ -1947,7 +1947,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 onClick={() => setReviewModalTab('rubric')}
                 className={`flex-1 py-1.5 rounded-lg transition-all text-center cursor-pointer ${
                   reviewModalTab === 'rubric'
-                    ? 'bg-[#111111] text-white shadow-xs font-semibold'
+                    ? 'bg-[#111111] text-white shadow-xs font-medium'
                     : 'text-[#4A4A4A] hover:text-[#111111]'
                 }`}
               >
@@ -1959,7 +1959,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                 onClick={() => setReviewModalTab('feedback')}
                 className={`flex-1 py-1.5 rounded-lg transition-all text-center cursor-pointer flex items-center justify-center gap-1.5 ${
                   reviewModalTab === 'feedback'
-                    ? 'bg-[#111111] text-white shadow-xs font-semibold'
+                    ? 'bg-[#111111] text-white shadow-xs font-medium'
                     : 'text-[#4A4A4A] hover:text-[#111111]'
                 }`}
               >
@@ -1978,7 +1978,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
             {reviewModalTab === 'feedback' ? (
               <div className="space-y-4 mb-6">
                 <div>
-                  <label className="block text-xs font-semibold text-[#111111] mb-1">
+                  <label className="block text-xs font-medium text-[#111111] mb-1">
                     Feedback
                   </label>
                   <p className="text-[11px] text-[#737373] mb-2">
@@ -2022,7 +2022,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                     id="submit-feedback-btn"
                     onClick={handleSubmitFeedback}
                     disabled={!facultyFeedbackText.trim()}
-                    className="btn-primary-black w-full py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs disabled:opacity-50"
+                    className="btn-primary-black w-full py-2.5 rounded-xl text-xs font-medium flex items-center justify-center gap-2 cursor-pointer shadow-xs disabled:opacity-50"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Submit Feedback</span>
@@ -2031,7 +2031,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
 
                 {projectFeedbacks.length > 0 && (
                   <div className="pt-4 border-t border-black/8 space-y-3">
-                    <h4 className="text-xs font-semibold text-[#111111] flex items-center gap-1.5">
+                    <h4 className="text-xs font-bold text-[#111111] flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-[#737373]" />
                       <span>Previous Feedback History ({projectFeedbacks.length})</span>
                     </h4>
@@ -2042,7 +2042,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
                           className="p-3 rounded-xl bg-[#FBFBFA] border border-black/8 text-xs space-y-1"
                         >
                           <div className="flex items-center justify-between text-[11px]">
-                            <span className="font-semibold text-[#111111]">{fb.facultyName}</span>
+                            <span className="font-medium text-[#111111]">{fb.facultyName}</span>
                             <span className="text-[#737373] font-mono-code">{formatTimeAgo(fb.createdAt)}</span>
                           </div>
                           <p className="text-[#4A4A4A] whitespace-pre-wrap">{fb.message}</p>
@@ -2140,7 +2140,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               {reviewModalTab === 'rubric' && (
                 <button
                   onClick={() => handleSignVerification(reviewingProject.id)}
-                  className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  className="btn-primary-black px-5 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>Publish Cryptographic Signature</span>
@@ -2182,7 +2182,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
             {viewingFeedbackDetail.project && (
               <div className="mb-4 p-3.5 rounded-2xl bg-[#FBFBFA] border border-black/8">
                 <span className="text-[10px] font-mono-code text-[#737373] uppercase tracking-wider">PROJECT</span>
-                <h4 className="text-sm font-semibold text-[#111111] mt-0.5">{viewingFeedbackDetail.project.title}</h4>
+                <h4 className="text-sm font-bold text-[#111111] mt-0.5">{viewingFeedbackDetail.project.title}</h4>
                 <p className="text-xs text-[#4A4A4A] mt-0.5 line-clamp-2">{viewingFeedbackDetail.project.tagline}</p>
               </div>
             )}
@@ -2190,14 +2190,14 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
             <div className="space-y-3 mb-6">
               <div className="flex items-center gap-2 text-xs">
                 <span className="text-[#737373]">Reviewed by:</span>
-                <span className="font-semibold text-[#111111]">{viewingFeedbackDetail.facultyName}</span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <span className="font-medium text-[#111111]">{viewingFeedbackDetail.facultyName}</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
                   Faculty Advisor
                 </span>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#111111] mb-1.5">Feedback & Actionable Next Steps</label>
+                <label className="block text-xs font-medium text-[#111111] mb-1.5">Feedback & Actionable Next Steps</label>
                 <div className="p-4 rounded-2xl bg-[#F7F7F5] border border-black/10 text-xs text-[#111111] whitespace-pre-wrap leading-relaxed">
                   {viewingFeedbackDetail.feedbackMessage}
                 </div>
@@ -2219,7 +2219,7 @@ export const AuthAppView: React.FC<AuthAppViewProps> = ({
               )}
               <button
                 onClick={() => setViewingFeedbackDetail(null)}
-                className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold cursor-pointer shadow-xs"
+                className="btn-primary-black px-5 py-2 rounded-xl text-xs font-medium cursor-pointer shadow-xs"
               >
                 Done
               </button>

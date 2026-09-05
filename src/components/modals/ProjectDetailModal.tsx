@@ -71,10 +71,10 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
           {/* Modal Header */}
           <div className="pr-10 pb-6 border-b border-black/8">
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className="text-xs font-mono-code px-2.5 py-0.5 rounded-full bg-[#111111] text-white font-semibold">
+              <span className="text-xs font-mono-code px-2.5 py-0.5 rounded-full bg-[#111111] text-white font-medium">
                 {passport.passportId}
               </span>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+              <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
                 <CheckCircle2 className="w-3 h-3" />
                 {passport.status}
               </span>
@@ -159,17 +159,17 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 </div>
 
                 <div className="p-5 rounded-2xl bg-[#FBFBFA] border border-black/8 space-y-3 font-body">
-                  <h4 className="text-sm font-semibold text-[#111111]">Repository & Governance</h4>
+                  <h4 className="text-sm font-bold text-[#111111]">Repository & Governance</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono-code text-[#4A4A4A]">
-                    <div>GitHub: <span className="text-[#111111] font-semibold">{passport.githubRepo}</span></div>
-                    <div>License: <span className="text-[#111111] font-semibold">{passport.license}</span></div>
-                    <div>Academic Year: <span className="text-[#111111] font-semibold">{passport.academicYear}</span></div>
+                    <div>GitHub: <span className="text-[#111111] font-medium">{passport.githubRepo}</span></div>
+                    <div>License: <span className="text-[#111111] font-medium">{passport.license}</span></div>
+                    <div>Academic Year: <span className="text-[#111111] font-medium">{passport.academicYear}</span></div>
                     <div>QR Seal Hash: <span className="text-[#737373] truncate block">{passport.qrHash}</span></div>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-mono-code uppercase font-semibold text-[#737373] mb-2">Verified Technology Stack</h4>
+                  <h4 className="text-xs font-mono-code uppercase font-bold text-[#737373] mb-2">Verified Technology Stack</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.techStack.map((tech) => (
                       <span key={tech} className="text-xs font-mono-code px-3 py-1 rounded-xl bg-[#F7F7F5] border border-black/8 text-[#111111]">
@@ -192,7 +192,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                         <div>
                           <span className="text-xs font-mono-code text-[#737373] uppercase">{batch.year}</span>
-                          <h4 className="text-base font-semibold text-[#111111]">{batch.batchName}</h4>
+                          <h4 className="text-base font-bold text-[#111111]">{batch.batchName}</h4>
                           <p className="text-xs text-[#737373]">{batch.institution} • Leads: {batch.leadContributors.join(', ')}</p>
                         </div>
                         <span className={`text-xs font-mono-code px-3 py-1 rounded-full self-start font-medium ${
@@ -222,7 +222,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                     <div key={i} className="p-4 rounded-2xl bg-[#FBFBFA] border border-black/8 flex items-center gap-3">
                       <img src={c.avatar} alt={c.name} className="w-12 h-12 rounded-full object-cover border border-black/10" />
                       <div>
-                        <h4 className="text-sm font-semibold text-[#111111]">{c.name}</h4>
+                        <h4 className="text-sm font-bold text-[#111111]">{c.name}</h4>
                         <p className="text-xs text-[#4A4A4A]">{c.role}</p>
                         <p className="text-[11px] text-[#737373] font-mono-code">{c.institution} • {c.batch}</p>
                       </div>
@@ -237,7 +237,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 <div className="p-5 rounded-2xl bg-[#FBFBFA] border border-black/8 space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="text-sm font-semibold text-[#111111]">Evaluator: {passport.facultyReviewer.name}</h4>
+                      <h4 className="text-sm font-bold text-[#111111]">Evaluator: {passport.facultyReviewer.name}</h4>
                       <p className="text-xs text-[#4A4A4A]">{passport.facultyReviewer.designation} • {passport.facultyReviewer.institution}</p>
                     </div>
                     <span className="text-lg font-bold text-emerald-700 font-mono-code">
@@ -266,7 +266,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 onClose();
                 onJoinClick(project);
               }}
-              className="btn-primary-black px-5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+              className="btn-primary-black px-5 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
               <Users className="w-3.5 h-3.5" />
               <span>Join Next Batch Roadmap</span>

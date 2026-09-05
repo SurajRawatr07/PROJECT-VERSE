@@ -7,7 +7,7 @@ export const TrustSection: React.FC = () => {
     <section id="trust" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#FFFFFF] border-t border-black/8 font-serif">
       <div className="max-w-4xl mx-auto text-center">
         {/* Section Heading */}
-        <span className="text-[12px] uppercase tracking-widest text-[#737373] font-semibold">
+        <span className="text-[12px] uppercase tracking-widest text-[#737373] font-medium">
           Trust & Verification
         </span>
         <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#111111] font-bold tracking-tight mb-4 mt-2">

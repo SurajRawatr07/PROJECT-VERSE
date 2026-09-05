@@ -25,7 +25,7 @@ export const ProjectActivityTimeline: React.FC<ProjectActivityTimelineProps> = (
     return (
       <div className="py-8 text-center bg-[#FBFBFA] rounded-2xl border border-black/8 p-6">
         <Clock className="w-8 h-8 text-[#737373] mx-auto mb-2" />
-        <p className="text-xs font-semibold text-[#111111]">No Activity Logged Yet</p>
+        <p className="text-xs font-medium text-[#111111]">No Activity Logged Yet</p>
         <p className="text-[11px] text-[#737373] mt-1">Project activity stream will record commits, reviews, and team milestones automatically.</p>
       </div>
     );
@@ -91,7 +91,7 @@ export const ProjectActivityTimeline: React.FC<ProjectActivityTimelineProps> = (
               <div className="flex-1 min-w-0 bg-white p-3.5 sm:p-4 rounded-xl border border-black/8 shadow-xs hover:border-black/15 transition-all">
                 <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1">
                   <div className="flex items-center gap-2 min-w-0">
-                    <h4 className="text-xs sm:text-sm font-semibold text-[#111111] truncate">
+                    <h4 className="text-xs sm:text-sm font-bold text-[#111111] truncate">
                       {item.title}
                     </h4>
                     {item.statusIndicator === 'verified' && (

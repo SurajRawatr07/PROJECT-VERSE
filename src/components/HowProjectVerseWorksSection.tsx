@@ -174,11 +174,11 @@ export const HowProjectVerseWorksSection: React.FC<HowProjectVerseWorksSectionPr
                       <div className="space-y-1 text-[11.5px] text-[#4A4A4A]">
                         <div className="flex items-center justify-between py-0.5">
                           <span>Student Account:</span>
-                          <span className="font-semibold text-[#111111]">Current • Alumni</span>
+                          <span className="font-medium text-[#111111]">Current • Alumni</span>
                         </div>
                         <div className="flex items-center justify-between py-0.5">
                           <span>Academic Guides:</span>
-                          <span className="font-semibold text-[#111111]">Faculty • HOD</span>
+                          <span className="font-medium text-[#111111]">Faculty • HOD</span>
                         </div>
                       </div>
                     )}

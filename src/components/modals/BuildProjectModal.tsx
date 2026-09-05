@@ -92,7 +92,7 @@ export const BuildProjectModal: React.FC<BuildProjectModalProps> = ({
 
           {!isSuccess ? (
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono-code text-[#737373] uppercase mb-1 font-semibold">
+              <div className="flex items-center gap-2 text-xs font-mono-code text-[#737373] uppercase mb-1 font-medium">
                 <PlusCircle className="w-3.5 h-3.5 text-[#111111]" />
                 <span>Capstone Registration Wizard</span>
               </div>
@@ -216,7 +216,7 @@ export const BuildProjectModal: React.FC<BuildProjectModalProps> = ({
                   </button>
                   <button
                     type="submit"
-                    className="btn-primary-black px-6 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    className="btn-primary-black px-6 py-2.5 rounded-xl text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs"
                   >
                     <span>Generate Cryptographic Passport</span>
                     <ArrowRight className="w-3.5 h-3.5 text-white" />

@@ -493,7 +493,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setMode('login')}
-                  className="py-2 rounded-lg bg-[#111111] text-white shadow-xs font-semibold cursor-pointer text-center"
+                  className="py-2 rounded-lg bg-[#111111] text-white shadow-xs font-medium cursor-pointer text-center"
                 >
                   Sign In
                 </button>
@@ -640,7 +640,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     }`}>
                       {regStep === 'ACCOUNT_FORM' ? '1' : '✓'}
                     </span>
-                    <span className={regStep === 'ACCOUNT_FORM' ? 'text-[#111111] font-semibold' : ''}>Account</span>
+                    <span className={regStep === 'ACCOUNT_FORM' ? 'text-[#111111] font-medium' : ''}>Account</span>
                   </div>
 
                   <ChevronRight className="w-3.5 h-3.5 text-black/20" />
@@ -651,7 +651,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     }`}>
                       {regStep === 'DOCUMENT_UPLOAD' || regStep === 'SUMMARY_SUCCESS' ? '✓' : '2'}
                     </span>
-                    <span className={regStep === 'EMAIL_OTP' ? 'text-[#111111] font-semibold' : ''}>Email OTP</span>
+                    <span className={regStep === 'EMAIL_OTP' ? 'text-[#111111] font-medium' : ''}>Email OTP</span>
                   </div>
 
                   {selectedRole === 'STUDENT' && (
@@ -663,7 +663,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         }`}>
                           {regStep === 'SUMMARY_SUCCESS' ? '✓' : '3'}
                         </span>
-                        <span className={regStep === 'DOCUMENT_UPLOAD' ? 'text-[#111111] font-semibold' : ''}>Document</span>
+                        <span className={regStep === 'DOCUMENT_UPLOAD' ? 'text-[#111111] font-medium' : ''}>Document</span>
                       </div>
                     </>
                   )}
@@ -676,7 +676,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     }`}>
                       ★
                     </span>
-                    <span className={regStep === 'SUMMARY_SUCCESS' ? 'text-emerald-800 font-semibold' : ''}>Verified</span>
+                    <span className={regStep === 'SUMMARY_SUCCESS' ? 'text-emerald-800 font-medium' : ''}>Verified</span>
                   </div>
                 </div>
               </div>
@@ -697,7 +697,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setMode('register')}
-                    className="py-2 rounded-lg bg-[#111111] text-white shadow-xs font-semibold cursor-pointer text-center"
+                    className="py-2 rounded-lg bg-[#111111] text-white shadow-xs font-medium cursor-pointer text-center"
                   >
                     Register
                   </button>
@@ -741,7 +741,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       <div className="flex items-start gap-2.5">
                         <Lock className="w-4 h-4 text-[#111111] shrink-0 mt-0.5" />
                         <div>
-                          <h4 className="font-semibold text-[#111111]">Centralized Node Provisioning</h4>
+                          <h4 className="font-bold text-[#111111]">Centralized Node Provisioning</h4>
                           <p className="text-[#4A4A4A] mt-1 leading-relaxed">
                             National Ledger Administrator accounts cannot be self-registered publicly. Root credentials are generated and signed directly by the Institutional Node Governance office.
                           </p>
@@ -763,7 +763,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       {/* If Student Role Selected: Show Student Type Selector */}
                       {selectedRole === 'STUDENT' && (
                         <div className="mb-4">
-                          <label className="block text-[11px] font-mono-code text-[#4A4A4A] uppercase font-semibold mb-1.5">
+                          <label className="block text-[11px] font-mono-code text-[#4A4A4A] uppercase font-medium mb-1.5">
                             Account Type *
                           </label>
                           <div className="grid grid-cols-2 gap-2">
@@ -779,7 +779,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                                   : 'bg-[#F7F7F5] text-[#4A4A4A] border-black/8 hover:bg-[#F3F3F1] hover:text-[#111111]'
                               }`}
                             >
-                              <div className="flex items-center gap-1.5 mb-1 font-semibold text-xs">
+                              <div className="flex items-center gap-1.5 mb-1 font-medium text-xs">
                                 <GraduationCap className="w-4 h-4" />
                                 <span>CURRENT STUDENT</span>
                               </div>
@@ -800,7 +800,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                                   : 'bg-[#F7F7F5] text-[#4A4A4A] border-black/8 hover:bg-[#F3F3F1] hover:text-[#111111]'
                               }`}
                             >
-                              <div className="flex items-center gap-1.5 mb-1 font-semibold text-xs">
+                              <div className="flex items-center gap-1.5 mb-1 font-medium text-xs">
                                 <Briefcase className="w-4 h-4" />
                                 <span>ALUMNI / PASS-OUT</span>
                               </div>
@@ -1037,7 +1037,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                               Academic / Institutional Email <span className="text-red-500">*</span>
                             </label>
                             {email && (
-                              <span className={`text-[10px] font-mono-code ${isDomainAcademic ? 'text-emerald-700 font-semibold' : 'text-[#737373]'}`}>
+                              <span className={`text-[10px] font-mono-code ${isDomainAcademic ? 'text-emerald-700 font-medium' : 'text-[#737373]'}`}>
                                 {isDomainAcademic ? '✓ Academic Domain Matched' : 'Standard Email (Requires Manual Doc Review)'}
                               </span>
                             )}
@@ -1059,7 +1059,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                             </label>
                             {password && (
                               <span
-                                className="text-[10.5px] font-mono-code font-semibold"
+                                className="text-[10.5px] font-mono-code font-medium"
                                 style={{ color: passwordStrength.color }}
                               >
                                 Strength: {passwordStrength.label}
@@ -1132,7 +1132,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                               Confirm Password <span className="text-red-500">*</span>
                             </label>
                             {confirmPassword && (
-                              <span className={`text-[10px] font-mono-code ${password === confirmPassword ? 'text-emerald-700 font-semibold' : 'text-red-600'}`}>
+                              <span className={`text-[10px] font-mono-code ${password === confirmPassword ? 'text-emerald-700 font-medium' : 'text-red-600'}`}>
                                 {password === confirmPassword ? '✓ Passwords Match' : '✗ Do not match'}
                               </span>
                             )}
@@ -1207,7 +1207,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
                     )}
                     <div>
-                      <span className="font-semibold block">
+                      <span className="font-medium block">
                         {isDomainAcademic ? 'Academic Domain Recognized' : 'Personal Domain Detected'}
                       </span>
                       <p className="text-[11px] mt-0.5 leading-relaxed">
@@ -1227,7 +1227,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     <button
                       type="button"
                       onClick={() => setEnteredOtp(generatedOtp)}
-                      className="text-xs font-mono-code px-3 py-1.5 rounded-lg bg-[#111111] text-white hover:bg-black font-semibold cursor-pointer shadow-xs"
+                      className="text-xs font-mono-code px-3 py-1.5 rounded-lg bg-[#111111] text-white hover:bg-black font-medium cursor-pointer shadow-xs"
                     >
                       Fill Demo OTP
                     </button>
@@ -1369,27 +1369,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                   {/* Verification Pipeline Timeline */}
                   <div className="p-4 rounded-2xl bg-[#F7F7F5] border border-black/8 space-y-2.5 text-xs font-mono-code">
-                    <span className="text-[10.5px] uppercase font-semibold text-[#737373] block mb-1">
+                    <span className="text-[10.5px] uppercase font-medium text-[#737373] block mb-1">
                       Identity Verification Pipeline
                     </span>
 
                     <div className="flex items-center justify-between">
                       <span className="text-[#4A4A4A]">1. Account Credentials:</span>
-                      <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                      <span className="text-emerald-700 font-medium flex items-center gap-1">
                         <Check className="w-3.5 h-3.5" /> Created ✓
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
                       <span className="text-[#4A4A4A]">2. Institutional Email Ownership:</span>
-                      <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                      <span className="text-emerald-700 font-medium flex items-center gap-1">
                         <Check className="w-3.5 h-3.5" /> Verified ✓
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
                       <span className="text-[#4A4A4A]">3. Academic Domain:</span>
-                      <span className={`font-semibold flex items-center gap-1 ${
+                      <span className={`font-medium flex items-center gap-1 ${
                         isDomainAcademic ? 'text-emerald-700' : 'text-amber-700'
                       }`}>
                         {isDomainAcademic ? <Check className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
@@ -1399,7 +1399,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                     <div className="flex items-center justify-between">
                       <span className="text-[#4A4A4A]">4. Academic Document Status:</span>
-                      <span className={`font-semibold flex items-center gap-1 ${
+                      <span className={`font-medium flex items-center gap-1 ${
                         uploadedDoc ? 'text-amber-700' : 'text-[#737373]'
                       }`}>
                         {uploadedDoc ? <Clock className="w-3.5 h-3.5" /> : '•'}
@@ -1418,7 +1418,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   {/* Project Continuity Card */}
                   <div className="p-4 rounded-2xl bg-[#111111] text-white space-y-2 shadow-xs">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono-code text-white/60 uppercase font-semibold">
+                      <span className="text-[10px] font-mono-code text-white/60 uppercase font-medium">
                         PROJECT CONTINUITY
                       </span>
                       <span className="text-[10px] font-mono-code px-2 py-0.5 rounded bg-white/10 text-white">
@@ -1426,7 +1426,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       </span>
                     </div>
                     
-                    <h4 className="text-sm font-semibold text-white">
+                    <h4 className="text-sm font-bold text-white">
                       {studentType === 'ALUMNI' ? 'Alumni Mentorship & Legacy' : 'Student Research & Capstone Engine'}
                     </h4>
                     
@@ -1445,7 +1445,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         onAuthenticated(selectedRole);
                         onClose();
                       }}
-                      className="btn-primary-black w-full py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                      className="btn-primary-black w-full py-3 px-4 rounded-xl text-xs font-medium flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                     >
                       <span>Enter ProjectVerse Workspace</span>
                       <ArrowRight className="w-3.5 h-3.5 text-white" />

@@ -179,7 +179,7 @@ export const AdvancedProjectDiscovery: React.FC<AdvancedProjectDiscoveryProps> =
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="lg:hidden px-3.5 py-2.5 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE9] border border-black/10 text-xs font-semibold text-[#111111] flex items-center gap-1.5 cursor-pointer font-serif"
+              className="lg:hidden px-3.5 py-2.5 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE9] border border-black/10 text-xs font-medium text-[#111111] flex items-center gap-1.5 cursor-pointer font-serif"
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>Filters {hasActiveFilters && '•'}</span>

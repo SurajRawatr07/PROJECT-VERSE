@@ -198,7 +198,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                   href={project.passport?.githubRepo || 'https://github.com'}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-[#111111] hover:bg-black text-white text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Code className="w-3.5 h-3.5" />
                   <span>View Repository</span>
@@ -207,7 +207,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
 
                 <button
                   onClick={() => onOpenPassport(project)}
-                  className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/10 text-xs font-semibold text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/10 text-xs font-medium text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <FileCheck2 className="w-3.5 h-3.5 text-emerald-700" />
                   <span>Passport</span>
@@ -215,7 +215,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
 
                 <button
                   onClick={() => onOpenCollaborate(project)}
-                  className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/10 text-xs font-semibold text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBE8] border border-black/10 text-xs font-medium text-[#111111] flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Users className="w-3.5 h-3.5" />
                   <span>Collaborate</span>
@@ -248,7 +248,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-3.5 py-2.5 text-xs font-medium whitespace-nowrap transition-all border-b-2 cursor-pointer flex items-center gap-1.5 ${
                     activeTab === tab.id
-                      ? 'border-[#111111] text-[#111111] font-semibold'
+                      ? 'border-[#111111] text-[#111111] font-medium'
                       : 'border-transparent text-[#737373] hover:text-[#111111]'
                   }`}
                 >
@@ -343,19 +343,19 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                       </h4>
                       <div>
                         <span className="text-[11px] text-[#737373] block">Institution</span>
-                        <span className="text-xs font-semibold text-[#111111]">{project.institution}</span>
+                        <span className="text-xs font-medium text-[#111111]">{project.institution}</span>
                       </div>
                       <div>
                         <span className="text-[11px] text-[#737373] block">Department</span>
-                        <span className="text-xs font-semibold text-[#111111]">{project.department}</span>
+                        <span className="text-xs font-medium text-[#111111]">{project.department}</span>
                       </div>
                       <div>
                         <span className="text-[11px] text-[#737373] block">Academic Batch</span>
-                        <span className="text-xs font-semibold text-[#111111]">{project.academicYear}</span>
+                        <span className="text-xs font-medium text-[#111111]">{project.academicYear}</span>
                       </div>
                       <div>
                         <span className="text-[11px] text-[#737373] block">Faculty Mentor</span>
-                        <span className="text-xs font-semibold text-[#111111]">
+                        <span className="text-xs font-medium text-[#111111]">
                           {project.passport.facultyReviewer?.name || 'Dr. Anil Sharma'}
                         </span>
                       </div>
@@ -402,7 +402,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                   </h4>
                   <button
                     onClick={() => onOpenCollaborate(project)}
-                    className="text-xs font-semibold text-[#111111] hover:underline"
+                    className="text-xs font-medium text-[#111111] hover:underline"
                   >
                     + Request to Join Team
                   </button>
@@ -594,7 +594,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                       "{project.passport.facultyReviewer?.reviewText || 'Exceptional theoretical depth in distributed visual odometry. The algorithmic formulation handles low-contrast feature extraction with high precision.'}"
                     </p>
                     <div className="mt-3 pt-2 border-t border-black/6 flex items-center justify-between text-[11px]">
-                      <span className="font-semibold text-[#111111]">
+                      <span className="font-medium text-[#111111]">
                         {project.passport.facultyReviewer?.name || 'Dr. Anil Sharma'}
                       </span>
                       <span className="font-mono-code text-[#737373]">
@@ -645,7 +645,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                       <button
                         type="submit"
                         disabled={!newFeedbackText.trim()}
-                        className="px-4 py-1.5 rounded-xl bg-[#111111] hover:bg-black disabled:opacity-50 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+                        className="px-4 py-1.5 rounded-xl bg-[#111111] hover:bg-black disabled:opacity-50 text-white text-xs font-medium flex items-center gap-1.5 cursor-pointer"
                       >
                         <Send className="w-3.5 h-3.5" />
                         <span>Submit Feedback</span>
@@ -663,7 +663,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                   {feedbacks.length === 0 ? (
                     <div className="p-8 text-center bg-white rounded-2xl border border-black/8">
                       <MessageSquare className="w-8 h-8 text-[#737373] mx-auto mb-2" />
-                      <p className="text-xs font-semibold text-[#111111]">No Feedback Recorded Yet</p>
+                      <p className="text-xs font-medium text-[#111111]">No Feedback Recorded Yet</p>
                       <p className="text-[11px] text-[#737373] mt-0.5">Faculty advisor guidance will appear here.</p>
                     </div>
                   ) : (
@@ -712,7 +712,7 @@ export const ProjectDashboardModal: React.FC<ProjectDashboardModalProps> = ({
                     <div className="flex items-center gap-3">
                       <FileText className="w-4 h-4 text-[#111111]" />
                       <div>
-                        <p className="text-xs font-semibold text-[#111111]">{doc.name}</p>
+                        <p className="text-xs font-medium text-[#111111]">{doc.name}</p>
                         <p className="text-[10px] text-[#737373] font-mono-code">{doc.size} • Uploaded {doc.date}</p>
                       </div>
                     </div>

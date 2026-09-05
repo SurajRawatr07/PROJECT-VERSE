@@ -65,7 +65,7 @@ export function getInitialsAvatar(name: string, role?: UserRole): string {
   const bg = role === 'ADMIN' ? '%23111111' : role === 'HOD' ? '%231E1E1E' : role === 'FACULTY' ? '%232C2C2C' : '%23F0F0ED';
   const textFill = role === 'ADMIN' || role === 'HOD' || role === 'FACULTY' ? '%23FFFFFF' : '%23111111';
 
-  return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect width="128" height="128" rx="64" fill="${bg}"/><text x="50%" y="54%" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="44" font-weight="600" fill="${textFill}" dominant-baseline="middle" text-anchor="middle">${initials}</text></svg>`;
+  return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect width="128" height="128" rx="64" fill="${bg}"/><text x="50%" y="54%" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="44" font-weight="700" fill="${textFill}" dominant-baseline="middle" text-anchor="middle">${initials}</text></svg>`;
 }
 
 // Initial academic directory
