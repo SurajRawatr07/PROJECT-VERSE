@@ -29,7 +29,7 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.35, delay: 0.05 }}
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAFA] border border-black/8 shadow-xs mb-6 sm:mb-8"
         >
-          <ProjectVerseLogo size={17} color="#111111" />
+          <ProjectVerseLogo size={17} color="#111111" className="text-[#111111]" />
           <span className="text-[12px] uppercase tracking-widest text-[#4A4A4A] font-medium">
             Academic Projects • Connected People • Continuous Progress
           </span>
@@ -60,7 +60,7 @@ export const Hero: React.FC<HeroProps> = ({
           <button
             id="hero-explore-btn"
             onClick={onExploreClick}
-            className="btn-secondary-white w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 cursor-pointer text-[15px] sm:text-[16px] font-medium group rounded-full shadow-xs hover:border-black/20 tracking-wide font-serif"
+            className="btn-secondary-white w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 cursor-pointer text-[15px] sm:text-[16px] font-medium group rounded-full shadow-xs hover:border-black/20 tracking-wide font-serif transition-all duration-200"
           >
             <Compass className="w-4 h-4 text-[#111111] group-hover:rotate-45 transition-transform duration-300" />
             <span>Explore Projects</span>
@@ -69,10 +69,10 @@ export const Hero: React.FC<HeroProps> = ({
           <button
             id="hero-get-started-btn"
             onClick={onGetStartedClick}
-            className="btn-primary-black w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 cursor-pointer text-[15px] sm:text-[16px] font-medium rounded-full shadow-xs hover:shadow-sm tracking-wide font-serif"
+            className="btn-primary-black w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 cursor-pointer text-[15px] sm:text-[16px] font-medium rounded-full shadow-xs hover:shadow-sm tracking-wide font-serif transition-all duration-200 bg-[#111111] text-white hover:bg-black"
           >
             <span>Get Started</span>
-            <ArrowRight className="w-4 h-4 text-white" />
+            <ArrowRight className="w-4 h-4 text-white transition-colors duration-200" />
           </button>
         </motion.div>
 

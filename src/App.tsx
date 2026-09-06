@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, PublicPage } from './components/Navbar';
 import { SplashIntro } from './components/SplashIntro';
 import { Hero } from './components/Hero';
-import { HowProjectVerseWorksSection } from './components/HowProjectVerseWorksSection';
+import { CrossCampusNetworkSection } from './components/CrossCampusNetworkSection';
+import { ProblemSection } from './components/ProblemSection';
+import { ApproachFlowSection } from './components/ApproachFlowSection';
 import { CoreInnovationsSection } from './components/CoreInnovationsSection';
-import { TrustSection } from './components/TrustSection';
 import { Footer } from './components/Footer';
 
 // Dedicated Separate Pages
@@ -178,23 +179,23 @@ export default function App() {
       {/* Page Content Rendering */}
       {currentPage === 'home' && (
         <main>
-          {/* Section 1: Hero */}
+          {/* Section 1: Hero ("YOUR PROJECT SHOULD GO FURTHER.") */}
           <Hero
             onExploreClick={() => handleSelectPage('how-it-works')}
             onGetStartedClick={handleOpenRegister}
           />
 
-          {/* Section 2: Built Around Your Project & 6-Step How ProjectVerse Works */}
-          <HowProjectVerseWorksSection
-            onGetStartedClick={handleOpenRegister}
-            onExploreProjectsClick={() => handleSelectPage('how-it-works')}
-          />
+          {/* Section 2: Cross-College / Cross-University Section ("ONE PROJECT. MANY CAMPUSES.") */}
+          <CrossCampusNetworkSection />
 
-          {/* Section 3: Core Features / Innovations */}
+          {/* Section 3: Problem Section ("Why ProjectVerse?") */}
+          <ProblemSection />
+
+          {/* Section 4: Approach Flow Section ("From Idea to Impact.") */}
+          <ApproachFlowSection />
+
+          {/* Section 5: Recreated Platform Capabilities with 6 Cards ("Built for Project Success") */}
           <CoreInnovationsSection />
-
-          {/* Section 4: Trust & Verification */}
-          <TrustSection />
         </main>
       )}
 

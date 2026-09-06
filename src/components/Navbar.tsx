@@ -4,7 +4,6 @@ import { Menu, X, ArrowRight } from 'lucide-react';
 import { ProjectVerseLogo } from './ProjectVerseLogo';
 import { ProjectVerseBrand } from './ProjectVerseBrand';
 import { AccountIcon } from './icons/AccountIcon';
-import { ThemeSwitch } from './common/ThemeSwitch';
 import { prefetchView } from '../lib/prefetchService';
 
 export type PublicPage = 'home' | 'about' | 'how-it-works' | 'faq';
@@ -195,29 +194,25 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* ========================================================================= */}
-          {/* RIGHT: Actions [ Theme Switch, Login, Get Started ] */}
+          {/* RIGHT: Actions [ Login, Get Started ] */}
           {/* ========================================================================= */}
           <div className="hidden md:flex items-center gap-2 font-nav">
-            <div className="flex items-center mr-1">
-              <ThemeSwitch id="desktop-theme-switch" />
-            </div>
-
             <button
               id="nav-login-btn"
               onClick={onOpenLogin}
-              className="text-[13.5px] lg:text-[14px] font-normal leading-none text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F4F4F2] dark:hover:bg-[#202026] px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 transition-all duration-180 cursor-pointer select-none"
+              className="text-[13.5px] lg:text-[14px] font-normal leading-none text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F4F4F2] px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 transition-all duration-180 cursor-pointer select-none"
             >
-              <AccountIcon size={15} className="text-[#4E4E4E] dark:text-[#A1A1AA]" />
+              <AccountIcon size={15} className="text-[#4E4E4E]" />
               <span>Login</span>
             </button>
 
             <button
               id="nav-get-started-btn"
               onClick={onOpenRegister}
-              className="bg-[#111111] hover:bg-black dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-[#0E0E10] text-[13px] lg:text-[13.5px] font-medium tracking-wide leading-none px-4 py-1.5 rounded-full shadow-xs hover:shadow-sm active:scale-95 transition-all duration-180 inline-flex items-center gap-1.5 cursor-pointer select-none font-nav"
+              className="bg-[#111111] hover:bg-black text-white text-[13px] lg:text-[13.5px] font-medium tracking-wide leading-none px-4 py-1.5 rounded-full shadow-xs hover:shadow-sm active:scale-95 transition-all duration-180 inline-flex items-center gap-1.5 cursor-pointer select-none font-nav"
             >
               <span>Get Started</span>
-              <ArrowRight className="w-3.5 h-3.5 text-white/90 dark:text-[#0E0E10]" />
+              <ArrowRight className="w-3.5 h-3.5 text-white/90" />
             </button>
           </div>
 
@@ -228,15 +223,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-mobile-toggle-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="px-2.5 py-1 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] dark:bg-[#202026] dark:hover:bg-[#26262D] border border-black/[0.06] dark:border-white/[0.10] flex items-center gap-1 text-[#111111] dark:text-[#F4F4F6] focus:outline-none cursor-pointer text-xs font-nav font-medium transition-colors duration-150"
+              className="px-2.5 py-1 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] border border-black/[0.06] flex items-center gap-1 text-[#111111] focus:outline-none cursor-pointer text-xs font-nav font-medium transition-colors duration-150"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
             >
               <span>{mobileMenuOpen ? 'Close' : 'Menu'}</span>
               {mobileMenuOpen ? (
-                <X className="w-3.5 h-3.5 text-[#111111] dark:text-[#F4F4F6]" />
+                <X className="w-3.5 h-3.5 text-[#111111]" />
               ) : (
-                <Menu className="w-3.5 h-3.5 text-[#111111] dark:text-[#F4F4F6]" />
+                <Menu className="w-3.5 h-3.5 text-[#111111]" />
               )}
             </button>
           </div>
@@ -267,14 +262,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed top-16 inset-x-3 sm:inset-x-4 max-w-sm mx-auto z-50 bg-white/98 dark:bg-[#16161B]/98 backdrop-blur-xl border border-black/[0.08] dark:border-white/[0.12] rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.6)] md:hidden flex flex-col font-nav"
+              className="fixed top-16 inset-x-3 sm:inset-x-4 max-w-sm mx-auto z-50 bg-white/98 backdrop-blur-xl border border-black/[0.08] rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] md:hidden flex flex-col font-nav"
             >
               {/* Header inside drawer */}
-              <div className="flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06] dark:border-white/[0.08]">
+              <div className="flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06]">
                 <div className="flex items-center gap-2">
                   <ProjectVerseLogo size={26} color="#111111" />
                   <div
-                    className="flex items-baseline leading-none font-brand text-[#111111] dark:text-[#F4F4F6]"
+                    className="flex items-baseline leading-none font-brand text-[#111111]"
                     style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
                   >
                     <span className="text-[17.5px] font-normal tracking-[0.025em] opacity-90">PROJECT</span>
@@ -284,7 +279,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-7 h-7 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] dark:bg-[#202026] dark:hover:bg-[#26262D] flex items-center justify-center text-[#111111] dark:text-[#F4F4F6] transition-colors cursor-pointer"
+                  className="w-7 h-7 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] flex items-center justify-center text-[#111111] transition-colors cursor-pointer"
                   aria-label="Close menu"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -298,12 +293,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleNavClick('home')}
                   className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
                     currentPage === 'home'
-                      ? 'bg-[#EBEBE8] dark:bg-[#26262D] text-[#111111] dark:text-[#FFFFFF] font-medium'
-                      : 'text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F7F7F5] dark:hover:bg-[#202026]'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
                   }`}
                 >
                   <span>Home</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#888888] dark:text-[#71717A]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
                 </button>
 
                 <button
@@ -311,12 +306,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleNavClick('about')}
                   className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
                     currentPage === 'about'
-                      ? 'bg-[#EBEBE8] dark:bg-[#26262D] text-[#111111] dark:text-[#FFFFFF] font-medium'
-                      : 'text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F7F7F5] dark:hover:bg-[#202026]'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
                   }`}
                 >
                   <span>About</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#888888] dark:text-[#71717A]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
                 </button>
 
                 <button
@@ -324,12 +319,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleNavClick('how-it-works')}
                   className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
                     currentPage === 'how-it-works'
-                      ? 'bg-[#EBEBE8] dark:bg-[#26262D] text-[#111111] dark:text-[#FFFFFF] font-medium'
-                      : 'text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F7F7F5] dark:hover:bg-[#202026]'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
                   }`}
                 >
                   <span>How It Works</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#888888] dark:text-[#71717A]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
                 </button>
 
                 <button
@@ -337,34 +332,26 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleNavClick('faq')}
                   className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
                     currentPage === 'faq'
-                      ? 'bg-[#EBEBE8] dark:bg-[#26262D] text-[#111111] dark:text-[#FFFFFF] font-medium'
-                      : 'text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F7F7F5] dark:hover:bg-[#202026]'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
                   }`}
                 >
                   <span>FAQ</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#888888] dark:text-[#71717A]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
                 </button>
               </div>
 
-              {/* Mobile Theme Switch Row: Theme [Switch] */}
-              <div className="my-2 py-2 px-3 rounded-xl bg-[#F7F7F5] dark:bg-[#202026] border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
-                <span className="text-[13.5px] font-medium text-[#111111] dark:text-[#F4F4F6]">
-                  Theme
-                </span>
-                <ThemeSwitch id="mobile-nav-theme-switch" />
-              </div>
-
               {/* Actions: Login & Get Started */}
-              <div className="pt-2 border-t border-black/[0.06] dark:border-white/[0.08] flex flex-col gap-2">
+              <div className="pt-2 border-t border-black/[0.06] flex flex-col gap-2">
                 <button
                   id="mobile-nav-login-btn"
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenLogin();
                   }}
-                  className="w-full py-2.5 px-3 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE8] dark:bg-[#202026] dark:hover:bg-[#26262D] border border-black/[0.06] dark:border-white/[0.08] text-[#111111] dark:text-[#F4F4F6] text-[13.5px] font-medium text-center inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  className="w-full py-2.5 px-3 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE8] border border-black/[0.06] text-[#111111] text-[13.5px] font-medium text-center inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                 >
-                  <AccountIcon size={16} className="text-[#111111] dark:text-[#F4F4F6]" />
+                  <AccountIcon size={16} className="text-[#111111]" />
                   <span>Login</span>
                 </button>
                 <button
@@ -373,10 +360,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setMobileMenuOpen(false);
                     onOpenRegister();
                   }}
-                  className="w-full py-2.5 px-3 rounded-xl bg-[#111111] hover:bg-black dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-[#0E0E10] text-[13.5px] font-medium flex items-center justify-center gap-1.5 shadow-xs active:scale-[0.98] transition-all cursor-pointer"
+                  className="w-full py-2.5 px-3 rounded-xl bg-[#111111] hover:bg-black text-white text-[13.5px] font-medium flex items-center justify-center gap-1.5 shadow-xs active:scale-[0.98] transition-all cursor-pointer"
                 >
                   <span>Get Started</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-white dark:text-[#0E0E10]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-white" />
                 </button>
               </div>
             </motion.div>

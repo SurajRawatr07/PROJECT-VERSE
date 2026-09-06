@@ -42,7 +42,7 @@ export const ProblemSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: idx * 0.06 }}
-                className="card-white p-6 sm:p-7 flex flex-col justify-between group hover:border-black/15 transition-all duration-200"
+                className="bg-white rounded-2xl border border-black/8 shadow-xs p-6 sm:p-7 flex flex-col justify-between group hover:border-black/20 hover:-translate-y-1 transition-all duration-200"
               >
                 <div>
                   <div className="w-10 h-10 rounded-xl bg-[#F5F5F3] border border-black/6 flex items-center justify-center text-[#111111] mb-5 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-200">
