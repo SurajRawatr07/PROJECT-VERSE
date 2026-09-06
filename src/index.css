@@ -8,9 +8,9 @@
 
 @layer base {
   :root {
-    --font-times: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
-    --font-display: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
-    --font-body: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 
     /* ProjectVerse Strict Typography Tokens: 400 / 500 / 700 */
     --font-weight-heading: 700;
@@ -78,11 +78,11 @@
     scroll-behavior: smooth;
     background-color: var(--background);
     color: var(--foreground);
-    font-family: var(--font-times);
+    font-family: var(--font-body);
   }
 
   body {
-    font-family: var(--font-times);
+    font-family: var(--font-body);
     background-color: var(--background);
     color: var(--foreground);
     -webkit-font-smoothing: antialiased;
@@ -107,8 +107,8 @@
     transition: background-color 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out;
   }
 
-  button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, label {
-    font-family: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
+  button, input, select, textarea, p, span, a, label {
+    font-family: var(--font-body);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -116,22 +116,18 @@
   }
 }
 
-.font-display {
-  font-family: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
+.font-display, .font-serif {
+  font-family: var(--font-display);
   letter-spacing: -0.015em;
 }
 
-.font-body, .font-sans, .font-serif {
-  font-family: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
-}
-
-.font-nav {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+.font-body, .font-sans, .font-nav {
+  font-family: var(--font-body);
   letter-spacing: -0.01em;
 }
 
 .font-mono-code {
-  font-family: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
+  font-family: var(--font-mono);
   letter-spacing: 0.05em;
 }
 
