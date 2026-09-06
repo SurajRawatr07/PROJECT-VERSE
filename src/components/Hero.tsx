@@ -27,7 +27,7 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.05 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAFA] border border-black/8 shadow-xs mb-6 sm:mb-8"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAFA] border border-black/8 shadow-xs mb-6 sm:mb-8 font-sans"
         >
           <ProjectVerseLogo size={17} color="#111111" className="text-[#111111]" />
           <span className="text-[12px] uppercase tracking-widest text-[#4A4A4A] font-medium">
@@ -35,17 +35,17 @@ export const Hero: React.FC<HeroProps> = ({
           </span>
         </motion.div>
 
-        {/* Hero Heading: Paints immediately for optimal LCP */}
+        {/* Hero Heading: Paints immediately with Lemon Tuesday */}
         <h1
-          className="font-serif text-[32px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] text-[#111111] font-bold tracking-tight leading-[0.98] sm:leading-[1.02] md:leading-[1.04] max-w-xl sm:max-w-2xl uppercase"
+          className="font-display-heading text-[38px] xs:text-[44px] sm:text-[54px] md:text-[62px] lg:text-[70px] text-[#111111] font-normal tracking-normal leading-[1.08] sm:leading-[1.1] max-w-xl sm:max-w-2xl"
         >
-          YOUR PROJECT<br />
-          SHOULD GO FURTHER.
+          Your Project<br />
+          Should Go Further.
         </h1>
 
         {/* Supporting Text: Paints immediately */}
         <p
-          className="mt-5 sm:mt-6 text-[14.5px] sm:text-[15.5px] md:text-[16.5px] lg:text-[17px] text-[#4A4A4A] max-w-[560px] leading-relaxed tracking-wide"
+          className="mt-5 sm:mt-6 text-[14.5px] sm:text-[15.5px] md:text-[16.5px] lg:text-[17px] text-[#4A4A4A] max-w-[560px] leading-relaxed tracking-normal font-sans"
         >
           Discover projects, collaborate with the right people, get verified, and keep your work moving forward.
         </p>
@@ -55,12 +55,12 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.25 }}
-          className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
+          className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto font-sans"
         >
           <button
             id="hero-explore-btn"
             onClick={onExploreClick}
-            className="btn-secondary-white w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 cursor-pointer text-[15px] sm:text-[16px] font-medium group rounded-full shadow-xs hover:border-black/20 tracking-wide font-serif transition-all duration-200"
+            className="btn-secondary-white w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 cursor-pointer text-[14.5px] sm:text-[15.5px] font-medium group rounded-xl shadow-xs hover:border-black/20 tracking-normal font-sans transition-all duration-200"
           >
             <Compass className="w-4 h-4 text-[#111111] group-hover:rotate-45 transition-transform duration-300" />
             <span>Explore Projects</span>
@@ -69,7 +69,7 @@ export const Hero: React.FC<HeroProps> = ({
           <button
             id="hero-get-started-btn"
             onClick={onGetStartedClick}
-            className="btn-primary-black w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 cursor-pointer text-[15px] sm:text-[16px] font-medium rounded-full shadow-xs hover:shadow-sm tracking-wide font-serif transition-all duration-200 bg-[#111111] text-white hover:bg-black"
+            className="btn-primary-black w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 cursor-pointer text-[14.5px] sm:text-[15.5px] font-medium rounded-xl shadow-xs hover:shadow-sm tracking-normal font-sans transition-all duration-200 bg-[#111111] text-white hover:bg-black"
           >
             <span>Get Started</span>
             <ArrowRight className="w-4 h-4 text-white transition-colors duration-200" />
@@ -81,7 +81,7 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.35 }}
-          className="mt-10 sm:mt-12 flex items-center justify-center flex-wrap gap-2 text-[13px] sm:text-[14px] text-[#737373] tracking-wide"
+          className="mt-10 sm:mt-12 flex items-center justify-center flex-wrap gap-2 text-[13px] sm:text-[14px] text-[#737373] tracking-normal font-sans"
         >
           <span className="text-[#4A4A4A] font-medium">Students</span>
           <span className="text-black/20">•</span>

@@ -68,17 +68,22 @@ export const Navbar: React.FC<NavbarProps> = ({
         Zero vertical slide or downward translation on scroll.
         =========================================================================
       */}
-      <header className="fixed top-3 sm:top-4 left-0 right-0 z-50 flex items-center justify-center px-3 sm:px-4 pointer-events-none">
+      <header className="fixed top-3 sm:top-4 left-0 right-0 z-50 flex items-center justify-center px-3 sm:px-6 pointer-events-none">
         <motion.nav
           id="main-navbar"
-          layout
-          transition={{
-            layout: { type: 'spring', stiffness: 440, damping: 35 },
+          initial={false}
+          animate={{
+            scale: isScrolled ? 0.985 : 1,
+            y: 0,
           }}
-          className={`pointer-events-auto rounded-full bg-white/95 dark:bg-[#15151A]/92 backdrop-blur-md border border-black/[0.08] dark:border-white/[0.12] flex items-center justify-between transition-[padding,height,max-width,box-shadow,background-color,border-color] duration-220 ease-out select-none ${
+          transition={{
+            duration: 0.22,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className={`pointer-events-auto rounded-2xl bg-white/95 backdrop-blur-md border border-black/[0.08] flex items-center justify-between transition-[padding,height,max-width,box-shadow] duration-200 ease-out select-none ${
             isScrolled
-              ? 'w-full max-w-3xl lg:max-w-4xl h-[48px] px-3 sm:px-4 shadow-[0_4px_20px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
-              : 'w-full max-w-4xl lg:max-w-5xl h-[52px] sm:h-[56px] px-3.5 sm:px-5 shadow-[0_2px_12px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.3)]'
+              ? 'w-full max-w-3xl lg:max-w-4xl h-[48px] px-3.5 sm:px-4 shadow-[0_4px_20px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.02)]'
+              : 'w-full max-w-4xl lg:max-w-5xl h-[52px] sm:h-[54px] px-4 sm:px-5 shadow-[0_2px_12px_rgba(0,0,0,0.03),0_1px_2px_rgba(0,0,0,0.02)]'
           }`}
           aria-label="Main Navigation"
         >
@@ -89,12 +94,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-logo-btn"
               onClick={() => handleNavClick('home')}
-              className="group flex items-center gap-2 sm:gap-2.5 py-1 px-1 rounded-full hover:bg-black/[0.03] active:scale-[0.98] transition-all duration-180 focus:outline-none cursor-pointer shrink-0"
+              className="group flex items-center gap-2 sm:gap-2.5 py-1 px-1 rounded-xl hover:bg-black/[0.03] active:scale-[0.98] transition-all duration-180 focus:outline-none cursor-pointer shrink-0"
               aria-label="PROJECT VERSE Home"
               title="PROJECT VERSE"
             >
               {/* PV Compact Geometric Emblem (23px mobile / 25-26px desktop) */}
-              <div className="shrink-0 flex items-center justify-center transition-transform duration-220 ease-out group-hover:scale-[1.03]">
+              <div className="shrink-0 flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-[1.03]">
                 <div className="block sm:hidden">
                   <ProjectVerseLogo
                     size={23}
@@ -104,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
                 <div className="hidden sm:block">
                   <ProjectVerseLogo
-                    size={isScrolled ? 25 : 26}
+                    size={isScrolled ? 24 : 26}
                     color="#111111"
                     className="shrink-0 transition-all duration-200"
                   />
@@ -113,11 +118,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* PROJECT VERSE Wordmark (Two Separate Words in Instrument Serif) */}
               <div
-                className="flex items-baseline whitespace-nowrap leading-none font-brand text-[#111111] transition-[opacity,letter-spacing] duration-220 ease-out group-hover:opacity-90"
-                style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                className="flex items-baseline whitespace-nowrap leading-none text-[#111111] transition-[opacity] duration-200 ease-out group-hover:opacity-90 font-brand-wordmark"
               >
                 {/* PROJECT: slightly lighter, refined tracking */}
-                <span className="text-[16.5px] sm:text-[18px] md:text-[19px] font-normal tracking-[0.025em] inline-block opacity-90">
+                <span className="text-[16px] sm:text-[17.5px] md:text-[18.5px] font-normal tracking-[0.025em] inline-block opacity-85">
                   PROJECT
                 </span>
 
@@ -125,7 +129,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="inline-block w-[0.28em]" aria-hidden="true" />
 
                 {/* VERSE: slightly stronger visual presence, 100% opacity */}
-                <span className="text-[17.5px] sm:text-[19.5px] md:text-[20.5px] font-medium tracking-[0.012em] inline-block opacity-100">
+                <span className="text-[17px] sm:text-[19px] md:text-[20px] font-medium tracking-[0.012em] inline-block opacity-100">
                   VERSE
                 </span>
               </div>
@@ -135,16 +139,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* ========================================================================= */}
           {/* CENTER: Existing Desktop Nav Links [ Home, About, How It Works, FAQ ] */}
           {/* ========================================================================= */}
-          <div className="hidden md:flex items-center gap-1 font-nav">
+          <div className="hidden md:flex items-center gap-1 font-sans">
             <button
               id="nav-link-home"
               onClick={() => handleNavClick('home')}
               onMouseEnter={() => prefetchView('home')}
               onFocus={() => prefetchView('home')}
-              className={`text-[13.5px] lg:text-[14px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-180 ${
+              className={`text-[13.5px] leading-none px-3.5 py-1.5 rounded-xl cursor-pointer select-none transition-all duration-180 ${
                 currentPage === 'home'
-                  ? 'text-[#111111] dark:text-[#FFFFFF] bg-[#EBEBE8] dark:bg-[#26262D] font-medium shadow-2xs'
-                  : 'text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F4F4F2] dark:hover:bg-[#202026]'
+                  ? 'text-[#111111] bg-[#EBEBE8] font-medium shadow-2xs'
+                  : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F4F4F2]'
               }`}
             >
               Home
@@ -155,10 +159,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => handleNavClick('about')}
               onMouseEnter={() => prefetchView('about')}
               onFocus={() => prefetchView('about')}
-              className={`text-[13.5px] lg:text-[14px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-180 ${
+              className={`text-[13.5px] leading-none px-3.5 py-1.5 rounded-xl cursor-pointer select-none transition-all duration-180 ${
                 currentPage === 'about'
-                  ? 'text-[#111111] dark:text-[#FFFFFF] bg-[#EBEBE8] dark:bg-[#26262D] font-medium shadow-2xs'
-                  : 'text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F4F4F2] dark:hover:bg-[#202026]'
+                  ? 'text-[#111111] bg-[#EBEBE8] font-medium shadow-2xs'
+                  : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F4F4F2]'
               }`}
             >
               About
@@ -169,10 +173,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => handleNavClick('how-it-works')}
               onMouseEnter={() => prefetchView('how-it-works')}
               onFocus={() => prefetchView('how-it-works')}
-              className={`text-[13.5px] lg:text-[14px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-180 ${
+              className={`text-[13.5px] leading-none px-3.5 py-1.5 rounded-xl cursor-pointer select-none transition-all duration-180 ${
                 currentPage === 'how-it-works'
-                  ? 'text-[#111111] dark:text-[#FFFFFF] bg-[#EBEBE8] dark:bg-[#26262D] font-medium shadow-2xs'
-                  : 'text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F4F4F2] dark:hover:bg-[#202026]'
+                  ? 'text-[#111111] bg-[#EBEBE8] font-medium shadow-2xs'
+                  : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F4F4F2]'
               }`}
             >
               How It Works
@@ -183,10 +187,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => handleNavClick('faq')}
               onMouseEnter={() => prefetchView('faq')}
               onFocus={() => prefetchView('faq')}
-              className={`text-[13.5px] lg:text-[14px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-180 ${
+              className={`text-[13.5px] leading-none px-3.5 py-1.5 rounded-xl cursor-pointer select-none transition-all duration-180 ${
                 currentPage === 'faq'
-                  ? 'text-[#111111] dark:text-[#FFFFFF] bg-[#EBEBE8] dark:bg-[#26262D] font-medium shadow-2xs'
-                  : 'text-[#4E4E4E] dark:text-[#A1A1AA] hover:text-[#111111] dark:hover:text-[#FFFFFF] hover:bg-[#F4F4F2] dark:hover:bg-[#202026]'
+                  ? 'text-[#111111] bg-[#EBEBE8] font-medium shadow-2xs'
+                  : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F4F4F2]'
               }`}
             >
               FAQ
@@ -196,11 +200,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* ========================================================================= */}
           {/* RIGHT: Actions [ Login, Get Started ] */}
           {/* ========================================================================= */}
-          <div className="hidden md:flex items-center gap-2 font-nav">
+          <div className="hidden md:flex items-center gap-2 font-sans">
             <button
               id="nav-login-btn"
               onClick={onOpenLogin}
-              className="text-[13.5px] lg:text-[14px] font-normal leading-none text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F4F4F2] px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 transition-all duration-180 cursor-pointer select-none"
+              className="text-[13.5px] font-normal leading-none text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F4F4F2] px-3 py-1.5 rounded-xl inline-flex items-center gap-1.5 transition-all duration-180 cursor-pointer select-none"
             >
               <AccountIcon size={15} className="text-[#4E4E4E]" />
               <span>Login</span>
@@ -209,7 +213,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-get-started-btn"
               onClick={onOpenRegister}
-              className="bg-[#111111] hover:bg-black text-white text-[13px] lg:text-[13.5px] font-medium tracking-wide leading-none px-4 py-1.5 rounded-full shadow-xs hover:shadow-sm active:scale-95 transition-all duration-180 inline-flex items-center gap-1.5 cursor-pointer select-none font-nav"
+              className="bg-[#111111] hover:bg-black text-white text-[13px] font-medium tracking-wide leading-none px-4 py-2 rounded-xl shadow-2xs hover:shadow-xs active:scale-95 transition-all duration-180 inline-flex items-center gap-1.5 cursor-pointer select-none font-sans"
             >
               <span>Get Started</span>
               <ArrowRight className="w-3.5 h-3.5 text-white/90" />
@@ -219,11 +223,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* ========================================================================= */}
           {/* MOBILE: [ MENU ] Pill Button (Compact, minimal, responsive 320px-768px) */}
           {/* ========================================================================= */}
-          <div className="flex md:hidden items-center shrink-0 font-nav">
+          <div className="flex md:hidden items-center shrink-0 font-sans">
             <button
               id="nav-mobile-toggle-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="px-2.5 py-1 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] border border-black/[0.06] flex items-center gap-1 text-[#111111] focus:outline-none cursor-pointer text-xs font-nav font-medium transition-colors duration-150"
+              className="px-3 py-1.5 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] border border-black/[0.06] flex items-center gap-1.5 text-[#111111] focus:outline-none cursor-pointer text-xs font-medium transition-colors duration-150"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -262,24 +266,21 @@ export const Navbar: React.FC<NavbarProps> = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed top-16 inset-x-3 sm:inset-x-4 max-w-sm mx-auto z-50 bg-white/98 backdrop-blur-xl border border-black/[0.08] rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] md:hidden flex flex-col font-nav"
+              className="fixed top-16 inset-x-3 sm:inset-x-4 max-w-sm mx-auto z-50 bg-white border border-black/[0.08] rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] md:hidden flex flex-col font-sans"
             >
               {/* Header inside drawer */}
               <div className="flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06]">
                 <div className="flex items-center gap-2">
                   <ProjectVerseLogo size={23} color="#111111" />
-                  <div
-                    className="flex items-baseline leading-none font-brand text-[#111111]"
-                    style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-                  >
-                    <span className="text-[16.5px] font-normal tracking-[0.025em] opacity-90">PROJECT</span>
+                  <div className="flex items-baseline leading-none text-[#111111] font-brand-wordmark">
+                    <span className="text-[16px] font-normal tracking-[0.025em] opacity-85">PROJECT</span>
                     <span className="inline-block w-[0.28em]" aria-hidden="true" />
-                    <span className="text-[17.5px] font-medium tracking-[0.012em] opacity-100">VERSE</span>
+                    <span className="text-[17px] font-medium tracking-[0.012em] opacity-100">VERSE</span>
                   </div>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-7 h-7 rounded-full bg-[#F5F5F3] hover:bg-[#EBEBE8] flex items-center justify-center text-[#111111] transition-colors cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] flex items-center justify-center text-[#111111] transition-colors cursor-pointer"
                   aria-label="Close menu"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -291,7 +292,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   id="mobile-nav-home"
                   onClick={() => handleNavClick('home')}
-                  className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                  className={`flex items-center justify-between text-left min-h-[44px] py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
                     currentPage === 'home'
                       ? 'bg-[#EBEBE8] text-[#111111] font-medium'
                       : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
@@ -304,7 +305,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   id="mobile-nav-about"
                   onClick={() => handleNavClick('about')}
-                  className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                  className={`flex items-center justify-between text-left min-h-[44px] py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
                     currentPage === 'about'
                       ? 'bg-[#EBEBE8] text-[#111111] font-medium'
                       : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
@@ -317,7 +318,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   id="mobile-nav-how-it-works"
                   onClick={() => handleNavClick('how-it-works')}
-                  className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                  className={`flex items-center justify-between text-left min-h-[44px] py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
                     currentPage === 'how-it-works'
                       ? 'bg-[#EBEBE8] text-[#111111] font-medium'
                       : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
@@ -330,7 +331,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   id="mobile-nav-faq"
                   onClick={() => handleNavClick('faq')}
-                  className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                  className={`flex items-center justify-between text-left min-h-[44px] py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
                     currentPage === 'faq'
                       ? 'bg-[#EBEBE8] text-[#111111] font-medium'
                       : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
@@ -349,7 +350,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setMobileMenuOpen(false);
                     onOpenLogin();
                   }}
-                  className="w-full py-2.5 px-3 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE8] border border-black/[0.06] text-[#111111] text-[13.5px] font-medium text-center inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  className="w-full min-h-[44px] py-2.5 px-3 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE8] border border-black/[0.06] text-[#111111] text-[13.5px] font-medium text-center inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <AccountIcon size={16} className="text-[#111111]" />
                   <span>Login</span>
@@ -360,7 +361,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setMobileMenuOpen(false);
                     onOpenRegister();
                   }}
-                  className="w-full py-2.5 px-3 rounded-xl bg-[#111111] hover:bg-black text-white text-[13.5px] font-medium flex items-center justify-center gap-1.5 shadow-xs active:scale-[0.98] transition-all cursor-pointer"
+                  className="w-full min-h-[44px] py-2.5 px-3 rounded-xl bg-[#111111] hover:bg-black text-white text-[13.5px] font-medium flex items-center justify-center gap-1.5 shadow-2xs active:scale-[0.98] transition-all cursor-pointer"
                 >
                   <span>Get Started</span>
                   <ArrowRight className="w-3.5 h-3.5 text-white" />

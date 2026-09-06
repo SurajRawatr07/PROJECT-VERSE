@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Lemon Tuesday';
+  src: url('/fonts/LemonTuesday.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -9,6 +17,7 @@
 @layer base {
   :root {
     --font-display: 'Instrument Serif', Georgia, serif;
+    --font-heading: 'Lemon Tuesday', 'Instrument Serif', Georgia, serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 
@@ -459,6 +468,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 
 /* Accessibility: Reduced motion */
+.font-display-heading {
+  font-family: 'Lemon Tuesday', 'Instrument Serif', Georgia, serif;
+}
+
+.font-brand-wordmark {
+  font-family: 'Instrument Serif', Georgia, serif;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

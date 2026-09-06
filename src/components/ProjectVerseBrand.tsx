@@ -43,10 +43,8 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
   const isDarkForced = theme === 'dark';
   const textColor = isDarkForced
     ? 'text-white'
-    : theme === 'light'
-    ? 'text-[#0F172A] dark:text-[#F4F4F6]'
-    : 'text-[#0F172A] dark:text-[#F4F4F6]';
-  const logoColor = isDarkForced ? '#FFFFFF' : undefined;
+    : 'text-[#111111]';
+  const logoColor = isDarkForced ? '#FFFFFF' : '#111111';
   const accentColor = isDarkForced ? '#60A5FA' : '#2563EB';
 
   const showWordmark = !collapsed && variant !== 'logo-only';
@@ -88,15 +86,14 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
       {/* 2. Editorial Wordmark: PROJECT VERSE (Strictly Two Words in Instrument Serif) */}
       {showWordmark && (
         <div
-          className={`flex items-baseline leading-none font-brand ${textColor} ${
-            textSizeClassName || 'text-[17px] sm:text-[18.5px] md:text-[20px]'
+          className={`flex items-baseline leading-none font-brand-wordmark ${textColor} ${
+            textSizeClassName || 'text-[16.5px] sm:text-[18px] md:text-[19.5px]'
           } transition-[letter-spacing,opacity] duration-220 ease-out ${
             interactive ? 'group-hover:opacity-90' : ''
           }`}
-          style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
         >
           {/* PROJECT: slightly lighter, refined tracking */}
-          <span className="text-[0.92em] tracking-[0.025em] inline-block font-normal opacity-90">
+          <span className="text-[0.92em] tracking-[0.025em] inline-block font-normal opacity-85">
             PROJECT
           </span>
 

@@ -46,18 +46,18 @@ export const CoreInnovationsSection: React.FC = () => {
   return (
     <section 
       id="project-infrastructure" 
-      className="relative w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F7F7F5] border-t border-black/8 font-serif"
+      className="relative w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F7F7F5] border-t border-black/8 font-sans"
     >
       <div className="max-w-5xl mx-auto">
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] text-[#737373] font-bold block mb-2">
+          <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] text-[#737373] font-bold block mb-2 font-sans">
             PROJECT INFRASTRUCTURE
           </span>
-          <h2 className="text-[26px] sm:text-[32px] md:text-[38px] text-[#111111] font-bold tracking-tight uppercase">
+          <h2 className="text-[30px] sm:text-[38px] md:text-[44px] text-[#111111] font-normal font-display-heading tracking-normal leading-[1.1]">
             Built for Project Success
           </h2>
-          <p className="text-[14px] sm:text-[15px] text-[#4A4A4A] mt-2 leading-relaxed">
+          <p className="text-[14px] sm:text-[15px] text-[#4A4A4A] mt-2 leading-relaxed font-sans">
             Six dedicated project mechanisms designed to keep academic work active, verified, and accessible.
           </p>
         </div>

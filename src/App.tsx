@@ -3,8 +3,6 @@ import { Navbar, PublicPage } from './components/Navbar';
 import { SplashIntro } from './components/SplashIntro';
 import { Hero } from './components/Hero';
 import { CrossCampusNetworkSection } from './components/CrossCampusNetworkSection';
-import { ProblemSection } from './components/ProblemSection';
-import { ApproachFlowSection } from './components/ApproachFlowSection';
 import { CoreInnovationsSection } from './components/CoreInnovationsSection';
 import { Footer } from './components/Footer';
 
@@ -188,13 +186,7 @@ export default function App() {
           {/* Section 2: Cross-College / Cross-University Section ("ONE PROJECT. MANY CAMPUSES.") */}
           <CrossCampusNetworkSection />
 
-          {/* Section 3: Problem Section ("Why ProjectVerse?") */}
-          <ProblemSection />
-
-          {/* Section 4: Approach Flow Section ("From Idea to Impact.") */}
-          <ApproachFlowSection />
-
-          {/* Section 5: Recreated Platform Capabilities with 6 Cards ("Built for Project Success") */}
+          {/* Section 3: Recreated Platform Capabilities with 6 Cards ("Built for Project Success") */}
           <CoreInnovationsSection />
         </main>
       )}
