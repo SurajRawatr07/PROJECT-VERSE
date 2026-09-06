@@ -44,16 +44,16 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
           <div className="lg:col-span-4 flex flex-col items-start space-y-4">
             {/* Approved ProjectVerse Branding */}
             <div className="flex items-center gap-2.5">
-              <ProjectVerseLogo size={26} color="#111111" />
+              <ProjectVerseLogo size={24} color="#111111" />
               <div
-                className="flex items-baseline leading-none font-brand text-[#111111] dark:text-[#F4F4F6]"
+                className="flex items-baseline leading-none font-brand text-[#111111]"
                 style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
               >
-                <span className="text-[19px] sm:text-[20.5px] font-normal tracking-[0.025em] opacity-90">
+                <span className="text-[17.5px] sm:text-[19px] font-normal tracking-[0.025em] opacity-90">
                   PROJECT
                 </span>
-                <span className="inline-block w-[0.3em]" aria-hidden="true" />
-                <span className="text-[20.5px] sm:text-[22px] font-medium tracking-[0.012em] opacity-100">
+                <span className="inline-block w-[0.28em]" aria-hidden="true" />
+                <span className="text-[18.5px] sm:text-[20.5px] font-medium tracking-[0.012em] opacity-100">
                   VERSE
                 </span>
               </div>

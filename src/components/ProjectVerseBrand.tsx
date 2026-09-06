@@ -61,10 +61,10 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
       {/* 1. Distinctive Geometric ProjectVerse Symbol */}
       {showLogo && (
         <div className={`shrink-0 flex items-center justify-center ${collapsed ? 'mx-auto' : ''}`}>
-          {/* Responsive sizing: 26px on mobile, 30px on desktop if not explicitly passed */}
+          {/* Responsive sizing: 23px on mobile, 26px on desktop if not explicitly passed */}
           <div className="block sm:hidden">
             <ProjectVerseLogo
-              size={logoSize || 26}
+              size={logoSize || 23}
               color={logoColor}
               accentColor={accentColor}
               className={`transition-transform duration-220 ease-out ${
@@ -74,7 +74,7 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
           </div>
           <div className="hidden sm:block">
             <ProjectVerseLogo
-              size={logoSize || 30}
+              size={logoSize || 26}
               color={logoColor}
               accentColor={accentColor}
               className={`transition-transform duration-220 ease-out ${
@@ -89,7 +89,7 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
       {showWordmark && (
         <div
           className={`flex items-baseline leading-none font-brand ${textColor} ${
-            textSizeClassName || 'text-[19px] sm:text-[21px] md:text-[22px]'
+            textSizeClassName || 'text-[17px] sm:text-[18.5px] md:text-[20px]'
           } transition-[letter-spacing,opacity] duration-220 ease-out ${
             interactive ? 'group-hover:opacity-90' : ''
           }`}
@@ -102,7 +102,7 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
 
           {/* Intentional space gap between PROJECT and VERSE */}
           <span
-            className="inline-block w-[0.32em]"
+            className="inline-block w-[0.28em]"
             aria-hidden="true"
           />
 

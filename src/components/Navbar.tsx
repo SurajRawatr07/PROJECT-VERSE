@@ -89,22 +89,22 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-logo-btn"
               onClick={() => handleNavClick('home')}
-              className="group flex items-center gap-2 sm:gap-2.5 py-1 px-1 rounded-full hover:bg-black/[0.03] dark:hover:bg-white/[0.06] active:scale-[0.98] transition-all duration-180 focus:outline-none cursor-pointer shrink-0"
+              className="group flex items-center gap-2 sm:gap-2.5 py-1 px-1 rounded-full hover:bg-black/[0.03] active:scale-[0.98] transition-all duration-180 focus:outline-none cursor-pointer shrink-0"
               aria-label="PROJECT VERSE Home"
               title="PROJECT VERSE"
             >
-              {/* PV Compact Geometric Emblem (26px mobile / 28-30px desktop) */}
+              {/* PV Compact Geometric Emblem (23px mobile / 25-26px desktop) */}
               <div className="shrink-0 flex items-center justify-center transition-transform duration-220 ease-out group-hover:scale-[1.03]">
                 <div className="block sm:hidden">
                   <ProjectVerseLogo
-                    size={26}
+                    size={23}
                     color="#111111"
                     className="shrink-0"
                   />
                 </div>
                 <div className="hidden sm:block">
                   <ProjectVerseLogo
-                    size={isScrolled ? 28 : 30}
+                    size={isScrolled ? 25 : 26}
                     color="#111111"
                     className="shrink-0 transition-all duration-200"
                   />
@@ -113,19 +113,19 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* PROJECT VERSE Wordmark (Two Separate Words in Instrument Serif) */}
               <div
-                className="flex items-baseline whitespace-nowrap leading-none font-brand text-[#111111] dark:text-[#F4F4F6] transition-[opacity,letter-spacing] duration-220 ease-out group-hover:opacity-90"
+                className="flex items-baseline whitespace-nowrap leading-none font-brand text-[#111111] transition-[opacity,letter-spacing] duration-220 ease-out group-hover:opacity-90"
                 style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
               >
                 {/* PROJECT: slightly lighter, refined tracking */}
-                <span className="text-[17.5px] sm:text-[19px] md:text-[20.5px] font-normal tracking-[0.025em] inline-block opacity-90">
+                <span className="text-[16.5px] sm:text-[18px] md:text-[19px] font-normal tracking-[0.025em] inline-block opacity-90">
                   PROJECT
                 </span>
 
                 {/* Calibrated single space between PROJECT and VERSE */}
-                <span className="inline-block w-[0.32em]" aria-hidden="true" />
+                <span className="inline-block w-[0.28em]" aria-hidden="true" />
 
                 {/* VERSE: slightly stronger visual presence, 100% opacity */}
-                <span className="text-[19px] sm:text-[20.5px] md:text-[22px] font-medium tracking-[0.012em] inline-block opacity-100">
+                <span className="text-[17.5px] sm:text-[19.5px] md:text-[20.5px] font-medium tracking-[0.012em] inline-block opacity-100">
                   VERSE
                 </span>
               </div>
@@ -267,14 +267,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Header inside drawer */}
               <div className="flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06]">
                 <div className="flex items-center gap-2">
-                  <ProjectVerseLogo size={26} color="#111111" />
+                  <ProjectVerseLogo size={23} color="#111111" />
                   <div
                     className="flex items-baseline leading-none font-brand text-[#111111]"
                     style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
                   >
-                    <span className="text-[17.5px] font-normal tracking-[0.025em] opacity-90">PROJECT</span>
-                    <span className="inline-block w-[0.3em]" aria-hidden="true" />
-                    <span className="text-[19px] font-medium tracking-[0.012em] opacity-100">VERSE</span>
+                    <span className="text-[16.5px] font-normal tracking-[0.025em] opacity-90">PROJECT</span>
+                    <span className="inline-block w-[0.28em]" aria-hidden="true" />
+                    <span className="text-[17.5px] font-medium tracking-[0.012em] opacity-100">VERSE</span>
                   </div>
                 </div>
                 <button
