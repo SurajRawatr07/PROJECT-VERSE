@@ -5,7 +5,6 @@ import { Hero } from './components/Hero';
 import { HowProjectVerseWorksSection } from './components/HowProjectVerseWorksSection';
 import { CoreInnovationsSection } from './components/CoreInnovationsSection';
 import { TrustSection } from './components/TrustSection';
-import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 
 // Dedicated Separate Pages
@@ -196,12 +195,6 @@ export default function App() {
 
           {/* Section 4: Trust & Verification */}
           <TrustSection />
-
-          {/* Section 5: Final Ready To Begin? CTA */}
-          <CTASection
-            onGetStartedClick={handleOpenRegister}
-            onExploreProjectsClick={() => handleSelectPage('how-it-works')}
-          />
         </main>
       )}
 

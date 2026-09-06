@@ -4,7 +4,7 @@ import { GitBranch, UserCheck, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const TrustSection: React.FC = () => {
   return (
-    <section id="trust" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#FFFFFF] border-t border-black/8 font-serif">
+    <section id="trust" className="relative w-full pt-16 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 bg-[#FFFFFF] border-t border-black/8 font-serif">
       <div className="max-w-4xl mx-auto text-center">
         {/* Section Heading */}
         <span className="text-[12px] uppercase tracking-widest text-[#737373] font-medium">
