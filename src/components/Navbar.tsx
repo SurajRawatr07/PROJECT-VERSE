@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { ProjectVerseLogo } from './ProjectVerseLogo';
 import { ProjectVerseBrand } from './ProjectVerseBrand';
 import { AccountIcon } from './icons/AccountIcon';
 import { prefetchView } from '../lib/prefetchService';
-import { BottomNavBar } from './BottomNavBar';
 
 export type PublicPage = 'home' | 'about' | 'how-it-works' | 'faq';
 
 // Re-export ProjectVerseLogo & ProjectVerseBrand for seamless application-wide access
-export { ProjectVerseLogo, ProjectVerseBrand, BottomNavBar };
+export { ProjectVerseLogo, ProjectVerseBrand };
 
 interface NavbarProps {
   currentPage: PublicPage;
@@ -26,6 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenRegister,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Monitor scroll position with high performance passive listener
   useEffect(() => {
@@ -42,8 +42,20 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent background scrolling while mobile navigation panel is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [mobileMenuOpen]);
+
   const handleNavClick = (page: PublicPage) => {
     onSelectPage(page);
+    setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -209,35 +221,156 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* ========================================================================= */}
-          {/* MOBILE TOP ACTIONS: [ Login, Get Started ] (320px - 768px) */}
+          {/* MOBILE: [ MENU ] Pill Button (Compact, minimal, responsive 320px-768px) */}
           {/* ========================================================================= */}
-          <div className="flex md:hidden items-center gap-1.5 font-sans shrink-0">
+          <div className="flex md:hidden items-center shrink-0 font-sans">
             <button
-              id="nav-mobile-login-btn"
-              onClick={onOpenLogin}
-              className="text-[12px] sm:text-[12.5px] font-normal leading-none text-[#4E4E4E] hover:text-[#111111] px-2 sm:px-2.5 py-1.5 rounded-xl transition-colors cursor-pointer select-none"
+              id="nav-mobile-toggle-btn"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="px-3 py-1.5 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] border border-black/[0.06] flex items-center gap-1.5 text-[#111111] focus:outline-none cursor-pointer text-xs font-medium transition-colors duration-150"
+              aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
             >
-              Login
-            </button>
-            <button
-              id="nav-mobile-get-started-btn"
-              onClick={onOpenRegister}
-              className="bg-[#111111] hover:bg-black text-white text-[11.5px] sm:text-[12px] font-medium leading-none px-2.5 sm:px-3 py-1.5 rounded-xl shadow-2xs active:scale-95 transition-all cursor-pointer select-none font-sans"
-            >
-              Get Started
+              <span>{mobileMenuOpen ? 'Close' : 'Menu'}</span>
+              {mobileMenuOpen ? (
+                <X className="w-3.5 h-3.5 text-[#111111]" />
+              ) : (
+                <Menu className="w-3.5 h-3.5 text-[#111111]" />
+              )}
             </button>
           </div>
         </motion.nav>
       </header>
 
       {/* ========================================================================= */}
-      {/* ANIMATED MOBILE / TABLET BOTTOM NAVIGATION */}
-      {/* Floating pill with active tab expanding animation (inspired by 21st.dev) */}
+      {/* MOBILE NAVIGATION OVERLAY & FLOATING PANEL */}
+      {/* Preserves identical links & actions, smooth animation, zero overflow */}
       {/* ========================================================================= */}
-      <BottomNavBar
-        currentPage={currentPage}
-        onSelectPage={onSelectPage}
-      />
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            {/* Soft Ambient Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 z-40 bg-black/25 backdrop-blur-xs md:hidden"
+              aria-hidden="true"
+            />
+
+            {/* Floating Navigation Card directly under the navbar */}
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed top-16 inset-x-3 sm:inset-x-4 max-w-sm mx-auto z-50 bg-white border border-black/[0.08] rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.12)] md:hidden flex flex-col font-sans"
+            >
+              {/* Header inside drawer */}
+              <div className="flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06]">
+                <div className="flex items-center gap-2">
+                  <ProjectVerseLogo size={23} color="#111111" />
+                  <div className="flex items-baseline leading-none text-[#111111] font-brand-wordmark">
+                    <span className="text-[16px] font-normal tracking-[0.025em] opacity-85">PROJECT</span>
+                    <span className="inline-block w-[0.28em]" aria-hidden="true" />
+                    <span className="text-[17px] font-medium tracking-[0.012em] opacity-100">VERSE</span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-8 h-8 rounded-xl bg-[#F5F5F3] hover:bg-[#EBEBE8] flex items-center justify-center text-[#111111] transition-colors cursor-pointer"
+                  aria-label="Close menu"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Navigation Links: Home, About, How It Works, FAQ */}
+              <div className="flex flex-col space-y-1 my-1">
+                <button
+                  id="mobile-nav-home"
+                  onClick={() => handleNavClick('home')}
+                  className={`flex items-center justify-between text-left min-h-[44px] py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                    currentPage === 'home'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
+                  }`}
+                >
+                  <span>Home</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
+                </button>
+
+                <button
+                  id="mobile-nav-about"
+                  onClick={() => handleNavClick('about')}
+                  className={`flex items-center justify-between text-left min-h-[44px] py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                    currentPage === 'about'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
+                  }`}
+                >
+                  <span>About</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
+                </button>
+
+                <button
+                  id="mobile-nav-how-it-works"
+                  onClick={() => handleNavClick('how-it-works')}
+                  className={`flex items-center justify-between text-left min-h-[44px] py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                    currentPage === 'how-it-works'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
+                  }`}
+                >
+                  <span>How It Works</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
+                </button>
+
+                <button
+                  id="mobile-nav-faq"
+                  onClick={() => handleNavClick('faq')}
+                  className={`flex items-center justify-between text-left min-h-[44px] py-2.5 px-3 rounded-xl text-[14px] transition-all cursor-pointer ${
+                    currentPage === 'faq'
+                      ? 'bg-[#EBEBE8] text-[#111111] font-medium'
+                      : 'text-[#4E4E4E] hover:text-[#111111] hover:bg-[#F7F7F5]'
+                  }`}
+                >
+                  <span>FAQ</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#888888]" />
+                </button>
+              </div>
+
+              {/* Actions: Login & Get Started */}
+              <div className="pt-2 border-t border-black/[0.06] flex flex-col gap-2">
+                <button
+                  id="mobile-nav-login-btn"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenLogin();
+                  }}
+                  className="w-full min-h-[44px] py-2.5 px-3 rounded-xl bg-[#F7F7F5] hover:bg-[#ECECE8] border border-black/[0.06] text-[#111111] text-[13.5px] font-medium text-center inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <AccountIcon size={16} className="text-[#111111]" />
+                  <span>Login</span>
+                </button>
+                <button
+                  id="mobile-nav-signup-btn"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenRegister();
+                  }}
+                  className="w-full min-h-[44px] py-2.5 px-3 rounded-xl bg-[#111111] hover:bg-black text-white text-[13.5px] font-medium flex items-center justify-center gap-1.5 shadow-2xs active:scale-[0.98] transition-all cursor-pointer"
+                >
+                  <span>Get Started</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-white" />
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };
