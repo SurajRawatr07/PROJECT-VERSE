@@ -39,8 +39,8 @@ export const Hero: React.FC<HeroProps> = ({
         <h1
           className="font-display-heading text-[38px] xs:text-[44px] sm:text-[54px] md:text-[62px] lg:text-[70px] text-[#111111] font-normal tracking-normal leading-[1.08] sm:leading-[1.1] max-w-xl sm:max-w-2xl"
         >
-          Your Project<br />
-          Should Go Further.
+          Give Every Project<br />
+          a Future.
         </h1>
 
         {/* Supporting Text: Paints immediately */}

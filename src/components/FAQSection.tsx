@@ -89,15 +89,9 @@ export const FAQSection: React.FC = () => {
     <section id="faq" className="relative w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#F7F7F5] dark:bg-[#141417] border-t border-black/8 dark:border-white/10 font-serif transition-colors duration-200">
       <div className="max-w-4xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] text-[#737373] dark:text-[#A1A1AA] font-bold block mb-2">
-            FREQUENTLY ASKED QUESTIONS
-          </span>
           <h2 className="text-[26px] sm:text-[32px] md:text-[38px] text-[#111111] dark:text-[#F4F4F6] font-bold tracking-tight uppercase">
-            Clarity on Academic Continuity
+            FREQUENTLY ASKED QUESTIONS
           </h2>
-          <p className="text-[14px] sm:text-[15px] font-normal text-[#4A4A4A] dark:text-[#A1A1AA] mt-2">
-            Direct answers regarding project verification, passports, lineage, and institutional roles.
-          </p>
         </div>
 
         <div className="space-y-3 max-w-3xl mx-auto">

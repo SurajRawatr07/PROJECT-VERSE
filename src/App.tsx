@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, PublicPage } from './components/Navbar';
-import { SplashIntro } from './components/SplashIntro';
 import { Hero } from './components/Hero';
 import { CrossCampusNetworkSection } from './components/CrossCampusNetworkSection';
 import { CoreInnovationsSection } from './components/CoreInnovationsSection';
@@ -47,13 +46,6 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [isProofOfWorkOpen, setIsProofOfWorkOpen] = useState(false);
-
-  // Splash intro state (shows when website opens, exactly 3 seconds)
-  const [showSplash, setShowSplash] = useState<boolean>(true);
-
-  const handleSplashComplete = () => {
-    setShowSplash(false);
-  };
 
   // Check existing session on mount
   useEffect(() => {
@@ -163,9 +155,6 @@ export default function App() {
   // Public Website: Home, About, or How It Works
   return (
     <div className="min-h-screen bg-white dark:bg-[#0E0E10] text-[#111111] dark:text-[#F4F4F6] font-body relative overflow-x-hidden transition-colors duration-200">
-      {/* Brand Introduction Splash Sequence */}
-      {showSplash && <SplashIntro onComplete={handleSplashComplete} />}
-
       {/* Floating Navbar */}
       <Navbar
         currentPage={currentPage}

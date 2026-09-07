@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectPage }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.35, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className="w-full bg-white dark:bg-[#121216] border-t border-black/[0.08] dark:border-white/[0.08] pt-14 sm:pt-16 md:pt-20 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-8 text-[#111111] dark:text-[#F4F4F6] font-serif transition-colors duration-200"
+      className="w-full bg-white dark:bg-[#121216] border-t border-black/[0.08] dark:border-white/[0.08] pt-14 sm:pt-16 md:pt-20 pb-20 sm:pb-24 md:pb-12 px-4 sm:px-6 lg:px-8 text-[#111111] dark:text-[#F4F4F6] font-serif transition-colors duration-200"
       aria-label="Site Footer"
     >
       <div className="max-w-7xl mx-auto">

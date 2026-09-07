@@ -251,28 +251,10 @@ export const FAQView: React.FC<FAQViewProps> = () => {
       <div className="max-w-4xl mx-auto">
         {/* Page Header Area */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          {/* Subtle Category Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAFA] border border-black/8 shadow-xs mb-5">
-            <ProjectVerseLogo size={15} color="#111111" />
-            <span className="text-[11px] sm:text-[12px] uppercase tracking-widest text-[#4A4A4A] font-medium font-sans">
-              Academic Continuity & Verification
-            </span>
-          </div>
-
           {/* Primary Page Heading */}
           <h1 className="text-[28px] sm:text-[36px] md:text-[42px] text-[#111111] font-bold tracking-tight uppercase leading-tight">
             FREQUENTLY ASKED QUESTIONS
           </h1>
-
-          {/* Subheading */}
-          <h2 className="text-[17px] sm:text-[19px] md:text-[21px] text-[#222222] font-medium mt-3">
-            Clarity on Academic Continuity
-          </h2>
-
-          {/* Supporting Text */}
-          <p className="mt-3 text-[14px] sm:text-[15.5px] text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal font-sans">
-            Direct answers regarding project verification, Project Passports, Project Lineage, collaboration, AI matching, and institutional roles.
-          </p>
         </div>
 
         {/* Categories & Accordion List */}

@@ -68,29 +68,11 @@ export const HowItWorksView: React.FC<HowItWorksViewProps> = () => {
       <div className="max-w-4xl mx-auto">
         {/* ONE Clear Heading & Short Description */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAFA] border border-black/8 shadow-xs mb-6"
-          >
-            <ProjectVerseLogo size={16} color="#111111" />
-            <span className="text-[12px] uppercase tracking-widest text-[#4A4A4A] font-medium">
-              Academic Projects • Connected People • Continuous Progress
-            </span>
-          </motion.div>
-
           <h1 
             className="text-[32px] sm:text-[38px] md:text-[44px] text-[#111111] font-bold tracking-tight uppercase"
           >
             How ProjectVerse Works
           </h1>
-
-          <p 
-            className="mt-4 text-[15px] sm:text-[16px] md:text-[17px] text-[#4A4A4A] leading-relaxed tracking-wide"
-          >
-            A connected six-stage academic journey from student onboarding to continuous multi-batch project evolution.
-          </p>
         </div>
 
         {/* 6 Clean Steps in Sequential Flow */}

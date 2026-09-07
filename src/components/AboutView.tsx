@@ -57,18 +57,6 @@ export const AboutView: React.FC<AboutViewProps> = ({
       <div className="max-w-4xl mx-auto">
         {/* ONE Clear Heading & Short Description */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAFAFA] border border-black/8 shadow-xs mb-6"
-          >
-            <ProjectVerseLogo size={16} color="#111111" />
-            <span className="text-[12px] uppercase tracking-widest text-[#4A4A4A] font-medium">
-              Academic Projects • Connected People • Continuous Progress
-            </span>
-          </motion.div>
-
           <h1 
             className="text-[32px] sm:text-[38px] md:text-[44px] text-[#111111] font-bold tracking-tight uppercase"
           >
@@ -84,10 +72,6 @@ export const AboutView: React.FC<AboutViewProps> = ({
 
         {/* 4 Core Pillars */}
         <div className="mb-14 sm:mb-16">
-          <h2 className="text-[20px] sm:text-[22px] md:text-[24px] font-bold text-[#111111] mb-6 text-center tracking-tight uppercase">
-            Four Core Pillars
-          </h2>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {pillars.map((item, idx) => {
               const Icon = item.icon;

@@ -29,7 +29,7 @@ export const CrossCampusNetworkSection: React.FC = () => {
             CROSS-CAMPUS ECOSYSTEM
           </span>
           <h2 className="text-[32px] sm:text-[40px] md:text-[48px] text-[#111111] font-normal font-display-heading tracking-normal leading-[1.1]">
-            One Project. Many Campuses.
+            Built for Project Success.
           </h2>
           <p className="text-[15px] sm:text-[16px] text-[#111111] font-medium mt-3 max-w-xl mx-auto leading-relaxed">
             Connect students, ideas and expertise across colleges and universities — and give academic projects a longer life.
