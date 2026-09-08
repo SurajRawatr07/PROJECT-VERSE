@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   Building2
 } from 'lucide-react';
-import { ProjectVerseLogo } from './ProjectVerseLogo';
 
 interface HowItWorksViewProps {
   onGetStarted: () => void;

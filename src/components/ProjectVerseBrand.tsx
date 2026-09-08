@@ -1,18 +1,18 @@
 import React from 'react';
-import { ProjectVerseLogo } from './ProjectVerseLogo';
+import { ProjectVerseWordmark } from './ProjectVerseWordmark';
 
 export interface ProjectVerseBrandProps {
-  /** Logo size in pixels. Default adapts responsively (24-25px mobile -> 28px desktop) */
+  /** Height in pixels. Default adapts responsively (24-28px) */
   logoSize?: number;
   /** Custom class for the container */
   className?: string;
-  /** Color theme: 'light' (dark text) or 'dark' (white text) */
+  /** Color theme: 'light' (dark wordmark) or 'dark' (white wordmark) */
   theme?: 'light' | 'dark';
-  /** Whether to show only the logo, wordmark, or both */
+  /** Compatibility prop */
   variant?: 'full' | 'logo-only' | 'wordmark-only';
-  /** Collapsed sidebar mode: centers the logo symbol cleanly without text clipping */
+  /** Collapsed sidebar mode */
   collapsed?: boolean;
-  /** Custom text sizing class if needed */
+  /** Custom text sizing class */
   textSizeClassName?: string;
   /** Whether to apply interactive hover transitions */
   interactive?: boolean;
@@ -21,94 +21,27 @@ export interface ProjectVerseBrandProps {
 /**
  * Premium PROJECT VERSE Brand Identity Component
  * 
- * Typographic & Visual Specifications:
- * - Wordmark Font: Instrument Serif (weight 400)
- * - Brand Name: "PROJECT VERSE" (Strictly displayed as TWO WORDS)
- * - "PROJECT": slightly smaller, subtle, refined letterform
- * - "VERSE": slightly more visually dominant, elegant editorial presence
- * - Symbol: Distinctive geometric academic ecosystem mark representing:
- *   CAMPUS → STUDENT → PROJECT → COLLABORATION → KNOWLEDGE CONTINUITY
- * - Sizing: Logo 26–30px desktop / 24–27px mobile; Wordmark 21–24px desktop / 18–21px mobile
- * - Anti-wrap: Strictly white-space: nowrap
+ * Uses the custom futuristic, geometric SVG wordmark identity.
  */
 export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
-  logoSize,
+  logoSize = 26,
   className = '',
-  theme,
-  variant = 'full',
-  collapsed = false,
-  textSizeClassName = '',
+  theme = 'light',
   interactive = true,
 }) => {
-  const isDarkForced = theme === 'dark';
-  const textColor = isDarkForced
-    ? 'text-white'
-    : 'text-[#111111]';
-  const logoColor = isDarkForced ? '#FFFFFF' : '#111111';
-  const accentColor = isDarkForced ? '#60A5FA' : '#2563EB';
-
-  const showWordmark = !collapsed && variant !== 'logo-only';
-  const showLogo = variant !== 'wordmark-only';
+  const isDark = theme === 'dark';
+  const markColor = isDark ? '#FFFFFF' : '#111111';
 
   return (
     <div
-      className={`inline-flex items-center select-none whitespace-nowrap align-middle group ${
-        collapsed ? 'justify-center w-full' : 'gap-2.5 sm:gap-3'
-      } ${className}`}
+      className={`inline-flex items-center select-none whitespace-nowrap align-middle ${className}`}
     >
-      {/* 1. Distinctive Geometric ProjectVerse Symbol */}
-      {showLogo && (
-        <div className={`shrink-0 flex items-center justify-center ${collapsed ? 'mx-auto' : ''}`}>
-          {/* Responsive sizing: 23px on mobile, 26px on desktop if not explicitly passed */}
-          <div className="block sm:hidden">
-            <ProjectVerseLogo
-              size={logoSize || 23}
-              color={logoColor}
-              accentColor={accentColor}
-              className={`transition-transform duration-220 ease-out ${
-                interactive ? 'group-hover:scale-[1.03]' : ''
-              }`}
-            />
-          </div>
-          <div className="hidden sm:block">
-            <ProjectVerseLogo
-              size={logoSize || 26}
-              color={logoColor}
-              accentColor={accentColor}
-              className={`transition-transform duration-220 ease-out ${
-                interactive ? 'group-hover:scale-[1.03]' : ''
-              }`}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* 2. Editorial Wordmark: PROJECT VERSE (Strictly Two Words in Instrument Serif) */}
-      {showWordmark && (
-        <div
-          className={`flex items-baseline leading-none font-brand-wordmark ${textColor} ${
-            textSizeClassName || 'text-[16.5px] sm:text-[18px] md:text-[19.5px]'
-          } transition-[letter-spacing,opacity] duration-220 ease-out ${
-            interactive ? 'group-hover:opacity-90' : ''
-          }`}
-        >
-          {/* PROJECT: slightly lighter, refined tracking */}
-          <span className="text-[0.92em] tracking-[0.025em] inline-block font-normal opacity-85">
-            PROJECT
-          </span>
-
-          {/* Intentional space gap between PROJECT and VERSE */}
-          <span
-            className="inline-block w-[0.28em]"
-            aria-hidden="true"
-          />
-
-          {/* VERSE: slightly stronger visual presence */}
-          <span className="text-[1.02em] tracking-[0.012em] inline-block font-medium opacity-100">
-            VERSE
-          </span>
-        </div>
-      )}
+      <ProjectVerseWordmark
+        height={logoSize}
+        color={markColor}
+        interactiveHover={interactive}
+        animated={false}
+      />
     </div>
   );
 };

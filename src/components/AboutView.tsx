@@ -11,7 +11,6 @@ import {
   BookOpen,
   FolderGit2
 } from 'lucide-react';
-import { ProjectVerseLogo } from './ProjectVerseLogo';
 
 interface AboutViewProps {
   onGetStarted: () => void;

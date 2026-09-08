@@ -1,7 +1,6 @@
 import React, { useState, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Plus } from 'lucide-react';
-import { ProjectVerseLogo } from './ProjectVerseLogo';
 
 interface FAQQuestion {
   id: string;

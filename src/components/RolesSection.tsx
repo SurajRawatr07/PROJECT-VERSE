@@ -3,36 +3,36 @@ import { motion } from 'motion/react';
 import { GraduationCap, UserCheck, Building2, Landmark } from 'lucide-react';
 
 interface RoleCard {
-  title: string;
   role: string;
   desc: string;
   icon: React.ComponentType<{ className?: string; size?: number }>;
+  tag: string;
 }
 
 const ROLES: RoleCard[] = [
   {
-    title: 'Student',
-    role: 'Undergraduate & Alumni',
-    desc: 'Discover projects, collaborate, build, and create verified proof-of-work.',
+    role: 'STUDENT',
+    desc: 'Discover, build, collaborate and prove your work.',
     icon: GraduationCap,
+    tag: 'Builder',
   },
   {
-    title: 'Faculty',
-    role: 'Academic Guides',
-    desc: 'Guide, review, and verify student projects.',
+    role: 'FACULTY',
+    desc: 'Guide and verify student projects.',
     icon: UserCheck,
+    tag: 'Mentor',
   },
   {
-    title: 'HOD',
-    role: 'Department Leadership',
-    desc: 'Monitor department projects and academic innovation.',
+    role: 'HOD',
+    desc: 'Monitor projects and verification.',
     icon: Building2,
+    tag: 'Oversight',
   },
   {
-    title: 'Institution',
-    role: 'University & Campus',
-    desc: 'Preserve project knowledge and institutional history.',
+    role: 'INSTITUTION',
+    desc: 'Preserve project knowledge and history.',
     icon: Landmark,
+    tag: 'Governance',
   },
 ];
 
@@ -40,56 +40,56 @@ export const RolesSection: React.FC = () => {
   return (
     <section 
       id="roles" 
-      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-white border-t border-black/[0.06] select-none"
+      className="relative w-full py-18 sm:py-24 px-4 sm:px-6 bg-white border-t border-black/[0.06] select-none"
     >
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-mono uppercase tracking-widest text-[#4A4A4A] mb-3">
-            Target Audience
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-['Manrope',sans-serif] font-semibold uppercase tracking-wider text-[#555555] mb-3">
+            Target Stakeholders
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal tracking-[-0.01em] leading-tight">
-            Who Is It For?
+          <h2 className="font-serif text-[28px] sm:text-[32px] md:text-[40px] text-[#111111] font-normal tracking-[-0.01em] leading-tight">
+            Who Uses ProjectVerse
           </h2>
-          <p className="mt-3 text-[14.5px] sm:text-[15.5px] text-[#666666] font-sans">
-            Built for every stakeholder across the academic innovation lifecycle.
+          <p className="mt-2.5 text-[15px] sm:text-[16px] text-[#555555] font-sans">
+            Designed to serve every role in the higher education project lifecycle.
           </p>
         </div>
 
-        {/* 4 Clean Minimal Role Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          {ROLES.map((item, idx) => {
-            const Icon = item.icon;
+        {/* 4 Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4.5">
+          {ROLES.map((role, idx) => {
+            const Icon = role.icon;
             return (
               <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 18 }}
+                key={role.role}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{
-                  duration: 0.45,
-                  delay: idx * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                whileHover={{ y: -3 }}
-                className="p-6 rounded-3xl bg-[#FAFAF8] border border-black/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:border-black/20 hover:shadow-[0_8px_24px_rgba(0,0,0,0.05)] transition-all duration-200 flex flex-col justify-between group"
+                viewport={{ once: true, margin: '-20px' }}
+                transition={{ duration: 0.35, delay: idx * 0.08 }}
+                whileHover={{ y: -2 }}
+                className="p-5 sm:p-6 rounded-2xl bg-[#FAFAF8] border border-black/[0.08] shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-black/25 transition-all duration-150 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="w-11 h-11 rounded-2xl bg-white border border-black/[0.08] flex items-center justify-center text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors duration-200 mb-5 shadow-2xs">
-                    <Icon size={20} />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-white border border-black/[0.07] flex items-center justify-center text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors duration-150">
+                      <Icon size={20} />
+                    </div>
+                    <span className="text-[10.5px] font-mono font-semibold text-[#888888] uppercase">
+                      {role.tag}
+                    </span>
                   </div>
-                  <h3 className="text-[19px] sm:text-[20px] font-medium text-[#111111] font-serif tracking-tight mb-1">
-                    {item.title}
+
+                  <h3 className="text-[15px] sm:text-[16px] font-bold text-[#111111] font-['Manrope',sans-serif] tracking-wide mb-1.5">
+                    {role.role}
                   </h3>
-                  <div className="text-[11px] font-mono text-[#888888] uppercase tracking-wider mb-3">
-                    {item.role}
-                  </div>
-                  <p className="text-[13.5px] sm:text-[14px] text-[#666666] leading-relaxed font-sans">
-                    {item.desc}
+
+                  <p className="text-[13.5px] sm:text-[14px] text-[#555555] leading-relaxed font-sans">
+                    {role.desc}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-3 border-t border-black/[0.04] text-[11px] font-mono text-[#888888]">
+                <div className="mt-5 pt-3 border-t border-black/[0.05] text-[11px] font-mono text-[#888888]">
                   ROLE 0{idx + 1}
                 </div>
               </motion.div>

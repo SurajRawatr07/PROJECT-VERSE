@@ -5,47 +5,50 @@ import {
   GitCommit, 
   UserCheck, 
   Landmark, 
-  ShieldCheck, 
-  CheckCircle2,
-  Plus,
-  Equal
+  CheckCircle2, 
+  Plus, 
+  ArrowDown 
 } from 'lucide-react';
 
-interface ChainItem {
+interface VerificationPillar {
+  id: string;
   title: string;
-  sub: string;
-  icon: React.ReactNode;
+  desc: string;
+  icon: React.ComponentType<{ className?: string; size?: number }>;
+  isGithub?: boolean;
 }
 
-const CHAIN_ITEMS: ChainItem[] = [
+const PILLARS: VerificationPillar[] = [
   {
+    id: 'github',
     title: 'GitHub Activity',
-    sub: 'Commits & PRs',
-    icon: (
-      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-      </svg>
-    ),
+    desc: 'Commits, pull requests & code frequency',
+    icon: GitCommit,
+    isGithub: true,
   },
   {
+    id: 'docs',
     title: 'Documentation',
-    sub: 'Architecture docs',
-    icon: <FileText size={20} />,
+    desc: 'Architecture specs & project synopsis',
+    icon: FileText,
   },
   {
+    id: 'contrib',
     title: 'Contributions',
-    sub: 'Author lines',
-    icon: <GitCommit size={20} />,
+    desc: 'Attributed roles & student modules',
+    icon: GitCommit,
   },
   {
+    id: 'faculty',
     title: 'Faculty Review',
-    sub: 'Academic rubric',
-    icon: <UserCheck size={20} />,
+    desc: 'Academic appraisal & rubric scoring',
+    icon: UserCheck,
   },
   {
+    id: 'institution',
     title: 'Institution Validation',
-    sub: 'Accredited record',
-    icon: <Landmark size={20} />,
+    desc: 'Department sign-off & batch archive',
+    icon: Landmark,
   },
 ];
 
@@ -53,78 +56,119 @@ export const ProofOfWorkSection: React.FC = () => {
   return (
     <section 
       id="proof-of-work" 
-      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-white border-t border-black/[0.06] select-none"
+      className="relative w-full py-18 sm:py-24 px-4 sm:px-6 bg-white border-t border-black/[0.06] select-none"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-mono uppercase tracking-widest text-[#4A4A4A] mb-3">
-            Academic Validation Chain
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-['Manrope',sans-serif] font-semibold uppercase tracking-wider text-[#555555] mb-3">
+            Academic Verification Engine
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal tracking-[-0.01em] leading-tight">
+          <h2 className="font-serif text-[28px] sm:text-[32px] md:text-[40px] text-[#111111] font-normal tracking-[-0.01em] leading-tight">
             Show What Was Actually Built.
           </h2>
-          <p className="mt-3 text-[14.5px] sm:text-[15.5px] text-[#666666] font-sans">
-            Replace self-proclaimed resumes with verifiable technical evidence and faculty review.
+          <p className="mt-2.5 text-[15px] sm:text-[16px] text-[#555555] font-sans">
+            A transparent chain combining automated repository activity with authoritative academic oversight.
           </p>
         </div>
 
         {/* ========================================================================= */}
-        {/* VERIFICATION CHAIN EQUATION */}
-        {/* GitHub + Docs + Contributions + Faculty + Institution = VERIFIED PROJECT */}
+        {/* VERIFICATION CHAIN: 5 Real UI Cards + Plus Signs + Pure Black Arrow */}
         {/* ========================================================================= */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-3 sm:gap-4 max-w-5xl mx-auto">
-          {CHAIN_ITEMS.map((item, idx) => (
-            <React.Fragment key={item.title}>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                whileHover={{ y: -3 }}
-                className="w-full sm:w-44 p-4 sm:p-5 rounded-2xl bg-[#FAFAF8] border border-black/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center text-center group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-white border border-black/[0.08] flex items-center justify-center text-[#111111] group-hover:bg-[#111111] group-hover:text-white transition-colors duration-200 mb-2.5">
-                  {item.icon}
-                </div>
-                <div className="text-[13px] font-semibold text-[#111111] font-sans leading-tight">
-                  {item.title}
-                </div>
-                <div className="text-[10.5px] text-[#777777] font-sans mt-0.5">
-                  {item.sub}
-                </div>
-              </motion.div>
+        <div className="flex flex-col items-center">
+          {/* Horizontal / Wrapped Grid of 5 Cards with '+' signs */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 w-full">
+            {PILLARS.map((pillar, idx) => {
+              const Icon = pillar.icon;
+              return (
+                <motion.div
+                  key={pillar.id}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-20px' }}
+                  transition={{ duration: 0.35, delay: idx * 0.07 }}
+                  className="p-4 rounded-2xl bg-[#FAFAF8] border border-black/[0.08] shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-9 h-9 rounded-xl bg-white border border-black/[0.07] flex items-center justify-center text-[#111111] mb-3 shadow-2xs">
+                      {pillar.isGithub ? (
+                        <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
+                          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                        </svg>
+                      ) : (
+                        <Icon size={18} />
+                      )}
+                    </div>
+                    <h3 className="text-[14px] font-bold text-[#111111] font-['Manrope',sans-serif] tracking-tight mb-1">
+                      {pillar.title}
+                    </h3>
+                    <p className="text-[12px] text-[#666666] leading-snug font-sans">
+                      {pillar.desc}
+                    </p>
+                  </div>
 
-              {/* Plus Sign (between items) */}
-              <div className="hidden lg:flex items-center justify-center text-black/25">
-                <Plus size={16} />
-              </div>
-            </React.Fragment>
-          ))}
-
-          {/* Equal Sign */}
-          <div className="hidden lg:flex items-center justify-center text-black/25">
-            <Equal size={20} />
+                  <div className="mt-3 pt-2 border-t border-black/[0.05] flex items-center justify-between text-[10px] font-mono text-[#888888]">
+                    <span>INPUT 0{idx + 1}</span>
+                    <span className="text-black font-bold">✓</span>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
-          {/* = VERIFIED PROJECT CARD */}
+          {/* Pure-Black Downward Arrow SVG Connector */}
+          <div className="my-6 flex flex-col items-center">
+            <svg width="2" height="42" className="overflow-visible">
+              <defs>
+                <marker
+                  id="pow-down-arrow"
+                  markerWidth="6"
+                  markerHeight="6"
+                  refX="3"
+                  refY="5"
+                  orient="auto"
+                >
+                  <path d="M0,0 L3,5 L6,0 Z" fill="#000000" />
+                </marker>
+              </defs>
+              <line
+                x1="1"
+                y1="0"
+                x2="1"
+                y2="36"
+                stroke="#000000"
+                strokeWidth="2"
+                strokeLinecap="round"
+                markerEnd="url(#pow-down-arrow)"
+              />
+            </svg>
+          </div>
+
+          {/* Result Card: VERIFIED PROJECT */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ scale: 0.95, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: 0.45 }}
-            whileHover={{ scale: 1.03 }}
-            className="w-full sm:w-52 p-4 sm:p-5 rounded-2xl bg-emerald-50/70 border border-emerald-300/80 shadow-[0_4px_16px_rgba(16,185,129,0.08)] flex flex-col items-center text-center group"
+            transition={{ duration: 0.4 }}
+            className="w-full max-w-md p-5 sm:p-6 rounded-2xl bg-white border-2 border-black shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex items-center justify-between gap-4"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs mb-2.5">
-              <ShieldCheck size={22} />
+            <div className="flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-xl bg-[#111111] text-white flex items-center justify-center">
+                <CheckCircle2 size={22} className="text-white" />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#777777] block">
+                  Cryptographic Outcome
+                </span>
+                <span className="text-[17px] sm:text-[18px] font-bold text-[#111111] font-['Manrope',sans-serif] tracking-tight">
+                  VERIFIED PROJECT
+                </span>
+              </div>
             </div>
-            <div className="text-[13.5px] font-bold text-emerald-950 font-sans leading-tight">
-              VERIFIED PROJECT
-            </div>
-            <div className="text-[10.5px] text-emerald-700 font-mono mt-0.5">
-              Proof-of-Work
-            </div>
+
+            <span className="px-2.5 py-1 rounded-full bg-[#F5F5F3] border border-black/[0.08] text-[11px] font-mono font-bold text-[#111111]">
+              PASSED
+            </span>
           </motion.div>
         </div>
       </div>
