@@ -1,211 +1,169 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { 
   ShieldCheck, 
   QrCode, 
-  GitBranch, 
-  GitPullRequest, 
-  GitCommit, 
-  Award, 
   CheckCircle2, 
-  FileCode, 
-  GraduationCap, 
+  Users, 
   ExternalLink,
   Lock,
+  FileCode2,
+  Building2,
   Layers,
-  Sparkles,
-  ChevronRight
+  Sparkles
 } from 'lucide-react';
-import { SAMPLE_PROJECTS } from '../data/mockData';
-import { ProjectPassportData } from '../types';
 
 export const ProjectPassportSection: React.FC = () => {
-  const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
-  const currentProject = SAMPLE_PROJECTS[selectedProjectIndex];
-  const passport = currentProject.passport;
+  const [activeTab, setActiveTab] = useState<'overview' | 'evidence'>('overview');
 
   return (
-    <section id="passport" className="relative w-full py-24 sm:py-32 px-4 sm:px-6 bg-[#040714] border-t border-white/5 overflow-hidden">
-      {/* Subtle background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[300px] sm:h-[600px] bg-indigo-600/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section 
+      id="passport" 
+      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-white border-t border-black/[0.06] select-none"
+    >
+      <div className="max-w-4xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full liquid-glass text-xs font-mono-code text-indigo-300 mb-3">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>CORE INNOVATION • DUAL EVIDENCE PASSPORT</span>
-            </div>
-            <h2 className="font-display text-3xl sm:text-5xl md:text-6xl text-white font-normal leading-[1.1]">
-              Every Project Gets an Identity.
-            </h2>
-            <p className="text-slate-400 font-body text-sm sm:text-base mt-4 leading-relaxed">
-              Project Passport brings technical evidence and academic validation into one structured, tamper-proof project record that persists beyond graduation.
-            </p>
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-mono uppercase tracking-widest text-[#4A4A4A] mb-3">
+            Digital Academic Identity
           </div>
-
-          {/* Project Switcher Tabs */}
-          <div className="flex flex-wrap gap-2">
-            {SAMPLE_PROJECTS.slice(0, 3).map((p, idx) => (
-              <button
-                key={p.id}
-                id={`passport-switch-${p.id}`}
-                onClick={() => setSelectedProjectIndex(idx)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-mono-code transition-all cursor-pointer ${
-                  selectedProjectIndex === idx
-                    ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20'
-                    : 'liquid-glass text-slate-400 hover:text-white border-white/10'
-                }`}
-              >
-                {p.title.split(':')[0]}
-              </button>
-            ))}
-          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal tracking-[-0.01em] leading-tight">
+            Every Project Gets an Identity.
+          </h2>
+          <p className="mt-3 text-[14.5px] sm:text-[15.5px] text-[#666666] font-sans">
+            A verified record of the project, its people, work, and history.
+          </p>
         </div>
 
-        {/* Passport Card Presentation */}
+        {/* ========================================================================= */}
+        {/* INTERACTIVE PROJECT PASSPORT UI MOCKUP */}
+        {/* ========================================================================= */}
         <motion.div
-          key={passport.passportId}
-          initial={{ opacity: 0, scale: 0.98, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="liquid-glass-elevated rounded-3xl p-6 sm:p-10 border border-white/15 shadow-2xl relative overflow-hidden"
+          className="w-full rounded-3xl bg-[#FAFAF8] border border-black/[0.1] shadow-[0_12px_40px_rgba(0,0,0,0.06)] overflow-hidden"
         >
-          {/* Top Bar: Passport Header & Cryptographic ID */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-white/10 gap-4">
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-slate-900 border border-indigo-400/40 flex items-center justify-center text-white shadow-inner">
-                <ShieldCheck className="w-6 h-6 text-emerald-400" />
-              </div>
-              <div>
-                <div className="text-[10px] font-mono-code uppercase tracking-widest text-indigo-300">
-                  OFFICIAL ACADEMIC REPOSITORY RECORD
-                </div>
-                <div className="text-lg sm:text-xl font-bold font-mono-code text-white tracking-wider">
-                  {passport.passportId}
-                </div>
-              </div>
-            </div>
-
+          {/* Top Document Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4 bg-white border-b border-black/[0.08]">
             <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-body">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                VERIFIED ACADEMIC PASSPORT
-              </span>
-              <span className="text-[11px] font-mono-code text-slate-400 hidden lg:inline">
-                HASH: {passport.qrHash.slice(0, 10)}...
-              </span>
+              <div className="w-8 h-8 rounded-xl bg-[#111111] text-white flex items-center justify-center font-mono text-xs font-bold">
+                PV
+              </div>
+              <div>
+                <span className="text-[12px] font-mono font-medium text-[#111111] tracking-wider uppercase">
+                  PROJECT PASSPORT
+                </span>
+                <span className="text-[11px] font-mono text-[#888888] ml-2">
+                  #PV-2026-GEHU-042
+                </span>
+              </div>
+            </div>
+
+            {/* Verified Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[12px] font-medium">
+              <ShieldCheck size={14} className="text-emerald-600" />
+              <span>Faculty Verified</span>
             </div>
           </div>
 
-          {/* Core Info Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-            {/* Left Col: Project Details */}
-            <div className="lg:col-span-7 space-y-6">
+          {/* Document Content */}
+          <div className="p-6 sm:p-8">
+            {/* Project Header Row */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-black/[0.06] gap-4">
               <div>
-                <h3 className="font-display text-2xl sm:text-3xl text-white font-normal leading-snug">
-                  {passport.projectName}
+                <div className="text-[11px] uppercase tracking-wider text-[#888888] font-mono mb-1">
+                  Project Name
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-serif text-[#111111] font-medium tracking-tight">
+                  CampusConnect
                 </h3>
-                <p className="text-slate-300 text-sm sm:text-base font-body mt-2 leading-relaxed">
-                  {passport.tagline}
-                </p>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-[10px] font-mono-code text-slate-400 block uppercase">Institution</span>
-                  <span className="text-xs font-medium text-white block mt-1 truncate">{passport.institution}</span>
+              {/* Status & Repository */}
+              <div className="flex items-center gap-3">
+                {/* Active Status */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-black/[0.08] text-[12px] font-medium text-[#111111] shadow-2xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Status: Active</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-[10px] font-mono-code text-slate-400 block uppercase">Academic Cycle</span>
-                  <span className="text-xs font-medium text-white block mt-1">{passport.academicYear}</span>
-                </div>
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10 col-span-2 sm:col-span-1">
-                  <span className="text-[10px] font-mono-code text-slate-400 block uppercase">Batch Lineage</span>
-                  <span className="text-xs font-medium text-indigo-300 block mt-1">{passport.currentBatch}</span>
-                </div>
-              </div>
 
-              {/* Tech Stack Pills */}
-              <div>
-                <span className="text-[11px] font-mono-code text-slate-400 block uppercase mb-2">Verified Technology Stack</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {passport.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="text-xs font-mono-code px-2.5 py-1 rounded-lg bg-indigo-950/40 text-indigo-200 border border-indigo-500/30"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                {/* GitHub Connected */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-black/[0.08] text-[12px] font-medium text-[#111111] shadow-2xs">
+                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                  </svg>
+                  <span>GitHub Connected</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Col: Dual Telemetry Matrix */}
-            <div className="lg:col-span-5 flex flex-col gap-4">
-              {/* Technical Evidence Card */}
-              <div className="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-3 font-mono-code text-xs">
-                <div className="flex items-center justify-between text-slate-400 border-b border-white/10 pb-2">
-                  <span className="flex items-center gap-1.5 text-white font-medium">
-                    <GitBranch className="w-4 h-4 text-indigo-400" />
-                    Technical Evidence
-                  </span>
-                  <span className="text-emerald-400">CI Tests Passing</span>
+            {/* Core Metadata Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+              {/* Institution */}
+              <div className="p-4 rounded-2xl bg-white border border-black/[0.06]">
+                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[#888888] mb-1">
+                  <Building2 size={13} />
+                  <span>Institution</span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-center pt-1">
-                  <div className="p-2 rounded-lg bg-white/5">
-                    <span className="text-base font-bold text-white block">{passport.totalCommits}</span>
-                    <span className="text-[10px] text-slate-400">Commits</span>
-                  </div>
-                  <div className="p-2 rounded-lg bg-white/5">
-                    <span className="text-base font-bold text-white block">{passport.mergedPRs}</span>
-                    <span className="text-[10px] text-slate-400">Merged PRs</span>
-                  </div>
-                  <div className="p-2 rounded-lg bg-white/5">
-                    <span className="text-base font-bold text-emerald-400 block">{passport.codeHealthScore}%</span>
-                    <span className="text-[10px] text-slate-400">Health Score</span>
-                  </div>
-                </div>
-                <div className="text-[11px] text-slate-400 flex items-center justify-between pt-1">
-                  <span className="truncate">Repo: {passport.githubRepo}</span>
-                  <span className="text-indigo-400 shrink-0">Branch: main</span>
+                <div className="text-[14px] font-semibold text-[#111111] font-sans">
+                  Graphic Era Hill University
                 </div>
               </div>
 
-              {/* Academic Review Rubric */}
-              <div className="p-5 rounded-2xl bg-indigo-950/20 border border-indigo-500/20 space-y-3">
-                <div className="flex items-center justify-between text-slate-300 border-b border-white/10 pb-2">
-                  <span className="flex items-center gap-1.5 text-white text-xs font-medium">
-                    <GraduationCap className="w-4 h-4 text-indigo-400" />
-                    Faculty Review & Scoring
-                  </span>
-                  <span className="text-xs font-mono-code text-indigo-300 font-bold">
-                    Score: {passport.facultyReviewer.score}/10
-                  </span>
+              {/* Domain */}
+              <div className="p-4 rounded-2xl bg-white border border-black/[0.06]">
+                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[#888888] mb-1">
+                  <Layers size={13} />
+                  <span>Domain</span>
                 </div>
+                <div className="text-[14px] font-semibold text-[#111111] font-sans">
+                  Web Development
+                </div>
+              </div>
 
-                <p className="text-xs text-slate-300 italic font-body leading-relaxed">
-                  "{passport.facultyReviewer.reviewText}"
-                </p>
-
-                <div className="pt-2 flex items-center justify-between text-[11px] text-slate-400 font-mono-code">
-                  <span className="truncate">{passport.facultyReviewer.name}</span>
-                  <span className="text-emerald-400 shrink-0 font-medium">Verified Signature</span>
+              {/* Contributors */}
+              <div className="p-4 rounded-2xl bg-white border border-black/[0.06]">
+                <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[#888888] mb-1">
+                  <Users size={13} />
+                  <span>Contributors</span>
+                </div>
+                <div className="text-[14px] font-semibold text-[#111111] font-sans flex items-center gap-2">
+                  <span>4 Students</span>
+                  <span className="text-[11px] text-[#666666] font-normal font-mono">(Batch 2026)</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Bottom Security Footer */}
-          <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 font-mono-code">
-            <div className="flex items-center gap-2">
-              <Lock className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Institutional Validation: {passport.institutionalValidationCode}</span>
+            {/* Technologies */}
+            <div className="mt-5 p-4 rounded-2xl bg-white border border-black/[0.06]">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-[#888888] mb-2">
+                <FileCode2 size={13} />
+                <span>Technologies</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                {['React', 'Node.js', 'MongoDB', 'TypeScript', 'Tailwind CSS'].map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2.5 py-1 rounded-full bg-[#F7F7F5] border border-black/[0.06] text-[12px] font-medium text-[#111111] font-mono"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="text-slate-500 text-[11px]">
-              Permanent Archive • Linked to National Academic Repositories
+
+            {/* Verification Sign-Off Footer */}
+            <div className="mt-5 p-4 rounded-2xl bg-[#F4F4F2] border border-black/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[12px] font-sans text-[#4A4A4A]">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                <span>Reviewed by Dr. A. Sharma (Head of CSE) • Cryptographic Hash Recorded</span>
+              </div>
+              <div className="flex items-center gap-1 text-[11px] font-mono text-[#777777]">
+                <Lock size={12} />
+                <span>Immutable Proof</span>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -213,3 +171,5 @@ export const ProjectPassportSection: React.FC = () => {
     </section>
   );
 };
+
+export default ProjectPassportSection;

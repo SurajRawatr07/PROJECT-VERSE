@@ -1,168 +1,130 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  GitFork, 
-  ArrowDown, 
-  CheckCircle2, 
-  Users, 
-  ArrowRight 
-} from 'lucide-react';
-import { SAMPLE_PROJECTS } from '../data/mockData';
+import { GitFork, GitCommit, Users, ArrowRight, ArrowDown, Sparkles } from 'lucide-react';
 
-interface ProjectLineageSectionProps {
-  onContinueProjectClick: (projectName: string) => void;
-  selectedProjectId?: string;
+interface LineageNode {
+  year: string;
+  version: string;
+  phase: string;
+  focus: string;
+  contributors: string;
+  tag: string;
 }
 
-export const ProjectLineageSection: React.FC<ProjectLineageSectionProps> = ({
-  onContinueProjectClick,
-  selectedProjectId
-}) => {
-  const [selectedProjectIndex, setSelectedProjectIndex] = useState(() => {
-    if (selectedProjectId) {
-      const idx = SAMPLE_PROJECTS.findIndex(p => p.id === selectedProjectId);
-      return idx >= 0 ? idx : 0;
-    }
-    return 0;
-  });
+const TIMELINE_NODES: LineageNode[] = [
+  {
+    year: '2026',
+    version: 'v1.0',
+    phase: 'Idea + Initial Build',
+    focus: 'Architecture setup, core database schema, and initial MVP prototype.',
+    contributors: '3 Student Founders',
+    tag: 'Foundation',
+  },
+  {
+    year: '2027',
+    version: 'v2.0',
+    phase: 'New Contributors + Improvements',
+    focus: 'Performance optimization, real-time messaging, and mobile responsive redesign.',
+    contributors: '4 Successor Students + 1 Faculty',
+    tag: 'Expansion',
+  },
+  {
+    year: '2028',
+    version: 'v3.0',
+    phase: 'New Features + Research',
+    focus: 'Edge AI processing module and IEEE conference paper publication.',
+    contributors: '2 Senior Researchers',
+    tag: 'Academic Research',
+  },
+  {
+    year: '2029',
+    version: 'v4.0',
+    phase: 'Further Development',
+    focus: 'Multi-campus deployment, cloud scalability, and institutional pilot integration.',
+    contributors: 'Incoming Capstone Batch',
+    tag: 'Active Lineage',
+  },
+];
 
-  const currentProject = SAMPLE_PROJECTS[selectedProjectIndex] || SAMPLE_PROJECTS[0];
-
-  // Default clean 3-batch progression if lineage is sparse
-  const timelineNodes = [
-    {
-      batch: 'Batch 2024',
-      phase: 'Original Base',
-      added: 'Initial system architecture, core algorithms, and foundational dataset collection.',
-      contributors: ['Aditya Verma', 'Rhea Chakraborty'],
-      status: 'Completed'
-    },
-    {
-      batch: 'Batch 2025',
-      phase: 'Feature Expansion',
-      added: 'Distributed pipeline, web interface, real-time edge processing, and API endpoints.',
-      contributors: ['Kavita Rao', 'Mohit Nair'],
-      status: 'Verified & Active'
-    },
-    {
-      batch: 'Batch 2026',
-      phase: 'Performance & Scale',
-      added: 'Benchmarking on edge hardware, production containerization, and peer review.',
-      contributors: ['Incoming Capstone Batch'],
-      status: 'Open for Continuity'
-    }
-  ];
-
+export const ProjectLineageSection: React.FC = () => {
   return (
-    <section id="lineage" className="relative w-full py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-[#FFFFFF] border-t border-black/8 font-serif">
-      <div className="max-w-4xl mx-auto">
-        {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <h2 className="text-[26px] sm:text-[30px] md:text-[36px] font-bold text-[#111111] tracking-tight uppercase">
-            Project Lineage
+    <section 
+      id="lineage" 
+      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#FAFAF8] border-t border-black/[0.06] select-none"
+    >
+      <div className="max-w-5xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-mono uppercase tracking-widest text-[#4A4A4A] mb-3">
+            Inter-Batch Continuity
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#111111] font-normal tracking-[-0.01em] leading-tight">
+            Projects Can Continue Across Batches.
           </h2>
-          <p className="text-[15px] sm:text-[16px] text-[#4A4A4A] mt-2 tracking-wide">
-            See how projects evolve across batches.
+          <p className="mt-3 text-[14.5px] sm:text-[16px] text-[#555555] font-sans max-w-xl mx-auto">
+            Instead of restarting from zero, future students can build on what already exists.
           </p>
         </div>
 
-        {/* Project Selector Chips */}
-        <div className="flex items-center justify-center flex-wrap gap-2 mb-10">
-          {SAMPLE_PROJECTS.slice(0, 4).map((p, idx) => (
-            <button
-              key={p.id}
-              onClick={() => setSelectedProjectIndex(idx)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-serif transition-all cursor-pointer ${
-                selectedProjectIndex === idx
-                  ? 'bg-[#111111] text-white font-medium shadow-xs'
-                  : 'bg-[#F7F7F5] border border-black/8 text-[#4A4A4A] hover:text-[#111111] hover:bg-[#ECECE9]'
-              }`}
-            >
-              {p.title.split(':')[0]}
-            </button>
-          ))}
-        </div>
+        {/* ========================================================================= */}
+        {/* TIMELINE: The Same Project Flowing Forward Through 4 Years */}
+        {/* ========================================================================= */}
+        <div className="relative max-w-3xl mx-auto">
+          {/* Vertical Connecting Line */}
+          <div className="absolute top-6 bottom-6 left-[23px] sm:left-[31px] w-[2px] bg-black/[0.1] -z-0" />
 
-        {/* Selected Project Lineage Banner */}
-        <div className="card-white p-6 sm:p-7 mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-black/8">
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#737373] block mb-1">
-              Active Lineage Track
-            </span>
-            <h3 className="text-[19px] sm:text-[21px] font-bold text-[#111111]">
-              {currentProject.title}
-            </h3>
-            <p className="text-xs text-[#737373] mt-0.5">
-              {currentProject.institution} • Multi-Batch Academic Continuity
-            </p>
-          </div>
-
-          <button
-            onClick={() => onContinueProjectClick(currentProject.title)}
-            className="btn-primary-black px-5 py-2 rounded-full text-xs font-medium inline-flex items-center gap-1.5 cursor-pointer shadow-xs shrink-0"
-          >
-            <GitFork className="w-3.5 h-3.5 text-white" />
-            <span>Continue This Project</span>
-            <ArrowRight className="w-3.5 h-3.5 text-white" />
-          </button>
-        </div>
-
-        {/* Visual Timeline: Batch 2024 -> Batch 2025 -> Batch 2026 */}
-        <div className="flex flex-col items-center space-y-4">
-          {timelineNodes.map((node, idx) => (
-            <React.Fragment key={node.batch}>
-              {/* Timeline Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: idx * 0.05 }}
-                className="w-full card-white p-6 border border-black/8 hover:border-black/20 transition-all duration-200"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-black/6 mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[16px] sm:text-[18px] font-bold text-[#111111]">
-                      {node.batch}
-                    </span>
-                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F5F5F3] border border-black/6 text-[#4A4A4A] font-medium">
-                      {node.phase}
+          <div className="space-y-6 sm:space-y-8 relative z-10">
+            {TIMELINE_NODES.map((item, idx) => {
+              const isLatest = idx === TIMELINE_NODES.length - 1;
+              return (
+                <motion.div
+                  key={item.year}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{
+                    duration: 0.45,
+                    delay: idx * 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="flex items-start gap-4 sm:gap-6 group"
+                >
+                  {/* Timeline Node Marker */}
+                  <div className="shrink-0 flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white border border-black/[0.12] shadow-[0_2px_10px_rgba(0,0,0,0.04)] group-hover:border-black/30 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-all duration-200">
+                    <span className="font-mono text-[13px] sm:text-[15px] font-bold text-[#111111]">
+                      {item.year}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1.5 text-xs">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    <span className="text-[#111111] font-medium">{node.status}</span>
-                  </div>
-                </div>
+                  {/* Node Content Card */}
+                  <div className="flex-1 p-5 sm:p-6 rounded-3xl bg-white border border-black/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:border-black/20 hover:shadow-[0_6px_20px_rgba(0,0,0,0.06)] transition-all duration-200">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded-full bg-[#111111] text-white text-[11px] font-mono font-medium">
+                          {item.version}
+                        </span>
+                        <h3 className="text-[16px] sm:text-[18px] font-serif font-medium text-[#111111]">
+                          {item.phase}
+                        </h3>
+                      </div>
+                      <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#F5F5F3] border border-black/[0.05] text-[#555555]">
+                        {item.tag}
+                      </span>
+                    </div>
 
-                <div className="space-y-3">
-                  <div>
-                    <span className="text-xs font-bold text-[#737373] uppercase tracking-wider block mb-1">
-                      What Was Added
-                    </span>
-                    <p className="text-[14px] sm:text-[15px] text-[#4A4A4A] leading-relaxed">
-                      {node.added}
+                    <p className="text-[13.5px] sm:text-[14px] text-[#666666] leading-relaxed font-sans mb-4">
+                      {item.focus}
                     </p>
-                  </div>
 
-                  <div className="flex items-center gap-2 pt-1 text-xs text-[#737373]">
-                    <Users className="w-3.5 h-3.5 text-[#111111]" />
-                    <span className="font-medium text-[#111111]">Contributors:</span>
-                    <span>{node.contributors.join(', ')}</span>
+                    <div className="flex items-center gap-2 pt-3 border-t border-black/[0.04] text-[12px] font-sans text-[#444444]">
+                      <Users size={14} className="text-[#888888]" />
+                      <span>{item.contributors}</span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-
-              {/* Arrow down connector */}
-              {idx < timelineNodes.length - 1 && (
-                <div className="flex items-center justify-center text-[#737373] py-1">
-                  <div className="w-7 h-7 rounded-full bg-[#F5F5F3] border border-black/8 flex items-center justify-center">
-                    <ArrowDown className="w-3.5 h-3.5 text-[#111111]" />
-                  </div>
-                </div>
-              )}
-            </React.Fragment>
-          ))}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

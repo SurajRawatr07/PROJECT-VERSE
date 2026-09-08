@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, PublicPage } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { ProblemSection } from './components/ProblemSection';
+import { EcosystemSection } from './components/EcosystemSection';
+import { HowItWorksSection } from './components/HowItWorksSection';
+import { ProjectPassportSection } from './components/ProjectPassportSection';
+import { ProjectLineageSection } from './components/ProjectLineageSection';
+import { ProofOfWorkSection } from './components/ProofOfWorkSection';
 import { CrossCampusNetworkSection } from './components/CrossCampusNetworkSection';
-import { CoreInnovationsSection } from './components/CoreInnovationsSection';
+import { RolesSection } from './components/RolesSection';
+import { FAQSection } from './components/FAQSection';
+import { FinalCTASection } from './components/FinalCTASection';
 import { Footer } from './components/Footer';
-
-// Dedicated Separate Pages
-import { AboutView } from './components/AboutView';
-import { HowItWorksView } from './components/HowItWorksView';
-import { FAQView } from './components/FAQView';
 
 // Authenticated Application
 import { AuthAppView, UserRole } from './components/AuthAppView';
@@ -23,19 +26,7 @@ import { ProofOfWorkModal } from './components/modals/ProofOfWorkModal';
 
 import { ProjectItem } from './types';
 
-const getInitialPage = (): PublicPage => {
-  if (typeof window !== 'undefined') {
-    const path = window.location.pathname.toLowerCase();
-    if (path === '/faq' || path.startsWith('/faq')) return 'faq';
-    if (path === '/about' || path.startsWith('/about')) return 'about';
-    if (path === '/how-it-works' || path.startsWith('/how-it-works')) return 'how-it-works';
-  }
-  return 'home';
-};
-
 export default function App() {
-  // Navigation View State: public pages ('home' | 'about' | 'how-it-works' | 'faq') or authenticated workspace
-  const [currentPage, setCurrentPage] = useState<PublicPage>(getInitialPage);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [currentRole, setCurrentRole] = useState<UserRole>('STUDENT');
 
@@ -56,23 +47,35 @@ export default function App() {
     }
   }, []);
 
-  // Listen to browser navigation (back / forward buttons)
+  // Handle URL path / hash smooth scrolling on initial mount or popstate
   useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname.toLowerCase();
-      if (path === '/faq' || path.startsWith('/faq')) {
-        setCurrentPage('faq');
-      } else if (path === '/about' || path.startsWith('/about')) {
-        setCurrentPage('about');
-      } else if (path === '/how-it-works' || path.startsWith('/how-it-works')) {
-        setCurrentPage('how-it-works');
-      } else {
-        setCurrentPage('home');
+    const scrollToTarget = () => {
+      const hash = window.location.hash.replace('#', '');
+      const path = window.location.pathname.replace('/', '').toLowerCase();
+      const targetId = hash || path;
+
+      if (targetId) {
+        // Map common paths to section IDs
+        let elementId = targetId;
+        if (targetId === 'how-it-works' || targetId === 'howitworks') elementId = 'how-it-works';
+        if (targetId === 'about') elementId = 'about';
+        if (targetId === 'faq') elementId = 'faq';
+        if (targetId === 'home') elementId = 'home';
+
+        setTimeout(() => {
+          const el = document.getElementById(elementId);
+          if (el) {
+            const yOffset = -72;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }, 150);
       }
     };
 
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    scrollToTarget();
+    window.addEventListener('popstate', scrollToTarget);
+    return () => window.removeEventListener('popstate', scrollToTarget);
   }, []);
 
   // Authentication Handlers
@@ -96,7 +99,6 @@ export default function App() {
   const handleLogout = () => {
     clearSession();
     setIsAuthenticated(false);
-    setCurrentPage('home');
     if (window.location.pathname !== '/') {
       window.history.pushState(null, '', '/');
     }
@@ -104,19 +106,29 @@ export default function App() {
   };
 
   const handleSelectPage = (page: PublicPage) => {
-    setCurrentPage(page);
-    setIsAuthenticated(false);
-    const newPath = page === 'home' ? '/' : `/${page}`;
-    if (window.location.pathname !== newPath) {
-      window.history.pushState(null, '', newPath);
+    const element = document.getElementById(page);
+    if (element) {
+      const yOffset = -72;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else if (page === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleExploreProjectVerse = () => {
+    const element = document.getElementById('how-it-works');
+    if (element) {
+      const yOffset = -72;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
   };
 
   // If user is inside the authenticated workspace
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0E0E10] text-[#111111] dark:text-[#F4F4F6] font-body relative overflow-x-hidden transition-colors duration-200">
+      <div className="min-h-screen bg-white text-[#111111] font-sans relative overflow-x-hidden">
         <AuthAppView
           initialRole={currentRole}
           onLogout={handleLogout}
@@ -152,57 +164,65 @@ export default function App() {
     );
   }
 
-  // Public Website: Home, About, or How It Works
+  // =========================================================================
+  // PUBLIC WEBSITE: SINGLE CONTINUOUS SCROLLING HOMEPAGE
+  // Premium, modern, highly interactive, clean white/off-white aesthetic
+  // =========================================================================
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0E0E10] text-[#111111] dark:text-[#F4F4F6] font-body relative overflow-x-hidden transition-colors duration-200">
-      {/* Floating Navbar */}
+    <div className="min-h-screen bg-white text-[#111111] font-sans relative overflow-x-hidden selection:bg-black selection:text-white">
+      {/* 1. Floating Pill Navbar with scroll shrink/expand */}
       <Navbar
-        currentPage={currentPage}
         onSelectPage={handleSelectPage}
         onOpenLogin={handleOpenLogin}
         onOpenRegister={handleOpenRegister}
       />
 
-      {/* Page Content Rendering */}
-      {currentPage === 'home' && (
-        <main>
-          {/* Section 1: Hero ("YOUR PROJECT SHOULD GO FURTHER.") */}
-          <Hero
-            onExploreClick={() => handleSelectPage('how-it-works')}
-            onGetStartedClick={handleOpenRegister}
-          />
-
-          {/* Section 2: Cross-College / Cross-University Section ("ONE PROJECT. MANY CAMPUSES.") */}
-          <CrossCampusNetworkSection />
-
-          {/* Section 3: Recreated Platform Capabilities with 6 Cards ("Built for Project Success") */}
-          <CoreInnovationsSection />
-        </main>
-      )}
-
-      {currentPage === 'about' && (
-        <AboutView
-          onGetStarted={handleOpenRegister}
-          onExploreHowItWorks={() => handleSelectPage('how-it-works')}
+      <main className="w-full">
+        {/* 2. Hero Section (#home) */}
+        <Hero
+          onExploreClick={handleExploreProjectVerse}
+          onGetStartedClick={handleOpenRegister}
         />
-      )}
 
-      {currentPage === 'how-it-works' && (
-        <HowItWorksView
-          onGetStarted={handleOpenRegister}
-          onExploreProjects={() => handleSelectPage('home')}
+        {/* 3. The Problem Section (#about) */}
+        <ProblemSection />
+
+        {/* 4. ProjectVerse Solution / Ecosystem Diagram (#ecosystem) */}
+        <EcosystemSection />
+
+        {/* 5. How It Works Section (#how-it-works) */}
+        <HowItWorksSection />
+
+        {/* 6. Project Passport UI Mockup (#passport) */}
+        <ProjectPassportSection />
+
+        {/* 7. Project Lineage Timeline (#lineage) */}
+        <ProjectLineageSection />
+
+        {/* 8. Verified Proof of Work Chain (#proof-of-work) */}
+        <ProofOfWorkSection />
+
+        {/* 9. One Project. Many Campuses. (#cross-campus) */}
+        <CrossCampusNetworkSection />
+
+        {/* 10. Who Is It For? Roles Section (#roles) */}
+        <RolesSection />
+
+        {/* 11. FAQ Accordion (#faq) */}
+        <FAQSection />
+
+        {/* 12. Final CTA Section (#cta) */}
+        <FinalCTASection
+          onExploreClick={handleExploreProjectVerse}
+          onGetStartedClick={handleOpenRegister}
         />
-      )}
+      </main>
 
-      {currentPage === 'faq' && (
-        <FAQView
-          onGetStarted={handleOpenRegister}
-          onExploreProjects={() => handleSelectPage('home')}
-        />
-      )}
-
-      {/* Footer (Section: #F7F7F5) */}
-      <Footer onSelectPage={handleSelectPage} />
+      {/* 13. Minimal Premium Footer */}
+      <Footer
+        onSelectPage={handleSelectPage}
+        onOpenLogin={handleOpenLogin}
+      />
 
       {/* Global Interactive Modals */}
       <AuthModal
