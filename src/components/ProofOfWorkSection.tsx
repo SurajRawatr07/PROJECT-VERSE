@@ -61,10 +61,10 @@ export const ProofOfWorkSection: React.FC = () => {
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-['Manrope',sans-serif] font-semibold uppercase tracking-wider text-[#555555] mb-3">
-            Academic Verification Engine
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-black/[0.04] text-[11px] font-['Manrope',sans-serif] font-semibold uppercase tracking-widest text-[#333333] mb-3">
+            VERIFIED PROOF OF WORK
           </div>
-          <h2 className="font-serif text-[28px] sm:text-[32px] md:text-[40px] text-[#111111] font-normal tracking-[-0.01em] leading-tight">
+          <h2 className="font-['Manrope',sans-serif] font-bold text-[28px] sm:text-[34px] md:text-[42px] text-[#111111] tracking-tight leading-tight">
             Show What Was Actually Built.
           </h2>
           <p className="mt-2.5 text-[15px] sm:text-[16px] text-[#555555] font-sans">
@@ -116,49 +116,53 @@ export const ProofOfWorkSection: React.FC = () => {
             })}
           </div>
 
-          {/* Pure-Black Downward Arrow SVG Connector */}
+          {/* Pure-Black Downward Arrow SVG Connector (1.4px) */}
           <div className="my-6 flex flex-col items-center">
             <svg width="2" height="42" className="overflow-visible">
               <defs>
                 <marker
                   id="pow-down-arrow"
-                  markerWidth="6"
-                  markerHeight="6"
+                  viewBox="0 0 6 6"
                   refX="3"
                   refY="5"
+                  markerWidth="4"
+                  markerHeight="4"
                   orient="auto"
                 >
-                  <path d="M0,0 L3,5 L6,0 Z" fill="#000000" />
+                  <path d="M 0 1 L 3 5 L 6 1 Z" fill="#000000" />
                 </marker>
               </defs>
               <line
                 x1="1"
                 y1="0"
                 x2="1"
-                y2="36"
+                y2="34"
                 stroke="#000000"
-                strokeWidth="2"
+                strokeWidth="1.4"
                 strokeLinecap="round"
                 markerEnd="url(#pow-down-arrow)"
               />
             </svg>
           </div>
 
-          {/* Result Card: VERIFIED PROJECT */}
+          {/* Result Card: VERIFIED PROJECT with restrained cyan/blue verification accent */}
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="w-full max-w-md p-5 sm:p-6 rounded-2xl bg-white border-2 border-black shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex items-center justify-between gap-4"
+            className="w-full max-w-md p-5 sm:p-6 rounded-2xl bg-white border-2 border-black shadow-[0_4px_20px_rgba(0,0,0,0.06)] flex items-center justify-between gap-4 relative overflow-hidden"
           >
+            {/* Subtle restrained cyan-blue top accent border */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#00F0FF] via-[#2563EB] to-[#8B5CF6]" />
+
             <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-[#111111] text-white flex items-center justify-center">
-                <CheckCircle2 size={22} className="text-white" />
+              <div className="w-11 h-11 rounded-xl bg-[#111111] text-white flex items-center justify-center relative">
+                <CheckCircle2 size={22} className="text-[#00F0FF]" />
               </div>
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#777777] block">
-                  Cryptographic Outcome
+                <span className="text-[10px] font-['Manrope',sans-serif] uppercase tracking-wider text-[#666666] font-semibold block">
+                  AUTHENTICATED OUTCOME
                 </span>
                 <span className="text-[17px] sm:text-[18px] font-bold text-[#111111] font-['Manrope',sans-serif] tracking-tight">
                   VERIFIED PROJECT
@@ -166,8 +170,8 @@ export const ProofOfWorkSection: React.FC = () => {
               </div>
             </div>
 
-            <span className="px-2.5 py-1 rounded-full bg-[#F5F5F3] border border-black/[0.08] text-[11px] font-mono font-bold text-[#111111]">
-              PASSED
+            <span className="px-2.5 py-1 rounded-full bg-white border border-[#2563EB]/40 text-[11px] font-['Manrope',sans-serif] font-bold text-[#2563EB] shadow-2xs">
+              PASSED ✓
             </span>
           </motion.div>
         </div>

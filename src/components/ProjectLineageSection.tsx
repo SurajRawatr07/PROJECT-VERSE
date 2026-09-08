@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { GitBranch, GitMerge, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { GitBranch, CheckCircle2 } from 'lucide-react';
 
 interface BatchEpoch {
   year: string;
@@ -52,55 +52,63 @@ export const ProjectLineageSection: React.FC = () => {
   return (
     <section 
       id="lineage" 
-      className="relative w-full py-18 sm:py-24 px-4 sm:px-6 bg-[#FAFAF8] border-t border-black/[0.06] select-none"
+      className="relative w-full py-20 sm:py-28 px-4 sm:px-6 bg-[#FAFAF8] border-t border-black/[0.06] select-none overflow-hidden"
     >
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-['Manrope',sans-serif] font-semibold uppercase tracking-wider text-[#555555] mb-3">
-            Multi-Cohort Continuity
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-black/[0.04] text-[11px] font-['Manrope',sans-serif] font-semibold uppercase tracking-widest text-[#333333] mb-3">
+            MULTI-COHORT CONTINUITY
           </div>
-          <h2 className="font-serif text-[28px] sm:text-[32px] md:text-[40px] text-[#111111] font-normal tracking-[-0.01em] leading-tight">
+          {/* Main Statement in Instrument Serif */}
+          <h2 className="font-serif text-[32px] sm:text-[38px] md:text-[46px] text-[#111111] font-normal tracking-[-0.015em] leading-tight">
             Projects Can Continue Across Batches.
           </h2>
-          <p className="mt-2.5 text-[15px] sm:text-[16px] text-[#555555] font-sans">
-            Future students build on existing knowledge instead of starting from zero.
+          <p className="mt-3 text-[15px] sm:text-[16px] text-[#555555] font-sans leading-relaxed">
+            Future student cohorts build directly upon proven foundations instead of discarding valuable academic progress.
           </p>
         </div>
 
         {/* ========================================================================= */}
-        {/* REAL UI TIMELINE: One Continuous PURE BLACK SVG Timeline */}
+        {/* REAL UI TIMELINE: Thin Pure Black Timeline (Stroke: 1.4px, Minimal Arrowheads) */}
+        {/* Animated: Path drawing, year activation, version badges, contributor avatars */}
         {/* ========================================================================= */}
         <div className="relative w-full">
-          {/* Desktop Continuous Black Line */}
-          <div className="hidden lg:block absolute top-[28px] left-[6%] right-[6%] h-[2px] pointer-events-none -z-0">
+          {/* Desktop Continuous Pure Black Line (1.4px) */}
+          <div className="hidden lg:block absolute top-[36px] left-[7%] right-[7%] h-[12px] pointer-events-none z-0">
             <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
               <defs>
                 <marker
-                  id="lineage-black-arrow"
-                  markerWidth="6"
-                  markerHeight="6"
+                  id="lineage-small-black-arrow"
+                  viewBox="0 0 6 6"
                   refX="5"
                   refY="3"
-                  orient="auto"
+                  markerWidth="4"
+                  markerHeight="4"
+                  orient="auto-start-reverse"
                 >
-                  <path d="M0,0 L6,3 L0,6 Z" fill="#000000" />
+                  <path d="M 0 1 L 5 3 L 0 5 Z" fill="#000000" />
                 </marker>
               </defs>
-              <line
+              <motion.line
                 x1="0%"
                 y1="50%"
                 x2="100%"
                 y2="50%"
                 stroke="#000000"
-                strokeWidth="2"
+                strokeWidth="1.4"
                 strokeLinecap="round"
+                markerEnd="url(#lineage-small-black-arrow)"
+                initial={{ pathLength: 0, opacity: 0 }}
+                whileInView={{ pathLength: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
               />
             </svg>
           </div>
 
-          {/* Mobile/Tablet Vertical Pure-Black Line */}
-          <div className="lg:hidden absolute top-[20px] bottom-[20px] left-[24px] w-[2px] bg-black pointer-events-none -z-0" />
+          {/* Mobile/Tablet Vertical Pure-Black Line (1.4px) */}
+          <div className="lg:hidden absolute top-[20px] bottom-[20px] left-[24px] w-[1.4px] bg-black pointer-events-none z-0" />
 
           {/* 4 Epoch Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-4 relative z-10">
@@ -109,12 +117,12 @@ export const ProjectLineageSection: React.FC = () => {
               return (
                 <motion.div
                   key={epoch.year}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-30px' }}
+                  viewport={{ once: true }}
                   transition={{
-                    duration: 0.45,
-                    delay: idx * 0.1,
+                    duration: 0.4,
+                    delay: 0.15 + idx * 0.12,
                     ease: [0.16, 1, 0.3, 1],
                   }}
                   onMouseEnter={() => setHoveredEpoch(idx)}
@@ -125,58 +133,70 @@ export const ProjectLineageSection: React.FC = () => {
                       : 'border-black/[0.08] shadow-[0_1px_3px_rgba(0,0,0,0.02)]'
                   }`}
                 >
-                  {/* Top: Year + Version Badge */}
+                  {/* Top: Compact Technical Year Label (Manrope with increased spacing) + Version Badge */}
                   <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-black" />
-                      <span className="font-serif text-[22px] font-bold text-[#111111]">
+                    <motion.div 
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.25 + idx * 0.12, duration: 0.3 }}
+                      className="flex items-center gap-2"
+                    >
+                      <span className="w-2 h-2 rounded-full bg-black shrink-0" />
+                      <span className="font-['Manrope',sans-serif] text-[18px] font-bold text-[#111111] tracking-wider">
                         {epoch.year}
                       </span>
-                    </div>
+                    </motion.div>
 
-                    <span className="px-2 py-0.5 rounded-md bg-[#F5F5F3] border border-black/[0.08] text-[11px] font-mono font-bold text-[#111111]">
+                    {/* Version Badge */}
+                    <motion.span 
+                      initial={{ scale: 0.85, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.32 + idx * 0.12, duration: 0.25 }}
+                      className="px-2 py-0.5 rounded-md bg-[#F5F5F3] border border-black/[0.08] text-[11px] font-['Manrope',sans-serif] font-bold text-[#111111] tracking-wide"
+                    >
                       {epoch.version}
-                    </span>
+                    </motion.span>
                   </div>
 
                   {/* Title & Milestone */}
-                  <h3 className="text-[15px] font-bold text-[#111111] font-['Manrope',sans-serif] tracking-tight mb-1">
+                  <h3 className="text-[14.5px] font-['Manrope',sans-serif] font-bold text-[#111111] mb-1">
                     {epoch.title}
                   </h3>
-                  <p className="text-[12.5px] text-[#555555] leading-snug font-sans mb-4 min-h-[34px]">
+                  <p className="text-[12.5px] text-[#666666] font-sans leading-relaxed mb-4">
                     {epoch.milestone}
                   </p>
 
-                  {/* Contributor Avatars & Cohort */}
+                  {/* Cohort & Contributor Avatars */}
                   <div className="pt-3 border-t border-black/[0.06] flex items-center justify-between">
-                    <span className="text-[11px] font-mono text-[#777777]">
+                    <span className="text-[11px] font-['Manrope',sans-serif] font-medium text-[#777777]">
                       {epoch.cohort}
                     </span>
 
-                    {/* Contributor Avatars */}
-                    <div className="flex -space-x-1.5">
-                      {epoch.avatars.map((initials) => (
+                    {/* Contributor Avatars Reveal */}
+                    <motion.div 
+                      initial={{ opacity: 0, x: 4 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4 + idx * 0.12, duration: 0.3 }}
+                      className="flex -space-x-1.5"
+                    >
+                      {epoch.avatars.map((av) => (
                         <div
-                          key={initials}
-                          className="w-5.5 h-5.5 rounded-full bg-[#111111] text-white border border-white flex items-center justify-center text-[8.5px] font-mono font-bold"
-                          title={`Contributor ${initials}`}
+                          key={av}
+                          className="w-5 h-5 rounded-full bg-[#111111] text-white border border-white flex items-center justify-center text-[8px] font-['Manrope',sans-serif] font-bold"
+                          title={`Contributor: ${av}`}
                         >
-                          {initials}
+                          {av}
                         </div>
                       ))}
-                    </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               );
             })}
           </div>
-        </div>
-
-        {/* Supporting Line Underneath */}
-        <div className="mt-12 text-center">
-          <p className="text-[13.5px] font-sans text-[#666666]">
-            Every commit, PR, and faculty appraisal becomes part of the permanent immutable lineage.
-          </p>
         </div>
       </div>
     </section>

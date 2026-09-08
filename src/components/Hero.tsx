@@ -63,17 +63,17 @@ export const Hero: React.FC<HeroProps> = ({
         >
           <div className="hidden sm:block">
             <ProjectVerseWordmark
-              height={34}
-              color="#111111"
-              animated={false}
+              height={32}
+              theme="light"
+              animated={true}
               interactiveHover={false}
             />
           </div>
           <div className="block sm:hidden">
             <ProjectVerseWordmark
-              height={26}
-              color="#111111"
-              animated={false}
+              height={24}
+              theme="light"
+              animated={true}
               interactiveHover={false}
             />
           </div>

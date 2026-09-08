@@ -19,10 +19,10 @@ export const ProjectPassportSection: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] text-[11px] font-['Manrope',sans-serif] font-semibold uppercase tracking-wider text-[#555555] mb-3">
-            Digital Identity Document
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-black/[0.04] text-[11px] font-['Manrope',sans-serif] font-semibold uppercase tracking-widest text-[#333333] mb-3">
+            DIGITAL IDENTITY DOCUMENT
           </div>
-          <h2 className="font-serif text-[28px] sm:text-[32px] md:text-[40px] text-[#111111] font-normal tracking-[-0.01em] leading-tight">
+          <h2 className="font-['Manrope',sans-serif] font-bold text-[28px] sm:text-[34px] md:text-[42px] text-[#111111] tracking-tight leading-tight">
             Every Project Gets an Identity.
           </h2>
           <p className="mt-2.5 text-[15px] sm:text-[16px] text-[#555555] font-sans">

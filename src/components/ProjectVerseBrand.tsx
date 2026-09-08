@@ -29,16 +29,13 @@ export const ProjectVerseBrand: React.FC<ProjectVerseBrandProps> = ({
   theme = 'light',
   interactive = true,
 }) => {
-  const isDark = theme === 'dark';
-  const markColor = isDark ? '#FFFFFF' : '#111111';
-
   return (
     <div
       className={`inline-flex items-center select-none whitespace-nowrap align-middle ${className}`}
     >
       <ProjectVerseWordmark
         height={logoSize}
-        color={markColor}
+        theme={theme}
         interactiveHover={interactive}
         animated={false}
       />

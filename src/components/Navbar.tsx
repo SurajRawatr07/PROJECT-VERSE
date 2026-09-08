@@ -133,22 +133,22 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-logo-btn"
               onClick={() => scrollToSection('home')}
-              className="flex items-center py-1 px-1 rounded-md hover:opacity-90 active:scale-[0.99] transition-all duration-150 focus:outline-none cursor-pointer"
+              className="flex items-center py-1 px-1 rounded-md hover:opacity-95 active:scale-[0.99] transition-all duration-150 focus:outline-none cursor-pointer"
               aria-label="ProjectVerse Home"
               title="ProjectVerse"
             >
+              {/* Desktop wordmark: ~135–146px width (fits 120–155px specification) */}
               <div className="hidden sm:block">
                 <ProjectVerseWordmark
-                  height={isCollapsed ? 23 : isScrolled ? 25 : 27}
-                  color="#111111"
+                  height={isCollapsed ? 17 : isScrolled ? 18 : 19}
                   animated={true}
                   interactiveHover={true}
                 />
               </div>
+              {/* Mobile wordmark: ~116px width (fits 100–125px specification) */}
               <div className="block sm:hidden">
                 <ProjectVerseWordmark
-                  height={21}
-                  color="#111111"
+                  height={15}
                   animated={true}
                   interactiveHover={true}
                 />
@@ -158,53 +158,31 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* CENTER: Navigation Links (Home, About, How It Works, FAQ) */}
           <div className="hidden md:flex items-center gap-1 font-['Manrope',sans-serif]">
-            <button
-              id="nav-link-home"
-              onClick={() => scrollToSection('home')}
-              className={`text-[13px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-150 ${
-                activePage === 'home'
-                  ? 'text-[#111111] bg-[#F0F0EE] font-semibold'
-                  : 'text-[#555555] hover:text-[#111111] hover:bg-[#F7F7F5]'
-              }`}
-            >
-              Home
-            </button>
-
-            <button
-              id="nav-link-about"
-              onClick={() => scrollToSection('about')}
-              className={`text-[13px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-150 ${
-                activePage === 'about'
-                  ? 'text-[#111111] bg-[#F0F0EE] font-semibold'
-                  : 'text-[#555555] hover:text-[#111111] hover:bg-[#F7F7F5]'
-              }`}
-            >
-              About
-            </button>
-
-            <button
-              id="nav-link-how-it-works"
-              onClick={() => scrollToSection('how-it-works')}
-              className={`text-[13px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-150 ${
-                activePage === 'how-it-works'
-                  ? 'text-[#111111] bg-[#F0F0EE] font-semibold'
-                  : 'text-[#555555] hover:text-[#111111] hover:bg-[#F7F7F5]'
-              }`}
-            >
-              How It Works
-            </button>
-
-            <button
-              id="nav-link-faq"
-              onClick={() => scrollToSection('faq')}
-              className={`text-[13px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-150 ${
-                activePage === 'faq'
-                  ? 'text-[#111111] bg-[#F0F0EE] font-semibold'
-                  : 'text-[#555555] hover:text-[#111111] hover:bg-[#F7F7F5]'
-              }`}
-            >
-              FAQ
-            </button>
+            {[
+              { id: 'home' as PublicPage, label: 'Home' },
+              { id: 'about' as PublicPage, label: 'About' },
+              { id: 'how-it-works' as PublicPage, label: 'How It Works' },
+              { id: 'faq' as PublicPage, label: 'FAQ' },
+            ].map(({ id, label }) => {
+              const isActive = activePage === id;
+              return (
+                <button
+                  key={id}
+                  id={`nav-link-${id}`}
+                  onClick={() => scrollToSection(id)}
+                  className={`relative text-[13px] leading-none px-3.5 py-1.5 rounded-full cursor-pointer select-none transition-all duration-150 inline-flex items-center gap-1.5 ${
+                    isActive
+                      ? 'text-[#111111] bg-[#F0F0EE] font-semibold shadow-[inset_0_0_0_1px_rgba(0,0,0,0.04)]'
+                      : 'text-[#555555] hover:text-[#111111] hover:bg-[#F7F7F5]'
+                  }`}
+                >
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#00F0FF] via-[#2563EB] to-[#8B5CF6] shrink-0 animate-pulse" />
+                  )}
+                  <span>{label}</span>
+                </button>
+              );
+            })}
           </div>
 
           {/* RIGHT: Login & Get Started */}
